@@ -17,6 +17,7 @@ import dto.PlatillosDTO;
  * 
  */
 public interface IAdministradorPlatillos {
+    
     public abstract PlatillosDTO nuevoPlatillo(PlatillosDTO nuevoPlatillo);
     public abstract List<PlatillosDTO> consultarPlatillos();
     public abstract void ActualizarExistencias(String platilloActualizar,Integer cantidadActualizar);

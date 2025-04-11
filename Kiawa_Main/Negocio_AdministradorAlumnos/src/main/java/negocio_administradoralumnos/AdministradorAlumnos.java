@@ -2,24 +2,28 @@
 package negocio_administradoralumnos;
 
 import dto.AlumnoDTO;
+import logica.LogicaAlumnos;
 
 /**
  *
  * @author jalt2
  */
 public class AdministradorAlumnos implements IAdministradorAlumnos {
-    private static final AdministradorAlumnos instancia = new AdministradorAlumnos();
+    private static AdministradorAlumnos instancia;
+    private LogicaAlumnos logicaAlumnos= new LogicaAlumnos();
 
     private AdministradorAlumnos() {
     }
 
     public static AdministradorAlumnos getInstance() {
+        if (instancia==null) {
+            instancia = new AdministradorAlumnos();
+        }
         return instancia;
     }
 
     @Override
     public AlumnoDTO usuarioActual() {
-        AlumnoDTO usuarioActual = new AlumnoDTO("Ariel");
-        return usuarioActual;
+        return logicaAlumnos.obtenerAlumnoDTO();
     }
 }

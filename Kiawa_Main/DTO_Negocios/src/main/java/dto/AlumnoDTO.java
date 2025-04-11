@@ -4,6 +4,9 @@
  */
 package dto;
 
+import fabrica.FabricaObjetosNegocio;
+import objetos_negocio.Alumno;
+
 /**
  * @author
  * Ariel Eduardo Borbón Izaguirre    252116 
@@ -16,15 +19,18 @@ public class AlumnoDTO {
     private Long id;
     private String password;
     private String nombre;
+    
+    
 
+    
     public Long getId() {
         return id;
     }
-
+    
     public String getPassword() {
         return password;
     }
-
+    
     public AlumnoDTO() {
     }
 
@@ -40,6 +46,18 @@ public class AlumnoDTO {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     
     

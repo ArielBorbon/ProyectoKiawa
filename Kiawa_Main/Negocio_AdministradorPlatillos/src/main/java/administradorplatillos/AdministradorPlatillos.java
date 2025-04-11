@@ -7,7 +7,9 @@ package AdministradorPlatillos;
 import objetos_negocio.Platillo;
 import java.util.List;
 import dto.PlatillosDTO;
+import fabrica.FabricaObjetosNegocio;
 import java.util.ArrayList;
+import logica.LogicaPlatillos;
 
 /**
  * @author
@@ -18,25 +20,20 @@ import java.util.ArrayList;
  * 
  */
 public class AdministradorPlatillos implements IAdministradorPlatillos {
-    private static final AdministradorPlatillos instancia = new AdministradorPlatillos();
+    private static AdministradorPlatillos instancia;
     private List<PlatillosDTO> listaPlatillosDisponibles = new ArrayList<>();
-    
-    private PlatillosDTO platillo1 = new PlatillosDTO(1,"Burritos",35.0, 3);
-    private PlatillosDTO platillo2 = new PlatillosDTO(2,"Coca cola", 18.0, 10);
-    private PlatillosDTO platillo3 = new PlatillosDTO(3,"Torta", 40.0, 5);
-    private PlatillosDTO platillo4 = new PlatillosDTO(4,"Galletas", 20.0, 20);
-    private PlatillosDTO platillo5 = new PlatillosDTO(5,"Sabritas", 21.0, 15);
+    private LogicaPlatillos logicaplatillos=new LogicaPlatillos();
 
     private AdministradorPlatillos() {
-        listaPlatillosDisponibles.add(platillo1); 
-        listaPlatillosDisponibles.add(platillo2);
-        listaPlatillosDisponibles.add(platillo3);
-        listaPlatillosDisponibles.add(platillo4);
-        listaPlatillosDisponibles.add(platillo5);
+        this.listaPlatillosDisponibles = this.logicaplatillos.obtenerPlatillosDTO();
     }
 
     public static AdministradorPlatillos getInstance() {
-        return instancia;
+        if (instancia==null) {
+            instancia = new AdministradorPlatillos();
+        }
+        return instancia; 
+        
     }
 
     @Override
@@ -60,6 +57,6 @@ public class AdministradorPlatillos implements IAdministradorPlatillos {
 
     @Override
     public List<PlatillosDTO> consultarPlatillos() {
-        return listaPlatillosDisponibles;
+        return this.listaPlatillosDisponibles;
     }
 }

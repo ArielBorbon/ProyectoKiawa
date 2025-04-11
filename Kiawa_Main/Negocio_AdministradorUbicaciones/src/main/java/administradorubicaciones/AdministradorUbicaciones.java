@@ -8,6 +8,7 @@ import objetos_negocio.Ubicacion;
 import dto.UbicacionDTO;
 import java.util.ArrayList;
 import java.util.List;
+import logica.LogicaUbicacion;
 
 /**
  * @author
@@ -18,12 +19,16 @@ import java.util.List;
  * 
  */
 public class AdministradorUbicaciones implements IAdministradorUbicaciones {
-    private static final AdministradorUbicaciones instancia = new AdministradorUbicaciones();
+    private static AdministradorUbicaciones instancia;
+    private LogicaUbicacion logicaUbicacion = new LogicaUbicacion();
 
     private AdministradorUbicaciones() {
     }
 
     public static AdministradorUbicaciones getInstance() {
+        if (instancia==null) {
+            instancia = new AdministradorUbicaciones();
+        }
         return instancia;
     }
 
@@ -34,18 +39,6 @@ public class AdministradorUbicaciones implements IAdministradorUbicaciones {
 
     @Override
     public List<UbicacionDTO> consultarUbicaciones() {
-        List<UbicacionDTO> listaUbicaciones = new ArrayList<>();
-        listaUbicaciones.add(new UbicacionDTO("1800", "LV1821"));
-        listaUbicaciones.add(new UbicacionDTO("1800", "LV1822"));
-        listaUbicaciones.add(new UbicacionDTO("1800", "LV1823"));
-        listaUbicaciones.add(new UbicacionDTO("1800", "AV1823"));
-        listaUbicaciones.add(new UbicacionDTO("1800", "AV1824"));
-        listaUbicaciones.add(new UbicacionDTO("1800", "AV1831"));
-        listaUbicaciones.add(new UbicacionDTO("1400", "AV1421"));
-        listaUbicaciones.add(new UbicacionDTO("1400", "AV1422"));
-        listaUbicaciones.add(new UbicacionDTO("1400", "AV1423"));
-        listaUbicaciones.add(new UbicacionDTO("1400", "AV1424"));
-        
-        return listaUbicaciones;
+        return logicaUbicacion.obtenerUbicacionesDTO();
     }
 }

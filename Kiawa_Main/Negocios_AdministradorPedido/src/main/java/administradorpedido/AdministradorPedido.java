@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import objetos_negocio.Platillo;
 import objetos_negocio.Ubicacion;
 import dto.UbicacionDTO;
+import fabrica.FabricaObjetosNegocio;
 
 
 /**
@@ -24,11 +25,15 @@ import dto.UbicacionDTO;
  * 
  */
 public class AdministradorPedido implements IAdministradorPedido {
-    private static final AdministradorPedido instancia = new AdministradorPedido();
+    private static AdministradorPedido instancia;
+    private Pedido pedido = FabricaObjetosNegocio.crearPedidoBO();
 
     private AdministradorPedido() {}
 
     public static AdministradorPedido getInstance() {
+        if (instancia==null) {
+            instancia = new AdministradorPedido();
+        }
         return instancia;
     }
 
@@ -37,65 +42,64 @@ public class AdministradorPedido implements IAdministradorPedido {
         throw new UnsupportedOperationException("Método no implementado");
     }
 
-@Override
-public Pedido RegistrarPedido(PedidoDTO nuevoPedido) throws NegocioException { 
-    // Validación: Verificar si la lista de platillos o la ubicación es nula
-    if (nuevoPedido.getPlatillos() == null || nuevoPedido.getPlatillos().isEmpty()) {
-        throw new NegocioException("El pedido requiere al menos un platillo");
+    @Override
+    public Pedido RegistrarPedido(PedidoDTO nuevoPedido) throws NegocioException { 
+        // Validación: Verificar si la lista de platillos o la ubicación es nula
+        if (nuevoPedido.getPlatillos() == null || nuevoPedido.getPlatillos().isEmpty()) {
+            throw new NegocioException("El pedido requiere al menos un platillo");
+        }
+
+        if (nuevoPedido.getUbicacion() == null) {
+            throw new NegocioException("Se debe especificar una ubicación");
+        }
+
+        // Convertir el PedidoDTO en Pedido
+        this.pedido = convertirPedidoDTOaPedido(nuevoPedido);
+
+        // Aquí puedes agregar cualquier otra lógica que sea necesaria para procesar el pedido
+        // Por ejemplo, podrías guardar el pedido en una base de datos o realizar más validaciones
+
+        // Devolver el objeto Pedido convertido
+        return pedido;
     }
 
-    if (nuevoPedido.getUbicacion() == null) {
-        throw new NegocioException("Se debe especificar una ubicación");
+    // Método para convertir PedidoDTO a Pedido (como se explicó anteriormente)
+    private Pedido convertirPedidoDTOaPedido(PedidoDTO pedidoDTO) {
+        // Convertir la lista de PlatillosDTO a una lista de Platillos
+        List<Platillo> platillos = new ArrayList<>();
+        for (PlatillosDTO platilloDTO : pedidoDTO.getPlatillos()) {
+            Platillo platillo = new Platillo();
+            platillo.setPlatillo(platilloDTO.getPlatillo());
+            platillo.setPrecio(platilloDTO.getPrecio());
+            platillo.setExistencias(platilloDTO.getExistencias());
+            platillo.setCantidad(platilloDTO.getCantidad());
+            platillos.add(platillo);
+        }
+
+        // Convertir UbicacionDTO a Ubicacion
+        Ubicacion ubicacion = convertirUbicacionDTOaUbicacion(pedidoDTO.getUbicacion());
+
+        // Crear y devolver el objeto Pedido
+        pedido.setPlatillos(platillos);
+        pedido.setUbicacion(ubicacion);
+
+        return pedido;
     }
 
-    // Convertir el PedidoDTO en Pedido
-    Pedido pedido = convertirPedidoDTOaPedido(nuevoPedido);
+    // Método para convertir UbicacionDTO a Ubicacion (puedes hacer algo similar con tu clase de Ubicacion)
+    private Ubicacion convertirUbicacionDTOaUbicacion(UbicacionDTO ubicacionDTO) {
+        // Crear una nueva instancia de Ubicacion
+        Ubicacion ubicacion = FabricaObjetosNegocio.crearUbicacionBO();
 
-    // Aquí puedes agregar cualquier otra lógica que sea necesaria para procesar el pedido
-    // Por ejemplo, podrías guardar el pedido en una base de datos o realizar más validaciones
+        // Mapear los campos de UbicacionDTO a Ubicacion
+        ubicacion.setEdificio(ubicacionDTO.getEdificio());
+        ubicacion.setAula(ubicacionDTO.getAula());
+        ubicacion.setTelefono(ubicacionDTO.getTelefono());
+        ubicacion.setInstruccionesEntrega(ubicacionDTO.getInstruccionesEntrega());
 
-    // Devolver el objeto Pedido convertido
-    return pedido;
-}
-
-// Método para convertir PedidoDTO a Pedido (como se explicó anteriormente)
-private Pedido convertirPedidoDTOaPedido(PedidoDTO pedidoDTO) {
-    // Convertir la lista de PlatillosDTO a una lista de Platillos
-    List<Platillo> platillos = new ArrayList<>();
-    for (PlatillosDTO platilloDTO : pedidoDTO.getPlatillos()) {
-        Platillo platillo = new Platillo();
-        platillo.setPlatillo(platilloDTO.getPlatillo());
-        platillo.setPrecio(platilloDTO.getPrecio());
-        platillo.setExistencias(platilloDTO.getExistencias());
-        platillo.setCantidad(platilloDTO.getCantidad());
-        platillos.add(platillo);
+        // Retornar la nueva instancia de Ubicacion
+        return ubicacion;
     }
-    
-    // Convertir UbicacionDTO a Ubicacion
-    Ubicacion ubicacion = convertirUbicacionDTOaUbicacion(pedidoDTO.getUbicacion());
-
-    // Crear y devolver el objeto Pedido
-    Pedido pedido = new Pedido();
-    pedido.setPlatillos(platillos);
-    pedido.setUbicacion(ubicacion);
-    
-    return pedido;
-}
-
-// Método para convertir UbicacionDTO a Ubicacion (puedes hacer algo similar con tu clase de Ubicacion)
-private Ubicacion convertirUbicacionDTOaUbicacion(UbicacionDTO ubicacionDTO) {
-    // Crear una nueva instancia de Ubicacion
-    Ubicacion ubicacion = new Ubicacion();
-
-    // Mapear los campos de UbicacionDTO a Ubicacion
-    ubicacion.setEdificio(ubicacionDTO.getEdificio());
-    ubicacion.setAula(ubicacionDTO.getAula());
-    ubicacion.setTelefono(ubicacionDTO.getTelefono());
-    ubicacion.setInstruccionesEntrega(ubicacionDTO.getInstruccionesEntrega());
-
-    // Retornar la nueva instancia de Ubicacion
-    return ubicacion;
-}
 
 
 

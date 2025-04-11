@@ -16,6 +16,10 @@ public class Alumno {
     private Long id;
     private String password;
     private String nombre;
+    private Alumno alumnoActual;
+    
+    public Alumno() {
+    }
 
     public Alumno(Long id, String password, String nombre) {
         this.id = id;
@@ -26,7 +30,12 @@ public class Alumno {
     public Alumno(String nombre) {
         this.nombre = nombre;
     }
-
+    
+    public Alumno obtenerAlumnoActual(){
+        alumnoActual = new Alumno(1l,"1234","Adrian");
+        return alumnoActual;
+    }
+    
     public String getNombre() {
         return nombre;
     }

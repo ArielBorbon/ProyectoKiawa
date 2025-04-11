@@ -4,6 +4,9 @@
  */
 package objetos_negocio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author
  * Ariel Eduardo Borbón Izaguirre    252116 
@@ -17,6 +20,7 @@ public class Ubicacion {
     private String aula;
     private String telefono;
     private String instruccionesEntrega;
+    private List<Ubicacion> listaUbicaciones=new ArrayList();
 
     public Ubicacion(String edificio, String aula, String telefono, String instruccionesEntrega) {
         this.edificio = edificio;
@@ -34,6 +38,20 @@ public class Ubicacion {
     }
     
     
+    public List<Ubicacion> obtenerUbicaciones(){
+        this.listaUbicaciones.add(new Ubicacion("1800", "LV1822"));
+        this.listaUbicaciones.add(new Ubicacion("1800", "LV1821"));
+        this.listaUbicaciones.add(new Ubicacion("1800", "LV1823"));
+        this.listaUbicaciones.add(new Ubicacion("1800", "AV1823"));
+        this.listaUbicaciones.add(new Ubicacion("1800", "AV1824"));
+        this.listaUbicaciones.add(new Ubicacion("1800", "AV1831"));
+        this.listaUbicaciones.add(new Ubicacion("1400", "AV1421"));
+        this.listaUbicaciones.add(new Ubicacion("1400", "AV1422"));
+        this.listaUbicaciones.add(new Ubicacion("1400", "AV1423"));
+        this.listaUbicaciones.add(new Ubicacion("1400", "AV1424"));
+
+        return this.listaUbicaciones;
+    }
     
     
     
