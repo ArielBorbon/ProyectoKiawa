@@ -5,7 +5,7 @@
 package presentacion;
 
 import dto.PedidoDTO;
-import dto.PlatillosDTO;
+import dto.PlatilloDTO;
 import dto.UbicacionDTO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -45,7 +45,7 @@ public class MensajePedidoExitoso extends javax.swing.JFrame {
         modelo.setRowCount(0);
         
         for(PedidoDTO pedido : this.listaPedido){
-            for (PlatillosDTO platillo : pedido.getPlatillos()) { // Obtener lista de platillos dentro de pedido
+            for (PlatilloDTO platillo : pedido.getPlatillos()) { // Obtener lista de platillos dentro de pedido
                 Object[] filaTabla = {
                 platillo.getPlatillo(),  // Obtener nombre del platillo
                 platillo.getPrecio(),// Obtener precio del platillo
@@ -255,7 +255,7 @@ public class MensajePedidoExitoso extends javax.swing.JFrame {
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
         for(PedidoDTO pedido : this.listaPedido){
-            for (PlatillosDTO platillo : pedido.getPlatillos()) { // Obtener lista de platillos dentro de pedido
+            for (PlatilloDTO platillo : pedido.getPlatillos()) { // Obtener lista de platillos dentro de pedido
                 controlOrdenarPlatillo.actualizarExistencias(platillo);
             }
             

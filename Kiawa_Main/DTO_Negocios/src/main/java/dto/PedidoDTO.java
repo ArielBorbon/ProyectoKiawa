@@ -5,6 +5,7 @@
 package dto;
 
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,31 +17,17 @@ import java.util.List;
  * 
  */
 public class PedidoDTO {
-    private List<PlatillosDTO> platillos;
-    private UbicacionDTO ubicacion;
-
-    public PedidoDTO(List<PlatillosDTO> platillos, UbicacionDTO ubicacion) {
-        this.platillos = platillos;
-        this.ubicacion = ubicacion;
-    }
-
-    public List<PlatillosDTO> getPlatillos() {
-        return platillos;
-    }
-
-    public void setPlatillos(List<PlatillosDTO> platillos) {
-        this.platillos = platillos;
-    }
-
-    public UbicacionDTO getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(UbicacionDTO ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-
-    
-    
+    private String idPedido;
+    private String nombreAlumno;
+    private UbicacionDTO ubicacionEntrega;
+    private String telefonoContacto;
+    private String instruccionesEntrega;
+    private Date fechaPedido;
+    private String estado;
+    private String nombreCocinero;
+    private String nombreRepartidor;
+    private List<DetallePedidoDTO> platillos;
+    private Double total;
+    private Boolean pagado;
 }
+

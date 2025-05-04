@@ -13,6 +13,7 @@
         <module>Negocios_AdministradorPedido</module>
         <module>Objetos_Negocio</module>
         <module>Presentacion_Kiawa</module>
+        <module>Kiawa_Dominio</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

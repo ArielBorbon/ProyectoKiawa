@@ -1,31 +1,25 @@
-
-package dto;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Entidades;
 
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ *
+ * @author PC Gamer
  */
-public class UbicacionDTO {
+public class Ubicacion {
     private String edificio;
     private String salon;
 
-    public UbicacionDTO() {
+    public Ubicacion() {
     }
 
-    public UbicacionDTO(String edificio, String salon) {
+    public Ubicacion(String edificio, String salon) {
         this.edificio = edificio;
         this.salon = salon;
     }
 
-    
-    
-    
-    
-    
     public String getEdificio() {
         return edificio;
     }
@@ -45,4 +39,11 @@ public class UbicacionDTO {
     
     
     
+    
+    
+    
+    
+    
+    
 }
+

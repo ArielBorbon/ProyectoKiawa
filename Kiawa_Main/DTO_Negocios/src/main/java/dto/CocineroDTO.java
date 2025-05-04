@@ -4,42 +4,35 @@
  */
 package dto;
 
-import fabrica.FabricaObjetosNegocio;
-import objetos_negocio.Alumno;
-
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ *
+ * @author PC Gamer
  */
-public class AlumnoDTO {
-
-    private String idAlumno;     
+public class CocineroDTO {
+    private String idCocinero;
     private String nombreCompleto;
-    private String telefono; 
+    private String telefono;
+    private Boolean disponible;
 
-    public AlumnoDTO() {
+    public CocineroDTO() {
     }
 
-    public AlumnoDTO(String idAlumno, String nombreCompleto, String telefono) {
-        this.idAlumno = idAlumno;
+    
+    
+    
+    public CocineroDTO(String idCocinero, String nombreCompleto, String telefono, Boolean disponible) {
+        this.idCocinero = idCocinero;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
+        this.disponible = disponible;
     }
 
-    
-    
-    
-    
-    public String getIdAlumno() {
-        return idAlumno;
+    public String getIdCocinero() {
+        return idCocinero;
     }
 
-    public void setIdAlumno(String idAlumno) {
-        this.idAlumno = idAlumno;
+    public void setIdCocinero(String idCocinero) {
+        this.idCocinero = idCocinero;
     }
 
     public String getNombreCompleto() {
@@ -57,6 +50,15 @@ public class AlumnoDTO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+    
     
     
     

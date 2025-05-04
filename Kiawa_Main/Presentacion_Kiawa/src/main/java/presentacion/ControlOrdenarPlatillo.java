@@ -5,7 +5,7 @@ import AdministradorPlatillos.AdministradorPlatillos;
 import AdministradorUbicaciones.AdministradorUbicaciones;
 import dto.AlumnoDTO;
 import dto.PedidoDTO;
-import dto.PlatillosDTO;
+import dto.PlatilloDTO;
 import dto.UbicacionDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class ControlOrdenarPlatillo {
     }
     
     /*Este metodo recupera los platillos desde administrador de platillos simulando una base de datos*/
-    public List<PlatillosDTO> consultarPlatillos(){
+    public List<PlatilloDTO> consultarPlatillos(){
         return AdministradorPlatillos.getInstance().consultarPlatillos();
     }
     
@@ -98,16 +98,16 @@ public class ControlOrdenarPlatillo {
     
     /*Este metodo recibe una lista de platilloDTO y con el stringBuilder se juntan la cantidad y el platillo dejando un 
     salto de linea entre ellos, escribe el carrito de compra falta agregarle los precios*/
-    public String escribirCarritoCompra(List<PlatillosDTO> listaPlatillosSeleccionados){
+    public String escribirCarritoCompra(List<PlatilloDTO> listaPlatillosSeleccionados){
         StringBuilder contenidoCarrito = new StringBuilder();
-        for (PlatillosDTO p : listaPlatillosSeleccionados) {
+        for (PlatilloDTO p : listaPlatillosSeleccionados) {
             contenidoCarrito.append(p.getCantidad()).append(" ").append(p.getPlatillo()).append("\n");
         }
         return contenidoCarrito.toString();
     }
     
     /*Este metodo se trae del form una lista sacada de la JTable con los platillos que se seleccionaron*/
-    public List<PlatillosDTO> recuperarPlatillosSeleccionados(){
+    public List<PlatilloDTO> recuperarPlatillosSeleccionados(){
         return this.frmSeleccionarPlatillos.getListaPlatillosSeleccionados();
     }
     
@@ -123,7 +123,7 @@ public class ControlOrdenarPlatillo {
     }
     
     /*Este metodo lo que hace es actualizar las existencias de los platillos seleccionados cuando se confirma el pago*/
-    public void actualizarExistencias(PlatillosDTO platilloActualizar){
+    public void actualizarExistencias(PlatilloDTO platilloActualizar){
         AdministradorPlatillos.getInstance().ActualizarExistencias(platilloActualizar.getPlatillo(),platilloActualizar.getCantidad());
     }
     
@@ -132,7 +132,7 @@ public class ControlOrdenarPlatillo {
         Double sumaPrecio=0.0;
         
         for(PedidoDTO pedido : listaPedido){
-            for(PlatillosDTO platillo : pedido.getPlatillos()){
+            for(PlatilloDTO platillo : pedido.getPlatillos()){
                 sumaPrecio += platillo.getPrecio()*platillo.getCantidad();
             }
         }

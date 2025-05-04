@@ -4,42 +4,34 @@
  */
 package dto;
 
-import fabrica.FabricaObjetosNegocio;
-import objetos_negocio.Alumno;
-
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ *
+ * @author PC Gamer
  */
-public class AlumnoDTO {
-
-    private String idAlumno;     
+public class AdministradorDTO {
+    private String idAdministrador;
     private String nombreCompleto;
-    private String telefono; 
+    private String telefono;
 
-    public AlumnoDTO() {
-    }
-
-    public AlumnoDTO(String idAlumno, String nombreCompleto, String telefono) {
-        this.idAlumno = idAlumno;
+    public AdministradorDTO(String idAdministrador, String nombreCompleto, String telefono) {
+        this.idAdministrador = idAdministrador;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
     }
 
-    
-    
-    
-    
-    public String getIdAlumno() {
-        return idAlumno;
+    public AdministradorDTO() {
     }
 
-    public void setIdAlumno(String idAlumno) {
-        this.idAlumno = idAlumno;
+    
+    
+    
+    
+    public String getIdAdministrador() {
+        return idAdministrador;
+    }
+
+    public void setIdAdministrador(String idAdministrador) {
+        this.idAdministrador = idAdministrador;
     }
 
     public String getNombreCompleto() {
@@ -57,6 +49,7 @@ public class AlumnoDTO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
     
     
     

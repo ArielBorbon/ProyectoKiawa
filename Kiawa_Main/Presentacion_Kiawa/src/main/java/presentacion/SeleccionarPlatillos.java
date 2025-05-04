@@ -4,7 +4,7 @@
  */
 package presentacion;
 
-import dto.PlatillosDTO;
+import dto.PlatilloDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +22,8 @@ import javax.swing.table.DefaultTableModel;
 public class SeleccionarPlatillos extends javax.swing.JFrame {
 
     private final ControlOrdenarPlatillo controlOrdenarPlatillo;
-    private List<PlatillosDTO> listaPlatillosSeleccionados;
-    private List<PlatillosDTO> listaPlatillos;
+    private List<PlatilloDTO> listaPlatillosSeleccionados;
+    private List<PlatilloDTO> listaPlatillos;
     
     
     /**
@@ -40,7 +40,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     }
     
     /*Se utiliza para obtener los platillos seleccionados y poder usarla en otros form a traves de control*/
-    public List<PlatillosDTO> getListaPlatillosSeleccionados() {
+    public List<PlatilloDTO> getListaPlatillosSeleccionados() {
         return listaPlatillosSeleccionados;
     }
     
@@ -53,7 +53,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
 
         DefaultTableModel modelo = (DefaultTableModel)this.tblPlatillos.getModel();
         modelo.setRowCount(0);
-        for(PlatillosDTO platillo : this.listaPlatillos){
+        for(PlatilloDTO platillo : this.listaPlatillos){
             Object[] filaTabla = {
                 platillo.getId(),
                 platillo.getPlatillo(),
@@ -70,7 +70,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         
         Double sumaPrecio=0.0;
         
-        for(PlatillosDTO platillo : this.listaPlatillosSeleccionados){
+        for(PlatilloDTO platillo : this.listaPlatillosSeleccionados){
             sumaPrecio += platillo.getPrecio()*platillo.getCantidad();
         }
         
@@ -98,7 +98,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
                         /*Validacion para que no ingresen una cantidad mayor a las existencias o negativos*/
                         try{
                             if (cantidad > 0 && cantidad <= existencias) {
-                                this.listaPlatillosSeleccionados.add(new PlatillosDTO(id,nombrePlatillo, precio, existencias, cantidad));
+                                this.listaPlatillosSeleccionados.add(new PlatilloDTO(id,nombrePlatillo, precio, existencias, cantidad));
                                 this.calcularTotal();
                                 
                                 
@@ -308,13 +308,13 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         String platilloAEliminar = JOptionPane.showInputDialog(this,"Ingrese el id del platillo a quitar:", "Quitar platillo", JOptionPane.QUESTION_MESSAGE);
     
         if (platilloAEliminar != null && !platilloAEliminar.trim().isEmpty()) {
-            Optional<PlatillosDTO> platilloEncontrado = listaPlatillosSeleccionados.stream()
+            Optional<PlatilloDTO> platilloEncontrado = listaPlatillosSeleccionados.stream()
                 .filter(p -> Integer.parseInt(platilloAEliminar) == p.getId())  // Convertir platilloAEliminar a int
                 .findFirst();
 
 
             if (platilloEncontrado.isPresent()) {
-                PlatillosDTO platillo = platilloEncontrado.get();
+                PlatilloDTO platillo = platilloEncontrado.get();
 
                 String cantidadEliminarString = JOptionPane.showInputDialog(this, "Ingrese la cantidad a quitar de " + platilloEncontrado.get().getPlatillo() + " (Máx: " + platillo.getCantidad() + "):", "Cantidad a quitar", JOptionPane.QUESTION_MESSAGE);
 
