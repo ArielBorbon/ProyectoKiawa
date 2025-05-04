@@ -20,19 +20,16 @@ public class DetallePedido {
     public DetallePedido() {
     }
 
-    public DetallePedido(String nombrePlatillo, Integer cantidad, Double precioUnitario) {
-        this.nombrePlatillo = nombrePlatillo;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-    }
-
-    
-    public DetallePedido(String idPlatillo, String nombrePlatillo, Integer cantidad, Double precioUnitario) {
+    public DetallePedido(String idPlatillo, String nombrePlatillo, Integer cantidad, Double precioUnitario, Double subtotal, String nota) {
         this.idPlatillo = idPlatillo;
         this.nombrePlatillo = nombrePlatillo;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
+        this.subtotal = subtotal;
+        this.nota = nota;
     }
+
+
 
     public String getIdPlatillo() {
         return idPlatillo;
@@ -64,6 +61,22 @@ public class DetallePedido {
 
     public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
     }
     
     

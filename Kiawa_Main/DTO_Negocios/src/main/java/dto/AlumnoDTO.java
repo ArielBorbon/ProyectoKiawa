@@ -4,9 +4,6 @@
  */
 package dto;
 
-import fabrica.FabricaObjetosNegocio;
-import objetos_negocio.Alumno;
-
 /**
  * @author
  * Ariel Eduardo Borbón Izaguirre    252116 

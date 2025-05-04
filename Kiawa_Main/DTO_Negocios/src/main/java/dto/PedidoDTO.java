@@ -29,5 +29,127 @@ public class PedidoDTO {
     private List<DetallePedidoDTO> platillos;
     private Double total;
     private Boolean pagado;
+
+    public PedidoDTO() {
+    }
+
+    
+    
+    
+    
+    public PedidoDTO(String idPedido, String nombreAlumno, UbicacionDTO ubicacionEntrega, String telefonoContacto, String instruccionesEntrega, Date fechaPedido, String estado, String nombreCocinero, String nombreRepartidor, List<DetallePedidoDTO> platillos, Double total, Boolean pagado) {
+        this.idPedido = idPedido;
+        this.nombreAlumno = nombreAlumno;
+        this.ubicacionEntrega = ubicacionEntrega;
+        this.telefonoContacto = telefonoContacto;
+        this.instruccionesEntrega = instruccionesEntrega;
+        this.fechaPedido = fechaPedido;
+        this.estado = estado;
+        this.nombreCocinero = nombreCocinero;
+        this.nombreRepartidor = nombreRepartidor;
+        this.platillos = platillos;
+        this.total = total;
+        this.pagado = pagado;
+    }
+
+    public String getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(String idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public String getNombreAlumno() {
+        return nombreAlumno;
+    }
+
+    public void setNombreAlumno(String nombreAlumno) {
+        this.nombreAlumno = nombreAlumno;
+    }
+
+    public UbicacionDTO getUbicacionEntrega() {
+        return ubicacionEntrega;
+    }
+
+    public void setUbicacionEntrega(UbicacionDTO ubicacionEntrega) {
+        this.ubicacionEntrega = ubicacionEntrega;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getInstruccionesEntrega() {
+        return instruccionesEntrega;
+    }
+
+    public void setInstruccionesEntrega(String instruccionesEntrega) {
+        this.instruccionesEntrega = instruccionesEntrega;
+    }
+
+    public Date getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(Date fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getNombreCocinero() {
+        return nombreCocinero;
+    }
+
+    public void setNombreCocinero(String nombreCocinero) {
+        this.nombreCocinero = nombreCocinero;
+    }
+
+    public String getNombreRepartidor() {
+        return nombreRepartidor;
+    }
+
+    public void setNombreRepartidor(String nombreRepartidor) {
+        this.nombreRepartidor = nombreRepartidor;
+    }
+
+    public List<DetallePedidoDTO> getPlatillos() {
+        return platillos;
+    }
+
+    public void setPlatillos(List<DetallePedidoDTO> platillos) {
+        this.platillos = platillos;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Boolean getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(Boolean pagado) {
+        this.pagado = pagado;
+    }
+    
+    
+    
+    
 }
 

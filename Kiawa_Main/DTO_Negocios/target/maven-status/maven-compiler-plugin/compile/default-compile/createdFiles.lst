@@ -1,4 +1,11 @@
 dto\PedidoDTO.class
+Mappers\DetallePedidoMapper.class
 dto\UbicacionDTO.class
+Mappers\PlatilloMapper.class
+dto\AdministradorDTO.class
+dto\RepartidorDTO.class
+dto\CocineroDTO.class
 dto\AlumnoDTO.class
-dto\PlatillosDTO.class
+dto\DetallePedidoDTO.class
+Mappers\UbicacionMapper.class
+dto\PlatilloDTO.class

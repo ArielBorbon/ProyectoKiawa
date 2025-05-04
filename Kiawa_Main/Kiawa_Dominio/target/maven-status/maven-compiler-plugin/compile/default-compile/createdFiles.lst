@@ -2,8 +2,9 @@ Entidades\Platillo.class
 Entidades\Pedido.class
 DAO\PlatilloDAO.class
 Entidades\Cocinero.class
+Entidades\Administrador.class
 Entidades\Ubicacion.class
 Entidades\Repartidor.class
 ConexionMongo\Conexion.class
 DAO\MainDAO.class
-Entidades\Alumno.class
+Entidades\DetallePedido.class

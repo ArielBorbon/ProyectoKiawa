@@ -4,11 +4,6 @@
  */
 package dto;
 
-import fabrica.FabricaObjetosNegocio;
-import java.util.ArrayList;
-import java.util.List;
-import objetos_negocio.Platillo;
-
 /**
  * @author
  * Ariel Eduardo Borbón Izaguirre    252116 
