@@ -49,7 +49,7 @@ public class PlatilloDAO {
         try {
             conexion = Conexion.getInstancia().crearConexion();
             MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-            MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
             Bson filtro = and(
                 eq("disponible", true),
@@ -91,7 +91,7 @@ public class PlatilloDAO {
         try {
             conexion = Conexion.getInstancia().crearConexion();
             MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-            MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
         
             try (MongoCursor<Document> cursor = coleccion.find().iterator()) {
                 while (cursor.hasNext()) {
@@ -131,7 +131,7 @@ public class PlatilloDAO {
         try {
             conexion = Conexion.getInstancia().crearConexion();
             MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-            MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
         
             Bson filtro = eq("_id", new ObjectId(platillo.getIdPlatillo()));
             Bson actualizacion = set("existencias", nuevaCantidad);
@@ -155,7 +155,7 @@ public class PlatilloDAO {
     try {
         conexion = Conexion.getInstancia().crearConexion();
         MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-        MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
         Bson filtro = eq("nombre", nombrePlatillo);
         Document documento = coleccion.find(filtro).first();
@@ -200,7 +200,7 @@ public class PlatilloDAO {
         
             MongoCollection<Document> coleccionPlatillos = clienteMongo
                     .getDatabase("KiawaBD")
-                    .getCollection("platillos");
+                    .getCollection("Platillos");
         
             coleccionPlatillos.insertOne(platilloDoc);
         
@@ -283,7 +283,7 @@ public class PlatilloDAO {
         try {
             conexion = Conexion.getInstancia().crearConexion();
             MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-            MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
         
             // Buscar usando el nombre original
             Platillo platilloExistente = obtenerPlatilloPorNombre(nombreOriginal);
