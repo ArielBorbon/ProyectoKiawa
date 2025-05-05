@@ -9,10 +9,11 @@ package dto;
  * @author PC Gamer
  */
 public class DetallePedidoDTO {
+
     private String nombrePlatillo;
     private Integer cantidad;
     private Double precioUnitario;
-    private String nota;  
+    private String nota; //la entidad tiene subtotal que se saca con cantidad * precio unitario, pero el DTO no tiene 
 
     public DetallePedidoDTO() {
     }
@@ -23,8 +24,6 @@ public class DetallePedidoDTO {
         this.precioUnitario = precioUnitario;
         this.nota = nota;
     }
-    
-    
 
     public String getNombrePlatillo() {
         return nombrePlatillo;
@@ -57,9 +56,5 @@ public class DetallePedidoDTO {
     public void setNota(String nota) {
         this.nota = nota;
     }
-    
-    
-    
-    
-}
 
+}

@@ -4,19 +4,16 @@
  */
 package dto;
 
-
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ * @author Ariel Eduardo Borbón Izaguirre 252116 Freddy Ali Castro Román 252191
+ * Jesús Adrián Luzanilla Tapia 252699 Alberto Jiménez García 252595
+ *
  */
 public class PedidoDTO {
+
     private String idPedido;
     private String nombreAlumno;
     private UbicacionDTO ubicacionEntrega;
@@ -29,15 +26,12 @@ public class PedidoDTO {
     private List<DetallePedidoDTO> platillos;
     private Double total;
     private Boolean pagado;
+    private String folio;
 
     public PedidoDTO() {
     }
 
-    
-    
-    
-    
-    public PedidoDTO(String idPedido, String nombreAlumno, UbicacionDTO ubicacionEntrega, String telefonoContacto, String instruccionesEntrega, Date fechaPedido, String estado, String nombreCocinero, String nombreRepartidor, List<DetallePedidoDTO> platillos, Double total, Boolean pagado) {
+    public PedidoDTO(String idPedido, String nombreAlumno, UbicacionDTO ubicacionEntrega, String telefonoContacto, String instruccionesEntrega, Date fechaPedido, String estado, String nombreCocinero, String nombreRepartidor, List<DetallePedidoDTO> platillos, Double total, Boolean pagado, String folio) {
         this.idPedido = idPedido;
         this.nombreAlumno = nombreAlumno;
         this.ubicacionEntrega = ubicacionEntrega;
@@ -50,7 +44,21 @@ public class PedidoDTO {
         this.platillos = platillos;
         this.total = total;
         this.pagado = pagado;
+        this.folio = folio;
     }
+
+    
+    
+    
+    public String getFolio() {
+        return folio;
+    }
+
+    public void setFolio(String folio) {
+        this.folio = folio;
+    }
+
+    
 
     public String getIdPedido() {
         return idPedido;
@@ -147,9 +155,5 @@ public class PedidoDTO {
     public void setPagado(Boolean pagado) {
         this.pagado = pagado;
     }
-    
-    
-    
-    
-}
 
+}

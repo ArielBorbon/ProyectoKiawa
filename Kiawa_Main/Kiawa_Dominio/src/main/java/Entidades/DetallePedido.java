@@ -9,6 +9,7 @@ package Entidades;
  * @author PC Gamer
  */
 public class DetallePedido {
+
     private String idPlatillo;
     private String nombrePlatillo;
     private Integer cantidad;

@@ -10,10 +10,10 @@ package Entidades;
  */
 public class Administrador {
 
-    private String idAdministrador;  
+    private String idAdministrador;
     private String nombreCompleto;
     private String telefono;
-    private String contrasena;      
+    private String contrasena;
 
     public Administrador(String idAdministrador, String nombreCompleto, String telefono, String contrasena) {
         this.idAdministrador = idAdministrador;
@@ -25,11 +25,6 @@ public class Administrador {
     public Administrador() {
     }
 
-    
-    
-    
-    
-    
     public String getIdAdministrador() {
         return idAdministrador;
     }
@@ -61,7 +56,5 @@ public class Administrador {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    
-    
-}
 
+}

@@ -11,8 +11,7 @@ import Entidades.Platillo;
  * @author PC Gamer
  */
 public class MainDAO {
-    
-    
+
 //    public static void main(String[] args) throws Exception {
 //        Platillo platillo = new Platillo();
 //        platillo.setCategoria("Entrada");

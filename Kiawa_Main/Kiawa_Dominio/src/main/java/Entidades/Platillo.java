@@ -9,7 +9,7 @@ package Entidades;
  * @author PC Gamer
  */
 public class Platillo {
-    
+
     private String idPlatillo;
     private String nombre;
     private String descripcion;
@@ -96,6 +96,4 @@ public class Platillo {
         this.disponible = disponible;
     }
 
-
-    
 }

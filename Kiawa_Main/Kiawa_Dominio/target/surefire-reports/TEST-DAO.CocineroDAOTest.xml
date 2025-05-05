@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="DAO.UbicacionDAOTest" time="0.316" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="DAO.CocineroDAOTest" time="0.312" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,9 +15,9 @@
     <property name="user.country" value="MX"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\PC Gamer\AppData\Local\Temp\surefire15340676802580248263\surefirebooter-20250505004726268_3.jar C:\Users\PC Gamer\AppData\Local\Temp\surefire15340676802580248263 2025-05-05T00-47-26_148-jvmRun1 surefire-20250505004726268_1tmp surefire_0-20250505004726268_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\PC Gamer\AppData\Local\Temp\surefire15907193571081560413\surefirebooter-20250505034608338_3.jar C:\Users\PC Gamer\AppData\Local\Temp\surefire15907193571081560413 2025-05-05T03-46-08_217-jvmRun1 surefire-20250505034608338_1tmp surefire_0-20250505034608338_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="DAO.UbicacionDAOTest#testObtenerListaUbicaciones"/>
+    <property name="test" value="DAO.CocineroDAOTest#testBuscarPorIdFriendly"/>
     <property name="surefire.test.class.path" value="C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio\target\test-classes;C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio\target\classes;C:\Users\PC Gamer\.m2\repository\org\mongodb\mongodb-driver-sync\4.11.1\mongodb-driver-sync-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\bson\4.11.1\bson-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\mongodb-driver-core\4.11.1\mongodb-driver-core-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\bson-record-codec\4.11.1\bson-record-codec-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\DTO_Negocios\1.0-SNAPSHOT\DTO_Negocios-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\Objetos_Negocio\1.0-SNAPSHOT\Objetos_Negocio-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\PC Gamer\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\Kiawa_Dominio\1.0-SNAPSHOT\Kiawa_Dominio-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.6.0\junit-jupiter-api-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\PC Gamer\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\platform\junit-platform-commons\1.6.0\junit-platform-commons-1.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.6.0\junit-jupiter-params-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.6.0\junit-jupiter-engine-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\platform\junit-platform-engine\1.6.0\junit-platform-engine-1.6.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\PC Gamer"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\PC Gamer\AppData\Local\Temp\surefire15340676802580248263\surefirebooter-20250505004726268_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\PC Gamer\AppData\Local\Temp\surefire15907193571081560413\surefirebooter-20250505034608338_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.2+13-LTS-58"/>
@@ -60,14 +60,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testObtenerListaUbicaciones" classname="DAO.UbicacionDAOTest" time="0.3">
-    <system-out><![CDATA[1800//1821
-1800//1822
-1800//1823
-1500//1501
-1500//1502
-]]></system-out>
-    <system-err><![CDATA[may 05, 2025 12:47:26 A. M. com.mongodb.internal.diagnostics.logging.Loggers shouldUseSLF4J
+  <testcase name="testBuscarPorIdFriendly" classname="DAO.CocineroDAOTest" time="0.299">
+    <system-err><![CDATA[may 05, 2025 3:46:08 A. M. com.mongodb.internal.diagnostics.logging.Loggers shouldUseSLF4J
 WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
 ]]></system-err>
   </testcase>

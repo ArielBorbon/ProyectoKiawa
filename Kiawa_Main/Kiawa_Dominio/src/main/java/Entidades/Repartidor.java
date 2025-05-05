@@ -10,10 +10,10 @@ package Entidades;
  */
 public class Repartidor {
 
-    private String idRepartidor;     
+    private String idRepartidor;
     private String nombreCompleto;
     private String telefono;
-    private Boolean disponible;    
+    private Boolean disponible;
     private String contrasena;
 
     public Repartidor() {
@@ -27,7 +27,6 @@ public class Repartidor {
         this.contrasena = contrasena;
     }
 
-
     public String getContrasena() {
         return contrasena;
     }
@@ -36,10 +35,6 @@ public class Repartidor {
         this.contrasena = contrasena;
     }
 
-    
-    
-    
-    
     public String getIdRepartidor() {
         return idRepartidor;
     }
@@ -71,8 +66,5 @@ public class Repartidor {
     public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
-    
-    
-    
-}
 
+}

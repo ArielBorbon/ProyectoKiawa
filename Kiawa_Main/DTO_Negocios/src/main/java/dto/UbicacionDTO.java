@@ -1,15 +1,12 @@
-
 package dto;
 
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ * @author Ariel Eduardo Borbón Izaguirre 252116 Freddy Ali Castro Román 252191
+ * Jesús Adrián Luzanilla Tapia 252699 Alberto Jiménez García 252595
+ *
  */
 public class UbicacionDTO {
+
     private String edificio;
     private String salon;
 
@@ -21,11 +18,6 @@ public class UbicacionDTO {
         this.salon = salon;
     }
 
-    
-    
-    
-    
-    
     public String getEdificio() {
         return edificio;
     }
@@ -41,8 +33,5 @@ public class UbicacionDTO {
     public void setSalon(String salon) {
         this.salon = salon;
     }
-    
-    
-    
-    
+
 }

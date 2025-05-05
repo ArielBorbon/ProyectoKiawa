@@ -14,7 +14,9 @@ import dto.RepartidorDTO;
 public class RepartidorMapper {
 
     public static RepartidorDTO toDTO(Repartidor repartidor) {
-        if (repartidor == null) return null;
+        if (repartidor == null) {
+            return null;
+        }
 
         RepartidorDTO dto = new RepartidorDTO();
         dto.setIdRepartidor(repartidor.getIdRepartidor());
@@ -26,7 +28,9 @@ public class RepartidorMapper {
     }
 
     public static Repartidor toEntity(RepartidorDTO dto, String contrasena) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
 
         Repartidor repartidor = new Repartidor();
         repartidor.setIdRepartidor(dto.getIdRepartidor());
@@ -38,4 +42,3 @@ public class RepartidorMapper {
         return repartidor;
     }
 }
-

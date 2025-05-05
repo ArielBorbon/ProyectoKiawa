@@ -6,6 +6,7 @@ package Mappers;
 
 import Entidades.Platillo;
 import dto.PlatilloDTO;
+
 /**
  *
  * @author PC Gamer
@@ -13,7 +14,9 @@ import dto.PlatilloDTO;
 public class PlatilloMapper {
 
     public static PlatilloDTO toDTO(Platillo platillo) {
-        if (platillo == null) return null;
+        if (platillo == null) {
+            return null;
+        }
         PlatilloDTO dto = new PlatilloDTO();
         dto.setIdPlatillo(platillo.getIdPlatillo());
         dto.setNombre(platillo.getNombre());
@@ -22,11 +25,14 @@ public class PlatilloMapper {
         dto.setCategoria(platillo.getCategoria());
         dto.setDescripcion(platillo.getDescripcion());
         dto.setDisponible(platillo.getDisponible());
+        
         return dto;
     }
 
     public static Platillo toEntity(PlatilloDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
         Platillo platillo = new Platillo();
         platillo.setIdPlatillo(dto.getIdPlatillo());
         platillo.setNombre(dto.getNombre());
@@ -38,4 +44,3 @@ public class PlatilloMapper {
         return platillo;
     }
 }
-

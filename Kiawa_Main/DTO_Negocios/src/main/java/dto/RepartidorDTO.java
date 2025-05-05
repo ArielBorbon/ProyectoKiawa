@@ -9,6 +9,7 @@ package dto;
  * @author PC Gamer
  */
 public class RepartidorDTO {
+
     private String idRepartidor;
     private String nombreCompleto;
     private String telefono;
@@ -24,10 +25,6 @@ public class RepartidorDTO {
         this.disponible = disponible;
     }
 
-    
-    
-    
-    
     public String getIdRepartidor() {
         return idRepartidor;
     }
@@ -59,10 +56,5 @@ public class RepartidorDTO {
     public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
-    
-    
-    
-    
-    
-}
 
+}

@@ -4,11 +4,9 @@
  */
 package DAO;
 
-import Entidades.Ubicacion;
 import dto.UbicacionDTO;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -99,5 +97,23 @@ public class UbicacionDAOTest {
 //        
 //        
 //    }
+    
+    
+//    @Test
+//    public void validarUbicacionExistente() throws Exception{
+//        UbicacionDAO ubicacionDAO = new UbicacionDAO();
+//        UbicacionDTO dto = new UbicacionDTO();
+//        dto.setEdificio("1800");
+//        dto.setSalon("1821");
+//        boolean exito = ubicacionDAO.validarUbicacionExistente(dto);
+//        
+//        assertEquals(true , exito);
+//    }
+    
+    
+    
+    
+    
+    
     
 }

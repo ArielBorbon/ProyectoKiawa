@@ -14,7 +14,9 @@ import dto.UbicacionDTO;
 public class UbicacionMapper {
 
     public static UbicacionDTO toDTO(Ubicacion ubicacion) {
-        if (ubicacion == null) return null;
+        if (ubicacion == null) {
+            return null;
+        }
 
         UbicacionDTO dto = new UbicacionDTO();
         dto.setEdificio(ubicacion.getEdificio());
@@ -23,7 +25,9 @@ public class UbicacionMapper {
     }
 
     public static Ubicacion toEntity(UbicacionDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
 
         Ubicacion ubicacion = new Ubicacion();
         ubicacion.setEdificio(dto.getEdificio());
@@ -31,4 +35,3 @@ public class UbicacionMapper {
         return ubicacion;
     }
 }
-

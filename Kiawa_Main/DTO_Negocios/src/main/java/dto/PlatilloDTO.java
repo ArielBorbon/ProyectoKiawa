@@ -5,14 +5,12 @@
 package dto;
 
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ * @author Ariel Eduardo Borbón Izaguirre 252116 Freddy Ali Castro Román 252191
+ * Jesús Adrián Luzanilla Tapia 252699 Alberto Jiménez García 252595
+ *
  */
 public class PlatilloDTO {
+
     private String idPlatillo;
     private String nombre;
     private Double precio;
@@ -65,8 +63,6 @@ public class PlatilloDTO {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-    
-    
 
     public String getIdPlatillo() {
         return idPlatillo;
@@ -91,8 +87,5 @@ public class PlatilloDTO {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
-    
-    
-    
-}
 
+}

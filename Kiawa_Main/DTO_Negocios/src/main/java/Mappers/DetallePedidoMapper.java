@@ -12,10 +12,12 @@ import dto.DetallePedidoDTO;
  * @author PC Gamer
  */
 public class DetallePedidoMapper {
-
+    
     public static DetallePedidoDTO toDTO(DetallePedido detalle) {
-        if (detalle == null) return null;
-
+        if (detalle == null) {
+            return null;
+        }
+        
         DetallePedidoDTO dto = new DetallePedidoDTO();
         dto.setNombrePlatillo(detalle.getNombrePlatillo());
         dto.setCantidad(detalle.getCantidad());
@@ -23,17 +25,19 @@ public class DetallePedidoMapper {
         dto.setNota(detalle.getNota());
         return dto;
     }
-
+    
     public static DetallePedido toEntity(DetallePedidoDTO dto, String idPlatillo) {
-        if (dto == null) return null;
-
+        if (dto == null) {
+            return null;
+        }
+        
         DetallePedido detalle = new DetallePedido();
         detalle.setIdPlatillo(idPlatillo); // Esto ocupa venir de la lógica que convierte el nombre del platillo a su ID.
         detalle.setNombrePlatillo(dto.getNombrePlatillo());
         detalle.setCantidad(dto.getCantidad());
         detalle.setPrecioUnitario(dto.getPrecioUnitario());
         detalle.setNota(dto.getNota());
+        detalle.setSubtotal(dto.getPrecioUnitario() * dto.getCantidad());
         return detalle;
     }
 }
-

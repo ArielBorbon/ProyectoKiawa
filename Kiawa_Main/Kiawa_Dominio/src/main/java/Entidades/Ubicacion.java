@@ -9,6 +9,7 @@ package Entidades;
  * @author PC Gamer
  */
 public class Ubicacion {
+
     private String edificio;
     private String salon;
 
@@ -35,15 +36,5 @@ public class Ubicacion {
     public void setSalon(String salon) {
         this.salon = salon;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
 
+}

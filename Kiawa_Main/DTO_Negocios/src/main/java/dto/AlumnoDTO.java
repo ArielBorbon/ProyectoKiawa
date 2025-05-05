@@ -5,18 +5,15 @@
 package dto;
 
 /**
- * @author
- * Ariel Eduardo Borbón Izaguirre    252116 
- * Freddy Ali Castro Román           252191 
- * Jesús Adrián Luzanilla Tapia      252699
- * Alberto Jiménez García            252595 
- * 
+ * @author Ariel Eduardo Borbón Izaguirre 252116 Freddy Ali Castro Román 252191
+ * Jesús Adrián Luzanilla Tapia 252699 Alberto Jiménez García 252595
+ *
  */
 public class AlumnoDTO {
 
-    private String idAlumno;     
+    private String idAlumno;
     private String nombreCompleto;
-    private String telefono; 
+    private String telefono;
 
     public AlumnoDTO() {
     }
@@ -27,10 +24,6 @@ public class AlumnoDTO {
         this.telefono = telefono;
     }
 
-    
-    
-    
-    
     public String getIdAlumno() {
         return idAlumno;
     }
@@ -54,8 +47,5 @@ public class AlumnoDTO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
-    
-    
-}
 
+}

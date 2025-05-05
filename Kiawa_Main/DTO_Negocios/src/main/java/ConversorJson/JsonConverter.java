@@ -3,13 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ConversorJson;
+
 import com.google.gson.Gson;
+
 /**
  *
  * @author PC Gamer
  * @param <T>
  */
-
 
 public class JsonConverter<T> {
 
@@ -28,4 +29,3 @@ public class JsonConverter<T> {
         return gson.fromJson(json, tipo);
     }
 }
-

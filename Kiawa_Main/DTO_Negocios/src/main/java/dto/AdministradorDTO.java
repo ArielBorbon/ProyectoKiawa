@@ -9,6 +9,7 @@ package dto;
  * @author PC Gamer
  */
 public class AdministradorDTO {
+
     private String idAdministrador;
     private String nombreCompleto;
     private String telefono;
@@ -22,10 +23,6 @@ public class AdministradorDTO {
     public AdministradorDTO() {
     }
 
-    
-    
-    
-    
     public String getIdAdministrador() {
         return idAdministrador;
     }
@@ -49,9 +46,5 @@ public class AdministradorDTO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
-    
-    
-    
-}
 
+}

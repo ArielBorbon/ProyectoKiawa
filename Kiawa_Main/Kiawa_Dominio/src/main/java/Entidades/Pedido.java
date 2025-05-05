@@ -17,17 +17,18 @@ public class Pedido {
     private String nombreAlumno;
     private String idAlumno;
     private Ubicacion ubicacionEntrega;
-    private String telefonoContacto;          
-    private String instruccionesEntrega;     
+    private String telefonoContacto;
+    private String instruccionesEntrega;
     private Date fechaPedido;
-    private String estado; 
-    private String nombreCocinero; 
-    private String nombreRepartidor; 
+    private String estado;
+    private String nombreCocinero;
+    private String nombreRepartidor;
     private List<DetallePedido> platillos;
     private Double total;
     private Boolean pagado;
-    private String idCocinero;     
-    private String idRepartidor;     
+    private String idCocinero;
+    private String idRepartidor;
+    private String folio;
 
     public Pedido() {
     }
@@ -50,7 +51,8 @@ public class Pedido {
         this.idRepartidor = idRepartidor;
     }
 
-    public Pedido(String nombreAlumno, String idAlumno, Ubicacion ubicacionEntrega, String telefonoContacto, String instruccionesEntrega, Date fechaPedido, String estado, String nombreCocinero, String nombreRepartidor, List<DetallePedido> platillos, Double total, Boolean pagado, String idCocinero, String idRepartidor) {
+    public Pedido(String idPedido, String nombreAlumno, String idAlumno, Ubicacion ubicacionEntrega, String telefonoContacto, String instruccionesEntrega, Date fechaPedido, String estado, String nombreCocinero, String nombreRepartidor, List<DetallePedido> platillos, Double total, Boolean pagado, String idCocinero, String idRepartidor, String folio) {
+        this.idPedido = idPedido;
         this.nombreAlumno = nombreAlumno;
         this.idAlumno = idAlumno;
         this.ubicacionEntrega = ubicacionEntrega;
@@ -65,7 +67,22 @@ public class Pedido {
         this.pagado = pagado;
         this.idCocinero = idCocinero;
         this.idRepartidor = idRepartidor;
+        this.folio = folio;
     }
+
+
+
+    public String getFolio() {
+        return folio;
+    }
+
+    public void setFolio(String folio) {
+        this.folio = folio;
+    }
+    
+    
+    
+    
 
     public String getIdPedido() {
         return idPedido;
@@ -187,10 +204,4 @@ public class Pedido {
         this.idRepartidor = idRepartidor;
     }
 
-    
-    
-    
-    
-    
 }
-

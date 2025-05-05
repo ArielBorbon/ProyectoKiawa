@@ -18,7 +18,9 @@ import java.util.List;
 public class PedidoMapper {
 
     public static PedidoDTO toDTO(Pedido pedido) {
-        if (pedido == null) return null;
+        if (pedido == null) {
+            return null;
+        }
 
         PedidoDTO dto = new PedidoDTO();
         dto.setIdPedido(pedido.getIdPedido());
@@ -32,6 +34,7 @@ public class PedidoMapper {
         dto.setNombreRepartidor(pedido.getNombreRepartidor());
         dto.setTotal(pedido.getTotal());
         dto.setPagado(pedido.getPagado());
+        dto.setFolio(pedido.getFolio());
 
         List<DetallePedidoDTO> detalleDTOs = new ArrayList<>();
         for (DetallePedido detalle : pedido.getPlatillos()) {
@@ -43,7 +46,9 @@ public class PedidoMapper {
     }
 
     public static Pedido toEntity(PedidoDTO dto, String idAlumno, String idCocinero, String idRepartidor, List<DetallePedido> detalles) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
 
         Pedido pedido = new Pedido();
         pedido.setIdPedido(dto.getIdPedido());
@@ -61,6 +66,7 @@ public class PedidoMapper {
         pedido.setPagado(dto.getPagado());
         pedido.setIdCocinero(idCocinero);
         pedido.setIdRepartidor(idRepartidor);
+        pedido.setFolio(dto.getFolio());
 
         return pedido;
     }
