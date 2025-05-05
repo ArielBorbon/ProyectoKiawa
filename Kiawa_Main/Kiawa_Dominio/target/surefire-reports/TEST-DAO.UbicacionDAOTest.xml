@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="DAO.UbicacionDAOTest" time="0.316" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio\target\test-classes;C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio\target\classes;C:\Users\PC Gamer\.m2\repository\org\mongodb\mongodb-driver-sync\4.11.1\mongodb-driver-sync-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\bson\4.11.1\bson-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\mongodb-driver-core\4.11.1\mongodb-driver-core-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\bson-record-codec\4.11.1\bson-record-codec-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\DTO_Negocios\1.0-SNAPSHOT\DTO_Negocios-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\Objetos_Negocio\1.0-SNAPSHOT\Objetos_Negocio-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\PC Gamer\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\Kiawa_Dominio\1.0-SNAPSHOT\Kiawa_Dominio-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.6.0\junit-jupiter-api-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\PC Gamer\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\platform\junit-platform-commons\1.6.0\junit-platform-commons-1.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.6.0\junit-jupiter-params-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.6.0\junit-jupiter-engine-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\platform\junit-platform-engine\1.6.0\junit-platform-engine-1.6.0.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="America/Hermosillo"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="user.country" value="MX"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
+    <property name="sun.java.command" value="C:\Users\PC Gamer\AppData\Local\Temp\surefire15340676802580248263\surefirebooter-20250505004726268_3.jar C:\Users\PC Gamer\AppData\Local\Temp\surefire15340676802580248263 2025-05-05T00-47-26_148-jvmRun1 surefire-20250505004726268_1tmp surefire_0-20250505004726268_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="test" value="DAO.UbicacionDAOTest#testObtenerListaUbicaciones"/>
+    <property name="surefire.test.class.path" value="C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio\target\test-classes;C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio\target\classes;C:\Users\PC Gamer\.m2\repository\org\mongodb\mongodb-driver-sync\4.11.1\mongodb-driver-sync-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\bson\4.11.1\bson-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\mongodb-driver-core\4.11.1\mongodb-driver-core-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\org\mongodb\bson-record-codec\4.11.1\bson-record-codec-4.11.1.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\DTO_Negocios\1.0-SNAPSHOT\DTO_Negocios-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\Objetos_Negocio\1.0-SNAPSHOT\Objetos_Negocio-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\PC Gamer\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\PC Gamer\.m2\repository\com\mycompany\Kiawa_Dominio\1.0-SNAPSHOT\Kiawa_Dominio-1.0-SNAPSHOT.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.6.0\junit-jupiter-api-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\PC Gamer\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\platform\junit-platform-commons\1.6.0\junit-platform-commons-1.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.6.0\junit-jupiter-params-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.6.0\junit-jupiter-engine-5.6.0.jar;C:\Users\PC Gamer\.m2\repository\org\junit\platform\junit-platform-engine\1.6.0\junit-platform-engine-1.6.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\PC Gamer"/>
+    <property name="user.language" value="es"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2024-01-16"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\PC Gamer\AppData\Local\Temp\surefire15340676802580248263\surefirebooter-20250505004726268_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.2+13-LTS-58"/>
+    <property name="user.name" value="PC Gamer"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-20\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
+    <property name="localRepository" value="C:\Users\PC Gamer\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\PCGAME~1\AppData\Local\Temp\"/>
+    <property name="java.version" value="21.0.2"/>
+    <property name="user.dir" value="C:\Users\PC Gamer\OneDrive\Documents\GitHub\ProyectoKiawa\Kiawa_Main\Kiawa_Dominio"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Eclipse Adoptium\jdk-21.0.6.7-hotspot\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\PC Gamer\AppData\Local\Microsoft\WindowsApps;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files\Tailscale\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\PC Gamer\AppData\Local\Microsoft\WindowsApps;C:\Users\PC Gamer\AppData\Local\GitHubDesktop\bin;C:\Users\PC Gamer\AppData\Local\Programs\Microsoft VS Code\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.2+13-LTS-58"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="testObtenerListaUbicaciones" classname="DAO.UbicacionDAOTest" time="0.3">
+    <system-out><![CDATA[1800//1821
+1800//1822
+1800//1823
+1500//1501
+1500//1502
+]]></system-out>
+    <system-err><![CDATA[may 05, 2025 12:47:26 A. M. com.mongodb.internal.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+]]></system-err>
+  </testcase>
+</testsuite>

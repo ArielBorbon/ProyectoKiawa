@@ -2,6 +2,7 @@ Entidades\Platillo.class
 Entidades\Pedido.class
 DAO\PlatilloDAO.class
 Entidades\Cocinero.class
+DAO\UbicacionDAO.class
 Entidades\Administrador.class
 Entidades\Ubicacion.class
 Entidades\Repartidor.class
