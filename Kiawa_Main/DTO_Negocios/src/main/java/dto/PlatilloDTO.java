@@ -16,15 +16,57 @@ public class PlatilloDTO {
     private String idPlatillo;
     private String nombre;
     private Double precio;
+    private String descripcion;
+    private Integer existencias;
+    private String categoria;
+    private boolean disponible;
 
     public PlatilloDTO() {
     }
-    
-    public PlatilloDTO(String idPlatillo, String nombre, Double precio) {
+
+    public PlatilloDTO(String idPlatillo, String nombre, Double precio, String descripcion, Integer existencias, String categoria, boolean disponible) {
         this.idPlatillo = idPlatillo;
         this.nombre = nombre;
         this.precio = precio;
+        this.descripcion = descripcion;
+        this.existencias = existencias;
+        this.categoria = categoria;
+        this.disponible = disponible;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getExistencias() {
+        return existencias;
+    }
+
+    public void setExistencias(Integer existencias) {
+        this.existencias = existencias;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+    
+    
 
     public String getIdPlatillo() {
         return idPlatillo;

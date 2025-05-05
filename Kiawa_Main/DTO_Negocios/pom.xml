@@ -12,6 +12,12 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.13.1</version> 
+        </dependency>
+
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Kiawa_Dominio</artifactId>
             <version>${project.version}</version>
@@ -22,4 +28,8 @@
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>dto.DTO_Negocios</exec.mainClass>
     </properties>
+    
+    
+    
+    
 </project>

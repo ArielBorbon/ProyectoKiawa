@@ -18,6 +18,10 @@ public class PlatilloMapper {
         dto.setIdPlatillo(platillo.getIdPlatillo());
         dto.setNombre(platillo.getNombre());
         dto.setPrecio(platillo.getPrecio());
+        dto.setExistencias(platillo.getExistencias());
+        dto.setCategoria(platillo.getCategoria());
+        dto.setDescripcion(platillo.getDescripcion());
+        dto.setDisponible(platillo.getDisponible());
         return dto;
     }
 
@@ -27,6 +31,10 @@ public class PlatilloMapper {
         platillo.setIdPlatillo(dto.getIdPlatillo());
         platillo.setNombre(dto.getNombre());
         platillo.setPrecio(dto.getPrecio());
+        platillo.setDescripcion(dto.getDescripcion());
+        platillo.setExistencias(dto.getExistencias());
+        platillo.setDisponible(dto.isDisponible());
+        platillo.setCategoria(dto.getCategoria());
         return platillo;
     }
 }

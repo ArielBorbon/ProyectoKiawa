@@ -23,7 +23,7 @@ public class MainDAO {
         platillo.setPrecio(50.50);
         
         PlatilloDAO platilloDAO = new PlatilloDAO();
-        platilloDAO.agregarPlatillo(platillo);
+        platilloDAO.agregarPlatillo(platillo); //ya revento porque la puse como platilloDTO
         
         //es una prueba por encimita nomas luego la voy a borrar
     }
