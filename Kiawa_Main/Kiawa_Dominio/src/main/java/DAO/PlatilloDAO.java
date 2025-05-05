@@ -277,40 +277,41 @@ public class PlatilloDAO {
     
     
     
-    public boolean modificarPlatillo(PlatilloDTO platilloDTO) {
-    MongoClient conexion = null;
+    public boolean modificarPlatillo(String nombreOriginal, PlatilloDTO platilloDTO) {
+        MongoClient conexion = null;
 
-    try {
-        conexion = Conexion.getInstancia().crearConexion();
-        MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-        MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
-
-        // Obtener la entidad actual desde la base de datos
-        Platillo platilloExistente = obtenerPlatilloPorNombre(platilloDTO.getNombre());
-        if (platilloExistente == null) {
-            return false; // No se encontró el platillo
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("platillos");
+        
+            // Buscar usando el nombre original
+            Platillo platilloExistente = obtenerPlatilloPorNombre(nombreOriginal);
+            if (platilloExistente == null) {
+                return false;
+            }
+        
+            Bson filtro = eq("_id", new ObjectId(platilloExistente.getIdPlatillo()));
+        
+            Bson actualizacion = combine(
+                set("nombre", platilloDTO.getNombre()),
+                set("precio", platilloDTO.getPrecio()),
+                set("descripcion", platilloDTO.getDescripcion()),
+                set("categoria", platilloDTO.getCategoria())
+            );
+        
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+        
+            return resultado.getModifiedCount() == 1;
+        
+        } catch (Exception e) {
+            System.err.println("Error al modificar el platillo: " + e.getMessage());
+            return false;
+        } finally {
+            Conexion.getInstancia().cerrarConexion(conexion);
         }
-
-        Bson filtro = eq("_id", new ObjectId(platilloExistente.getIdPlatillo()));
-
-        Bson actualizacion = combine(
-            set("nombre", platilloDTO.getNombre()),
-            set("precio", platilloDTO.getPrecio()),
-            set("descripcion", platilloDTO.getDescripcion()),
-            set("categoria", platilloDTO.getCategoria())
-        );
-
-        UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
-
-        return resultado.getModifiedCount() == 1;
-
-    } catch (Exception e) {
-        System.err.println("Error al modificar el platillo: " + e.getMessage());
-        return false;
-    } finally {
-        Conexion.getInstancia().cerrarConexion(conexion);
     }
-}
+
 
     
 
