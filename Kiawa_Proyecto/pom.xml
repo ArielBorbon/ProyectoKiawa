@@ -8,6 +8,8 @@
     <modules>
         <module>Kiawa_Dominio</module>
         <module>DTO_Negocios</module>
+        <module>Objetos_Negocios</module>
+        <module>Subsistema_Infraestructura</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
