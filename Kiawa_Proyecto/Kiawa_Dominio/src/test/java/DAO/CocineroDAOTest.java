@@ -75,4 +75,40 @@ public class CocineroDAOTest {
 //        
 //    }
     
+    
+//    @Test
+//    public void pruebas() throws Exception{
+//        CocineroDAO cocineroDAO = new CocineroDAO();
+//                CocineroDTO cocinero = new CocineroDTO();
+//
+//        // Setear valores de prueba
+////        cocinero.setIdCocinero("COC001");
+////        cocinero.setNombreCompleto("María López");
+////        cocinero.setTelefono("555-987-6543");
+////        cocinero.setDisponible(true);
+////        cocinero.setDomicilio("Avenida Siempre Viva 456");
+////        cocinero.setApodo("La Chef");
+////        cocinero.setSalarioDiario(650.50);
+////        cocinero.setDiasTrabajo("Martes a Sábado");
+////        cocinero.setHorario("10:00 AM - 7:00 PM");
+////        cocinero.setConsideracionesExtras("Especialista en comida italiana");
+////        boolean exito = cocineroDAO.crearCocinero(cocinero, "CHILOSTEAM");
+////        
+////        assertEquals(true , exito);
+////        
+////        
+//        String id = cocineroDAO.crearIDFriendly();
+//        System.out.println(id);
+//        
+//        boolean exito2  = cocineroDAO.habilitarCocinero("000004");
+//        
+//        assertEquals(true , exito2);
+//        
+//        
+//    }
+    
+    
+    
+    
+    
 }

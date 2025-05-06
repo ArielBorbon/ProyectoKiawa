@@ -11,11 +11,11 @@ import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Sorts;
+import com.mongodb.client.result.UpdateResult;
 import dto.CocineroDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 
 /**
  *
@@ -23,20 +23,21 @@ import org.bson.conversions.Bson;
  */
 public class CocineroDAO {
 
-    public Cocinero buscarPorIdFriendly(String idFriendly) throws Exception {
+    private Cocinero buscarCocineroPorIdFriendly(String idFriendly) {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
+        Cocinero cocinero = null;
 
         try {
             clienteMongo = conexion.crearConexion();
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Cocineros");
 
-            Bson filtro = Filters.eq("idCocinero", idFriendly);
+            Document filtro = new Document("idCocinero", idFriendly);
             Document doc = coleccion.find(filtro).first();
 
             if (doc != null) {
-                Cocinero cocinero = new Cocinero();
+                cocinero = new Cocinero();
                 cocinero.setIdCocinero(doc.getString("idCocinero"));
                 cocinero.setNombreCompleto(doc.getString("nombreCompleto"));
                 cocinero.setTelefono(doc.getString("telefono"));
@@ -48,18 +49,17 @@ public class CocineroDAO {
                 cocinero.setDiasTrabajo(doc.getString("diasTrabajo"));
                 cocinero.setHorario(doc.getString("Horario"));
                 cocinero.setConsideracionesExtras(doc.getString("consideracionesExtras"));
-                return cocinero;
             }
 
         } catch (MongoException e) {
-            throw new Exception("Error al buscar cocinero por ID friendly: " + e.getMessage());
+            System.err.println("Error al buscar cocinero por ID: " + e.getMessage());
         } finally {
             if (clienteMongo != null) {
                 conexion.cerrarConexion(clienteMongo);
             }
         }
 
-        return null;
+        return cocinero;
     }
 
     public String crearIDFriendly() throws Exception {
@@ -71,21 +71,21 @@ public class CocineroDAO {
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Cocineros");
 
-        
-            Document doc = coleccion
-                    .find()
-                    .sort(Sorts.descending("idCocinero"))
-                    .limit(1)
-                    .first();
+            List<Document> documentos = coleccion.find().into(new ArrayList<>());
 
-            if (doc != null) {
-                String ultimoID = doc.getString("idCocinero"); 
-                int siguiente = Integer.parseInt(ultimoID) + 1;
-                return String.format("%06d", siguiente);
-            } else {
-               
-                return "000001";
+            int max = 0;
+            for (Document doc : documentos) {
+                String id = doc.getString("idCocinero");
+                if (id != null && id.matches("\\d+")) {
+                    int valor = Integer.parseInt(id);
+                    if (valor > max) {
+                        max = valor;
+                    }
+                }
             }
+
+            int siguiente = max + 1;
+            return String.format("%06d", siguiente);
 
         } catch (MongoException e) {
             throw new Exception("Error al generar ID friendly: " + e.getMessage());
@@ -96,7 +96,7 @@ public class CocineroDAO {
         }
     }
 
-    public boolean crearCocinero(CocineroDTO dto , String contrasena) throws Exception {
+    public boolean crearCocinero(CocineroDTO dto, String contrasena) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
 
@@ -105,19 +105,15 @@ public class CocineroDAO {
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Cocineros");
 
-          
-            if (buscarPorIdFriendly(dto.getIdCocinero()) != null) {
+            if (buscarCocineroPorIdFriendly(dto.getIdCocinero()) != null) {
                 return false; // Ya existe
             }
 
-         
             String nuevoID = crearIDFriendly();
             dto.setIdCocinero(nuevoID);
 
-         
-            Cocinero cocinero = CocineroMapper.toEntity(dto , contrasena);
+            Cocinero cocinero = CocineroMapper.toEntity(dto, contrasena);
 
-           
             Document doc = new Document();
             doc.append("idCocinero", cocinero.getIdCocinero());
             doc.append("nombreCompleto", cocinero.getNombreCompleto());
@@ -131,13 +127,72 @@ public class CocineroDAO {
             doc.append("Horario", cocinero.getHorario());
             doc.append("consideracionesExtras", cocinero.getConsideracionesExtras());
 
-         
             coleccion.insertOne(doc);
 
             return true;
 
         } catch (MongoException e) {
             throw new Exception("Error al crear cocinero: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+
+    public boolean habilitarCocinero(String idFriendly) throws Exception {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Cocineros");
+
+            Cocinero cocinero = buscarCocineroPorIdFriendly(idFriendly);
+            if (cocinero == null) {
+                return false;
+            }
+
+            Document filtro = new Document("idCocinero", idFriendly);
+            Document actualizacion = new Document("$set", new Document("disponible", true));
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+
+        } catch (MongoException e) {
+            System.err.println("Error al habilitar cocinero: " + e.getMessage());
+            return false;
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+
+    public boolean deshabilitarCocinero(String idFriendly) {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Cocineros");
+
+            Cocinero cocinero = buscarCocineroPorIdFriendly(idFriendly);
+            if (cocinero == null) {
+                return false;
+            }
+
+            Document filtro = new Document("idCocinero", idFriendly);
+            Document actualizacion = new Document("$set", new Document("disponible", false));
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+
+        } catch (MongoException e) {
+            System.err.println("Error al deshabilitar cocinero: " + e.getMessage());
+            return false;
         } finally {
             if (clienteMongo != null) {
                 conexion.cerrarConexion(clienteMongo);

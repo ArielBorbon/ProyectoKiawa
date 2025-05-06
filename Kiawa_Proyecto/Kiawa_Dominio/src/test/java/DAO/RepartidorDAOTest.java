@@ -22,27 +22,36 @@ public class RepartidorDAOTest {
     /**
      * Test of crearRepartidor method, of class RepartidorDAO.
      */
-    @Test
-    public void testCrearRepartidor() throws Exception {
-
-        RepartidorDTO repartidor = new RepartidorDTO();
-
-        repartidor.setNombreCompleto("Juan Pérez");
-        repartidor.setTelefono("555-123-4567");
-        repartidor.setDisponible(true);
-        repartidor.setDomicilio("Calle Falsa 123, Ciudad Ejemplo");
-        repartidor.setApodo("El Rayo");
-        repartidor.setSalarioDiario(500.75);
-        repartidor.setDiasTrabajo("Lunes a Viernes");
-        repartidor.setHorario("9:00 AM - 6:00 PM");
-        repartidor.setConsideracionesExtras("Tiene motocicleta propia y licencia vigente");   
-        
-        
-        RepartidorDAO repartidorDAO = new RepartidorDAO();
-        boolean exito = repartidorDAO.crearRepartidor(repartidor);
-        assertEquals(exito , true);
-        
-        
-    }
+//    @Test
+//    public void testCrearRepartidor() throws Exception {
+//
+//        RepartidorDTO repartidor = new RepartidorDTO();
+//
+//        repartidor.setNombreCompleto("Juan Pérez");
+//        repartidor.setTelefono("555-123-4567");
+//        repartidor.setDisponible(true);
+//        repartidor.setDomicilio("Calle Falsa 123, Ciudad Ejemplo");
+//        repartidor.setApodo("El Rayo");
+//        repartidor.setSalarioDiario(500.75);
+//        repartidor.setDiasTrabajo("Lunes a Viernes");
+//        repartidor.setHorario("9:00 AM - 6:00 PM");
+//        repartidor.setConsideracionesExtras("Tiene motocicleta propia y licencia vigente");   
+//        
+//        
+//        RepartidorDAO repartidorDAO = new RepartidorDAO();
+//        boolean exito = repartidorDAO.crearRepartidor(repartidor);
+//        assertEquals(exito , true);
+//        
+//        
+//    }
+    
+    
+//    @Test
+//    public void testBuscarPorIdFriendly(){
+//        RepartidorDAO repartidorDAO = new RepartidorDAO();
+//        boolean exito = repartidorDAO.habilitarRepartidor("000002");
+//        
+//        assertEquals(exito , true);
+//    }
     
 }

@@ -11,6 +11,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
 import dto.RepartidorDTO;
 import org.bson.Document;
 
@@ -29,9 +30,7 @@ public class RepartidorDAO {
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
 
-
             String nuevoID = crearIDFriendly();
-
 
             String contrasenaDummy = "1234";
 
@@ -86,5 +85,118 @@ public class RepartidorDAO {
 
         return String.format("%06d", contador);
     }
+
+    private Repartidor buscarRepartidorPorIdFriendly(String idFriendly) {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+
+            Document filtro = new Document("idRepartidor", idFriendly);
+            Document resultado = coleccion.find(filtro).first();
+
+            if (resultado != null) {
+                Repartidor repartidor = new Repartidor();
+                repartidor.setIdRepartidor(resultado.getString("idRepartidor"));
+                repartidor.setNombreCompleto(resultado.getString("nombreCompleto"));
+                repartidor.setTelefono(resultado.getString("telefono"));
+                repartidor.setDisponible(resultado.getBoolean("disponible"));
+                repartidor.setContrasena(resultado.getString("contrasena"));
+                repartidor.setDomicilio(resultado.getString("domicilio"));
+                repartidor.setApodo(resultado.getString("apodo"));
+                repartidor.setSalarioDiario(resultado.getDouble("salarioDiario"));
+                repartidor.setDiasTrabajo(resultado.getString("diasTrabajo"));
+                repartidor.setHorario(resultado.getString("Horario"));
+                repartidor.setConsideracionesExtras(resultado.getString("consideracionesExtras"));
+                return repartidor;
+            }
+
+        } catch (MongoException e) {
+            System.err.println("Error al buscar repartidor: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean deshabilitarRepartidor(String idFriendly) {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+
+         
+            Repartidor repartidor = buscarRepartidorPorIdFriendly(idFriendly);
+            if (repartidor == null) {
+                return false;
+            }
+
+          
+            Document filtro = new Document("idRepartidor", idFriendly);
+            Document actualizacion = new Document("$set", new Document("disponible", false));
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+
+        } catch (MongoException e) {
+            System.err.println("Error al deshabilitar repartidor: " + e.getMessage());
+            return false;
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public boolean habilitarRepartidor(String idFriendly) {
+    MongoClient clienteMongo = null;
+    Conexion conexion = Conexion.getInstancia();
+
+    try {
+        clienteMongo = conexion.crearConexion();
+        MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+
+        Repartidor repartidor = buscarRepartidorPorIdFriendly(idFriendly);
+        if (repartidor == null) {
+            return false;
+        }
+
+        Document filtro = new Document("idRepartidor", idFriendly);
+        Document actualizacion = new Document("$set", new Document("disponible", true));
+        UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+        return resultado.getModifiedCount() > 0;
+
+    } catch (MongoException e) {
+        System.err.println("Error al habilitar repartidor: " + e.getMessage());
+        return false;
+    } finally {
+        if (clienteMongo != null) {
+            conexion.cerrarConexion(clienteMongo);
+        }
+    }
 }
 
+
+}
