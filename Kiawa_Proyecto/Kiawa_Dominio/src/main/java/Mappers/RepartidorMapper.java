@@ -23,6 +23,12 @@ public class RepartidorMapper {
         dto.setNombreCompleto(repartidor.getNombreCompleto());
         dto.setTelefono(repartidor.getTelefono());
         dto.setDisponible(repartidor.getDisponible());
+        dto.setDomicilio(repartidor.getDomicilio());
+        dto.setApodo(repartidor.getApodo());
+        dto.setSalarioDiario(repartidor.getSalarioDiario());
+        dto.setDiasTrabajo(repartidor.getDiasTrabajo());
+        dto.setHorario(repartidor.getHorario());
+        dto.setConsideracionesExtras(repartidor.getConsideracionesExtras());
 
         return dto;
     }
@@ -37,8 +43,15 @@ public class RepartidorMapper {
         repartidor.setNombreCompleto(dto.getNombreCompleto());
         repartidor.setTelefono(dto.getTelefono());
         repartidor.setDisponible(dto.getDisponible());
-        repartidor.setContrasena(contrasena); // Se pasa como argumento externo
+        repartidor.setDomicilio(dto.getDomicilio());
+        repartidor.setApodo(dto.getApodo());
+        repartidor.setSalarioDiario(dto.getSalarioDiario());
+        repartidor.setDiasTrabajo(dto.getDiasTrabajo());
+        repartidor.setHorario(dto.getHorario());
+        repartidor.setConsideracionesExtras(dto.getConsideracionesExtras());
+        repartidor.setContrasena(contrasena); // La contraseña se pasa externamente
 
         return repartidor;
     }
 }
+
