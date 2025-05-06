@@ -4,10 +4,147 @@
  */
 package DAO;
 
+import ConexionMongo.Conexion;
+import Entidades.Administrador;
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Sorts;
+import dto.AdministradorDTO;
+import org.bson.Document;
+
 /**
  *
  * @author PC Gamer
  */
 public class AdministradorDAO {
-    
+
+    public Administrador buscarAdministradorPorIdFriendly(String idFriendly) throws Exception {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Administradores");
+
+            Document filtro = new Document("idAdministrador", idFriendly);
+            Document resultado = coleccion.find(filtro).first();
+
+            if (resultado != null) {
+                Administrador admin = new Administrador();
+                admin.setIdAdministrador(resultado.getString("idAdministrador"));
+                admin.setNombreCompleto(resultado.getString("nombreCompleto"));
+                admin.setTelefono(resultado.getString("telefono"));
+                admin.setContrasena(resultado.getString("contrasena"));
+                return admin;
+            } else {
+                return null;
+            }
+
+        } catch (MongoException e) {
+            throw new Exception("Error al buscar administrador: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+
+    public boolean crearAdministrador(AdministradorDTO dto, String contrasena) throws Exception {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Administradores");
+
+            // Generar ID friendly
+            String nuevoId = crearIDFriendly();
+            dto.setIdAdministrador(nuevoId);
+
+            Document nuevoAdmin = new Document("idAdministrador", dto.getIdAdministrador())
+                    .append("nombreCompleto", dto.getNombreCompleto())
+                    .append("telefono", dto.getTelefono())
+                    .append("contrasena", contrasena);
+
+            coleccion.insertOne(nuevoAdmin);
+            return true;
+
+        } catch (MongoException e) {
+            throw new Exception("Error al crear el administrador: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+
+    public String crearIDFriendly() throws Exception {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Administradores");
+
+            Document doc = coleccion
+                    .find()
+                    .sort(Sorts.descending("idAdministrador"))
+                    .limit(1)
+                    .first();
+
+            if (doc != null) {
+                String ultimoID = doc.getString("idAdministrador");
+                int siguiente = Integer.parseInt(ultimoID) + 1;
+                return String.format("%06d", siguiente);
+            } else {
+                return "000001";
+            }
+
+        } catch (MongoException e) {
+            throw new Exception("Error al generar ID friendly: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+
+    public boolean actualizarAdministrador(AdministradorDTO dto, String nuevaContrasena) throws Exception {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Administradores");
+
+            Document filtro = new Document("idAdministrador", dto.getIdAdministrador());
+            Document existente = coleccion.find(filtro).first();
+
+            if (existente == null) {
+                return false; // No existe el administrador
+            }
+
+            Document actualizacion = new Document("$set", new Document()
+                    .append("nombreCompleto", dto.getNombreCompleto())
+                    .append("telefono", dto.getTelefono())
+                    .append("contrasena", nuevaContrasena));
+
+            coleccion.updateOne(filtro, actualizacion);
+            return true;
+
+        } catch (MongoException e) {
+            throw new Exception("Error al actualizar el administrador: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+    }
+
 }
