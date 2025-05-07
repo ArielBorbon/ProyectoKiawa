@@ -192,9 +192,15 @@ public class PlatilloDAO implements IPlatilloDAO {
                     .getDatabase("KiawaBD")
                     .getCollection("Platillos");
 
+            Platillo platillo = obtenerPlatilloPorNombre(platilloDTO.getNombre());
+            if (platillo != null) {
+                throw new Exception ("Un platillo con el mismo nombre ya Existe");
+            }
+            
+            
             coleccionPlatillos.insertOne(platilloDoc);
 
-            return true; // Insertado correctamente
+            return true; 
 
         } catch (MongoException e) {
             throw new Exception("Error al registrar el platillo: " + e.getMessage());
@@ -329,7 +335,7 @@ public class PlatilloDAO implements IPlatilloDAO {
     }
 
     @Override
-    public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
+        public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
         MongoClient conexion = null;
         boolean todoCorrecto = true;
         try {
