@@ -5,6 +5,7 @@
 package BO;
 
 import CIA.Fachada_CIA;
+import Interfaces.IAlumnoBO;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
 
@@ -12,14 +13,16 @@ import dto.LoginRequestDTO;
  *
  * @author PC Gamer
  */
-public class AlumnoBO {
+public class AlumnoBO implements IAlumnoBO {
 
+    @Override
     public AlumnoDTO recuperarAlumno(LoginRequestDTO loginRequest) throws Exception {
         Fachada_CIA fachadaCIA = new Fachada_CIA();
         return fachadaCIA.recuperarAlumnoExterno(loginRequest);
 
     }
 
+    @Override
     public AlumnoDTO recuperarAlumnoPorId(String id) throws Exception {
         Fachada_CIA fachadaCIA = new Fachada_CIA();
         return fachadaCIA.recuperarAlumnoExternoPorId(id);
