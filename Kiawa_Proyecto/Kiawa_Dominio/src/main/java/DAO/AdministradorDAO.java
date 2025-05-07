@@ -5,6 +5,7 @@
 package DAO;
 
 import ConexionMongo.Conexion;
+import DAO.Interfaces.IAdministradorDAO;
 import Entidades.Administrador;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
@@ -12,14 +13,19 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 import dto.AdministradorDTO;
+import dto.CocineroDTO;
+import dto.RepartidorDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
 
 /**
  *
  * @author PC Gamer
  */
-public class AdministradorDAO {
+public class AdministradorDAO implements IAdministradorDAO {
 
+    @Override
     public Administrador buscarAdministradorPorIdFriendly(String idFriendly) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -52,6 +58,7 @@ public class AdministradorDAO {
         }
     }
 
+    @Override
     public boolean crearAdministrador(AdministradorDTO dto, String contrasena) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -82,6 +89,7 @@ public class AdministradorDAO {
         }
     }
 
+    @Override
     public String crearIDFriendly() throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -114,6 +122,7 @@ public class AdministradorDAO {
         }
     }
 
+    @Override
     public boolean actualizarAdministrador(AdministradorDTO dto, String nuevaContrasena) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -145,6 +154,56 @@ public class AdministradorDAO {
                 conexion.cerrarConexion(clienteMongo);
             }
         }
+    }
+
+    @Override
+    public List<RepartidorDTO> obtenerTodosLosEmpleados() {
+        List<RepartidorDTO> empleados = new ArrayList<>();
+
+        RepartidorDAO repartidorDAO = new RepartidorDAO();
+        CocineroDAO cocineroDAO = new CocineroDAO();
+
+        empleados.addAll(repartidorDAO.obtenerTodosLosRepartidores());
+        empleados.addAll(convertirCocinerosARepartidores(cocineroDAO.obtenerTodosLosCocineros()));
+
+        return empleados;
+    }
+
+    @Override
+    public List<RepartidorDTO> obtenerTodosLosEmpleadosPorDisponibilidad(boolean disponibilidad) {
+        List<RepartidorDTO> empleados = new ArrayList<>();
+
+        RepartidorDAO repartidorDAO = new RepartidorDAO();
+        CocineroDAO cocineroDAO = new CocineroDAO();
+
+        if (disponibilidad) {
+            empleados.addAll(repartidorDAO.obtenerTrabajadoresHabilitados());
+            empleados.addAll(convertirCocinerosARepartidores(cocineroDAO.obtenerTrabajadoresHabilitados()));
+        } else {
+            empleados.addAll(repartidorDAO.obtenerTrabajadoresDeshabilitados());
+            empleados.addAll(convertirCocinerosARepartidores(cocineroDAO.obtenerTrabajadoresDeshabilitados()));
+        }
+
+        return empleados;
+    }
+
+    private List<RepartidorDTO> convertirCocinerosARepartidores(List<CocineroDTO> cocineros) {
+        List<RepartidorDTO> lista = new ArrayList<>();
+        for (CocineroDTO c : cocineros) {
+            RepartidorDTO r = new RepartidorDTO();
+            r.setIdRepartidor(c.getIdCocinero());
+            r.setNombreCompleto(c.getNombreCompleto());
+            r.setTelefono(c.getTelefono());
+            r.setDisponible(c.getDisponible());
+            r.setDomicilio(c.getDomicilio());
+            r.setApodo(c.getApodo());
+            r.setSalarioDiario(c.getSalarioDiario());
+            r.setDiasTrabajo(c.getDiasTrabajo());
+            r.setHorario(c.getHorario());
+            r.setConsideracionesExtras(c.getConsideracionesExtras());
+            lista.add(r);
+        }
+        return lista;
     }
 
 }

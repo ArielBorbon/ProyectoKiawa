@@ -31,17 +31,28 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 id_recibido = credentials.get("id")
                 contrasena_recibida = credentials.get("contrasena")
 
-                # Buscar coincidencia
-                for alumno in alumnos:
-                    if alumno[0] == id_recibido and alumno[1] == contrasena_recibida:
-                        resultado = {
-                            "idAlumno": alumno[0],
-                            "nombreCompleto": alumno[2],
-                            "telefono": alumno[3]
-                        }
-                        break
+                resultado = None
+
+                if contrasena_recibida is not None:
+                    # Autenticación por id + contraseña
+                    for alumno in alumnos:
+                        if alumno[0] == id_recibido and alumno[1] == contrasena_recibida:
+                            resultado = {
+                                "idAlumno": alumno[0],
+                                "nombreCompleto": alumno[2],
+                                "telefono": alumno[3]
+                            }
+                            break
                 else:
-                    resultado = None  
+                    # Búsqueda solo por ID
+                    for alumno in alumnos:
+                        if alumno[0] == id_recibido:
+                            resultado = {
+                                "idAlumno": alumno[0],
+                                "nombreCompleto": alumno[2],
+                                "telefono": alumno[3]
+                            }
+                            break
 
                 response = json.dumps(resultado)
                 conn.sendall(response.encode("utf-8"))

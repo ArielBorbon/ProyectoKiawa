@@ -5,6 +5,8 @@
 package DAO;
 
 import ConexionMongo.Conexion;
+import DAO.Interfaces.IPlatilloDAO;
+import Entidades.DetallePedido;
 import Entidades.Platillo;
 import Mappers.PlatilloMapper;
 import com.mongodb.MongoException;
@@ -32,11 +34,12 @@ import java.util.List;
  *
  * @author PC Gamer
  */
-public class PlatilloDAO {
+public class PlatilloDAO implements IPlatilloDAO {
 
     public PlatilloDAO() {
     }
 
+    @Override
     public List<PlatilloDTO> obtenerListaPlatillosDisponibles() {
         List<PlatilloDTO> listaDTO = new ArrayList<>();
         MongoClient conexion = null;
@@ -78,6 +81,7 @@ public class PlatilloDAO {
         return listaDTO;
     }
 
+    @Override
     public List<PlatilloDTO> obtenerListaPlatillosTodos() {
         List<PlatilloDTO> listaDTO = new ArrayList<>();
         MongoClient conexion = null;
@@ -114,6 +118,7 @@ public class PlatilloDAO {
         return listaDTO;
     }
 
+    @Override
     public boolean actualizarExistenciasPlatillo(Platillo platillo, int nuevaCantidad) {
         MongoClient conexion = null;
         try {
@@ -135,6 +140,7 @@ public class PlatilloDAO {
         }
     }
 
+    @Override
     public Platillo obtenerPlatilloPorNombre(String nombrePlatillo) {
         MongoClient conexion = null;
         try {
@@ -167,6 +173,7 @@ public class PlatilloDAO {
         }
     }
 
+    @Override
     public boolean agregarPlatillo(PlatilloDTO platilloDTO) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -198,6 +205,7 @@ public class PlatilloDAO {
         }
     }
 
+    @Override
     public boolean deshabilitarPlatillo(String nombrePlatillo) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -207,10 +215,8 @@ public class PlatilloDAO {
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
-           
             Bson filtro = Filters.eq("nombre", nombrePlatillo);
 
-       
             Bson actualizacion = Updates.set("disponible", false);
 
             UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
@@ -226,6 +232,7 @@ public class PlatilloDAO {
         }
     }
 
+    @Override
     public boolean habilitarPlatillo(String nombrePlatillo) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -235,10 +242,8 @@ public class PlatilloDAO {
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
-         
             Bson filtro = Filters.eq("nombre", nombrePlatillo);
 
-        
             Bson actualizacion = Updates.set("disponible", true);
 
             UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
@@ -254,6 +259,7 @@ public class PlatilloDAO {
         }
     }
 
+    @Override
     public boolean modificarPlatillo(String nombreOriginal, PlatilloDTO platilloDTO) {
         MongoClient conexion = null;
 
@@ -262,7 +268,6 @@ public class PlatilloDAO {
             MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
-        
             Platillo platilloExistente = obtenerPlatilloPorNombre(nombreOriginal);
             if (platilloExistente == null) {
                 return false;
@@ -283,6 +288,80 @@ public class PlatilloDAO {
 
         } catch (Exception e) {
             System.err.println("Error al modificar el platillo: " + e.getMessage());
+            return false;
+        } finally {
+            Conexion.getInstancia().cerrarConexion(conexion);
+        }
+    }
+
+    @Override
+    public boolean hayExistenciasSuficientes(List<DetallePedido> detalles) {
+        MongoClient conexion = null;
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
+
+            for (DetallePedido detalle : detalles) {
+                Document filtro = new Document("nombre", detalle.getNombrePlatillo());
+                Document platilloDoc = coleccion.find(filtro).first();
+
+                if (platilloDoc == null) {
+                    System.err.println("Platillo no encontrado: " + detalle.getNombrePlatillo());
+                    return false;
+                }
+
+                int existencias = platilloDoc.getInteger("existencias", 0);
+                if (existencias < detalle.getCantidad()) {
+                    System.err.println("No hay existencias suficientes para: " + detalle.getNombrePlatillo());
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            System.err.println("Error al verificar existencias: " + e.getMessage());
+            return false;
+        } finally {
+            Conexion.getInstancia().cerrarConexion(conexion);
+        }
+    }
+
+    @Override
+    public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
+        MongoClient conexion = null;
+        boolean todoCorrecto = true;
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
+
+            for (DetallePedido detalle : detalles) {
+                Document filtro = new Document("nombre", detalle.getNombrePlatillo());
+                Document platilloDoc = coleccion.find(filtro).first();
+
+                if (platilloDoc == null) {
+                    mensajeError.append("El platillo '").append(detalle.getNombrePlatillo()).append("' no existe.\n");
+                    todoCorrecto = false;
+                    continue;
+                }
+
+                int existencias = platilloDoc.getInteger("existencias", 0);
+                if (existencias < detalle.getCantidad()) {
+                    mensajeError.append("No hay existencias suficientes para el platillo '")
+                            .append(detalle.getNombrePlatillo())
+                            .append("'. Requiere: ").append(detalle.getCantidad())
+                            .append(", disponibles: ").append(existencias)
+                            .append("\n");
+                    todoCorrecto = false;
+                }
+            }
+
+            return todoCorrecto;
+
+        } catch (Exception e) {
+            mensajeError.append("Error al verificar existencias: ").append(e.getMessage());
             return false;
         } finally {
             Conexion.getInstancia().cerrarConexion(conexion);

@@ -5,6 +5,7 @@
 package DAO;
 
 import ConexionMongo.Conexion;
+import DAO.Interfaces.IUbicacionDAO;
 import Entidades.Ubicacion;
 import Mappers.UbicacionMapper;
 import com.mongodb.MongoException;
@@ -25,8 +26,9 @@ import org.bson.conversions.Bson;
  *
  * @author PC Gamer
  */
-public class UbicacionDAO {
+public class UbicacionDAO implements IUbicacionDAO {
 
+    @Override
     public Ubicacion buscarUbicacionPorEdificioYSalon(UbicacionDTO dto) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -58,12 +60,12 @@ public class UbicacionDAO {
         }
     }
 
+    @Override
     public boolean crearUbicacion(UbicacionDTO ubicacionDTO) throws Exception {
         if (ubicacionDTO == null) {
             throw new IllegalArgumentException("Ubicación no puede ser null");
         }
 
-     
         Ubicacion yaExiste = buscarUbicacionPorEdificioYSalon(ubicacionDTO);
         if (yaExiste != null) {
             throw new Exception("Ya existe una ubicación con ese edificio y salón");
@@ -92,6 +94,7 @@ public class UbicacionDAO {
         }
     }
 
+    @Override
     public List<UbicacionDTO> obtenerListaUbicaciones() throws Exception {
         List<UbicacionDTO> listaUbicaciones = new ArrayList<>();
         MongoClient clienteMongo = null;
@@ -125,6 +128,7 @@ public class UbicacionDAO {
         return listaUbicaciones;
     }
 
+    @Override
     public List<UbicacionDTO> filtrarPorEdificio(String edificio) throws Exception {
         List<UbicacionDTO> listaFiltrada = new ArrayList<>();
         MongoClient clienteMongo = null;
@@ -159,35 +163,32 @@ public class UbicacionDAO {
 
         return listaFiltrada;
     }
-    
-    
-    
+
+    @Override
     public boolean validarUbicacionExistente(UbicacionDTO dto) throws Exception {
-    MongoClient clienteMongo = null;
-    Conexion conexion = Conexion.getInstancia();
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
 
-    try {
-        clienteMongo = conexion.crearConexion();
-        MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
-        MongoCollection<Document> coleccion = baseDatos.getCollection("Ubicaciones");
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Ubicaciones");
 
-        Bson filtro = Filters.and(
-            Filters.eq("edificio", dto.getEdificio()),
-            Filters.eq("salon", dto.getSalon())
-        );
+            Bson filtro = Filters.and(
+                    Filters.eq("edificio", dto.getEdificio()),
+                    Filters.eq("salon", dto.getSalon())
+            );
 
-        Document resultado = coleccion.find(filtro).first();
-        return resultado != null;
+            Document resultado = coleccion.find(filtro).first();
+            return resultado != null;
 
-    } catch (MongoException e) {
-        throw new Exception("Error al validar existencia de la ubicación: " + e.getMessage());
-    } finally {
-        if (clienteMongo != null) {
-            conexion.cerrarConexion(clienteMongo);
+        } catch (MongoException e) {
+            throw new Exception("Error al validar existencia de la ubicación: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
         }
     }
-}
-
-    
 
 }

@@ -19,5 +19,20 @@ public class Control_CIA {
 
         return sistemaCIA.obtenerDatos(jsonEntrada);
     }
+    
+    public String obtenerDatosAlumnoPorId(String jsonEntrada) throws Exception {
+    IConexion sistemaCIA = ConexionesFactory.obtenerConexion("CIA");
+
+    if (sistemaCIA == null) {
+        throw new Exception("No se pudo obtener una conexión con el sistema CIA.");
+    }
+
+    return sistemaCIA.obtenerDatosPorId(jsonEntrada);
+}
+
+    
+    
+    
+    
 }
 

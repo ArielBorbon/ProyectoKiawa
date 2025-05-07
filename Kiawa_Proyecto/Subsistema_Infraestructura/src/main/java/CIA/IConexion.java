@@ -10,5 +10,6 @@ package CIA;
  */
 public interface IConexion {
     String obtenerDatos(String jsonEntrada) throws Exception;
+    String obtenerDatosPorId(String jsonEntrada) throws Exception;
 }
 

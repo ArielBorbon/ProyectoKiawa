@@ -13,11 +13,16 @@ import dto.LoginRequestDTO;
  * @author PC Gamer
  */
 public class AlumnoBO {
-    
-        public AlumnoDTO recuperarAlumno(LoginRequestDTO loginRequest) throws Exception {
+
+    public AlumnoDTO recuperarAlumno(LoginRequestDTO loginRequest) throws Exception {
         Fachada_CIA fachadaCIA = new Fachada_CIA();
         return fachadaCIA.recuperarAlumnoExterno(loginRequest);
+
     }
-    
-    
+
+    public AlumnoDTO recuperarAlumnoPorId(String id) throws Exception {
+        Fachada_CIA fachadaCIA = new Fachada_CIA();
+        return fachadaCIA.recuperarAlumnoExternoPorId(id);
+
+    }
 }

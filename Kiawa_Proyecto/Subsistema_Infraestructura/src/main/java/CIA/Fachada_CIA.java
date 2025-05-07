@@ -7,6 +7,7 @@ package CIA;
 import com.google.gson.Gson;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
+import java.util.Collections;
 
 /**
  *
@@ -35,4 +36,22 @@ public class Fachada_CIA {
 
         return alumno;
     }
+    
+    
+    public AlumnoDTO recuperarAlumnoExternoPorId(String id) throws Exception {
+    String jsonEntrada = gson.toJson(Collections.singletonMap("id", id));
+
+    String jsonRespuesta = controlCIA.obtenerDatosAlumnoPorId(jsonEntrada);
+
+    if (jsonRespuesta == null || jsonRespuesta.isEmpty() || jsonRespuesta.equals("null")) {
+        return null;
+    }
+
+    return gson.fromJson(jsonRespuesta, AlumnoDTO.class);
+}
+
+    
+    
+    
+    
 }

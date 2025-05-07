@@ -5,22 +5,29 @@
 package DAO;
 
 import ConexionMongo.Conexion;
+import DAO.Interfaces.IRepartidorDAO;
 import Entidades.Repartidor;
 import Mappers.RepartidorMapper;
 import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import dto.RepartidorDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
  * @author PC Gamer
  */
-public class RepartidorDAO {
+public class RepartidorDAO implements IRepartidorDAO {
 
+    @Override
     public boolean crearRepartidor(RepartidorDTO dto) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -62,7 +69,8 @@ public class RepartidorDAO {
         }
     }
 
-    private String crearIDFriendly() {
+    @Override
+    public String crearIDFriendly() {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
         int contador = 1;
@@ -86,7 +94,8 @@ public class RepartidorDAO {
         return String.format("%06d", contador);
     }
 
-    private Repartidor buscarRepartidorPorIdFriendly(String idFriendly) {
+    @Override
+    public Repartidor buscarRepartidorPorIdFriendly(String idFriendly) {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
 
@@ -125,6 +134,7 @@ public class RepartidorDAO {
         return null;
     }
 
+    @Override
     public boolean deshabilitarRepartidor(String idFriendly) {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
@@ -134,13 +144,11 @@ public class RepartidorDAO {
             MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
 
-         
             Repartidor repartidor = buscarRepartidorPorIdFriendly(idFriendly);
             if (repartidor == null) {
                 return false;
             }
 
-          
             Document filtro = new Document("idRepartidor", idFriendly);
             Document actualizacion = new Document("$set", new Document("disponible", false));
             UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
@@ -156,47 +164,124 @@ public class RepartidorDAO {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    @Override
     public boolean habilitarRepartidor(String idFriendly) {
-    MongoClient clienteMongo = null;
-    Conexion conexion = Conexion.getInstancia();
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
 
-    try {
-        clienteMongo = conexion.crearConexion();
-        MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
-        MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
 
-        Repartidor repartidor = buscarRepartidorPorIdFriendly(idFriendly);
-        if (repartidor == null) {
+            Repartidor repartidor = buscarRepartidorPorIdFriendly(idFriendly);
+            if (repartidor == null) {
+                return false;
+            }
+
+            Document filtro = new Document("idRepartidor", idFriendly);
+            Document actualizacion = new Document("$set", new Document("disponible", true));
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+
+        } catch (MongoException e) {
+            System.err.println("Error al habilitar repartidor: " + e.getMessage());
             return false;
-        }
-
-        Document filtro = new Document("idRepartidor", idFriendly);
-        Document actualizacion = new Document("$set", new Document("disponible", true));
-        UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
-
-        return resultado.getModifiedCount() > 0;
-
-    } catch (MongoException e) {
-        System.err.println("Error al habilitar repartidor: " + e.getMessage());
-        return false;
-    } finally {
-        if (clienteMongo != null) {
-            conexion.cerrarConexion(clienteMongo);
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
         }
     }
-}
 
+    @Override
+    public List<RepartidorDTO> obtenerTrabajadoresHabilitados() {
+        return obtenerRepartidoresPorDisponibilidad(true);
+    }
+
+    @Override
+    public List<RepartidorDTO> obtenerTrabajadoresDeshabilitados() {
+        return obtenerRepartidoresPorDisponibilidad(false);
+    }
+
+    private List<RepartidorDTO> obtenerRepartidoresPorDisponibilidad(boolean disponibilidad) {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+        List<RepartidorDTO> repartidores = new ArrayList<>();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+
+            Bson filtro = Filters.eq("disponible", disponibilidad);
+            FindIterable<Document> resultados = coleccion.find(filtro);
+
+            for (Document doc : resultados) {
+                RepartidorDTO dto = new RepartidorDTO();
+                dto.setIdRepartidor(doc.getString("idRepartidor"));
+                dto.setNombreCompleto(doc.getString("nombreCompleto"));
+                dto.setTelefono(doc.getString("telefono"));
+                dto.setDisponible(doc.getBoolean("disponible"));
+                dto.setDomicilio(doc.getString("domicilio"));
+                dto.setApodo(doc.getString("apodo"));
+                dto.setSalarioDiario(doc.getDouble("salarioDiario"));
+                dto.setDiasTrabajo(doc.getString("diasTrabajo"));
+                dto.setHorario(doc.getString("Horario"));
+                dto.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                repartidores.add(dto);
+            }
+
+        } catch (MongoException e) {
+            System.err.println("Error al obtener repartidores: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+
+        return repartidores;
+    }
+
+    @Override
+    public List<RepartidorDTO> obtenerTodosLosRepartidores() {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+        List<RepartidorDTO> repartidores = new ArrayList<>();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+
+            FindIterable<Document> resultados = coleccion.find();
+
+            for (Document doc : resultados) {
+                RepartidorDTO dto = new RepartidorDTO();
+                dto.setIdRepartidor(doc.getString("idRepartidor"));
+                dto.setNombreCompleto(doc.getString("nombreCompleto"));
+                dto.setTelefono(doc.getString("telefono"));
+                dto.setDisponible(doc.getBoolean("disponible"));
+                dto.setDomicilio(doc.getString("domicilio"));
+                dto.setApodo(doc.getString("apodo"));
+                dto.setSalarioDiario(doc.getDouble("salarioDiario"));
+                dto.setDiasTrabajo(doc.getString("diasTrabajo"));
+                dto.setHorario(doc.getString("Horario"));
+                dto.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                repartidores.add(dto);
+            }
+
+        } catch (MongoException e) {
+            System.err.println("Error al obtener repartidores: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+
+        return repartidores;
+    }
 
 }
