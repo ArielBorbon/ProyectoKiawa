@@ -8,6 +8,8 @@ import BO.PlatilloBO;
 import Fabricas.FactoryBO;
 import dto.PlatilloDTO;
 import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,8 +25,27 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
     public BuscadorPlatillos() {
         initComponents();
         llenarTablaPlatillos();
-        this.cmbCategoriasFiltro.setEnabled(false);
+        this.cmbDisponible.setEnabled(false);
     }
+
+    public JComboBox<String> getCmbDisponible() {
+        return cmbDisponible;
+    }
+
+    public void setCmbDisponible(JComboBox<String> cmbDisponible) {
+        this.cmbDisponible = cmbDisponible;
+    }
+
+    public JLabel getLblDisponible() {
+        return lblDisponible;
+    }
+
+    public void setLblDisponible(JLabel lblDisponible) {
+        this.lblDisponible = lblDisponible;
+    }
+    
+    
+    
 
     private void llenarTablaPlatillos() {
         try {
@@ -72,6 +93,7 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
             modelo.addColumn("Descripción");
             modelo.addColumn("Existencias");
             modelo.addColumn("Categoria");
+            
 
             for (PlatilloDTO p : platillos) {
                 modelo.addRow(new Object[]{
@@ -104,9 +126,10 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
         txtNombreFiltro = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnFiltrar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        lblDisponible = new javax.swing.JLabel();
         cmbDisponible = new javax.swing.JComboBox<>();
 
+        tblPlatillos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tblPlatillos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -149,8 +172,8 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        jLabel3.setText("Disponible");
+        lblDisponible.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        lblDisponible.setText("Disponible");
 
         cmbDisponible.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Si", "No" }));
 
@@ -172,11 +195,11 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
+                    .addComponent(lblDisponible)
                     .addComponent(cmbDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +210,7 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel3))
+                            .addComponent(lblDisponible))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombreFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,8 +244,8 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbDisponible;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDisponible;
     private javax.swing.JTable tblPlatillos;
     private javax.swing.JTextField txtNombreFiltro;
     // End of variables declaration//GEN-END:variables
