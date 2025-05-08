@@ -252,5 +252,28 @@ public class PedidoDAO implements IPedidoDAO {
             }
         }
     }
+    
+    
+    
+    
+    public boolean revisarExistenciasPlatillo(List<DetallePedido> detalles, StringBuilder mensajeError) {
+    PlatilloDAO platilloDAO = new PlatilloDAO();
+    for (DetallePedido detalle : detalles) {
+        Platillo platillo = platilloDAO.obtenerPlatilloPorNombre(detalle.getNombrePlatillo());
+        if (platillo == null) {
+            mensajeError.append("No se encontró el platillo: ").append(detalle.getNombrePlatillo()).append("\n");
+            return false;
+        }
+        if (detalle.getCantidad() > platillo.getExistencias()) {
+            mensajeError.append("No hay suficientes existencias para: ")
+                        .append(detalle.getNombrePlatillo())
+                        .append(" (disponible: ").append(platillo.getExistencias())
+                        .append(", solicitado: ").append(detalle.getCantidad()).append(")\n");
+            return false;
+        }
+    }
+    return true;
+}
+
 
 }

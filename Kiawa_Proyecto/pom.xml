@@ -10,6 +10,9 @@
         <module>DTO_Negocios</module>
         <module>Objetos_Negocios</module>
         <module>Subsistema_Infraestructura</module>
+        <module>Subsistema_Platillos</module>
+        <module>Subsistema_Ubicaciones</module>
+        <module>Subsistema_Pedidos</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

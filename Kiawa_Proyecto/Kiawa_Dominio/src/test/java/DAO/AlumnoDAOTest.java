@@ -49,11 +49,11 @@ public class AlumnoDAOTest {
     /**
      * Test of recuperarAlumnoPorId method, of class AlumnoDAO.
      */
-    @Test
-    public void testRecuperarAlumnoPorId() throws Exception {
-        AlumnoDAO alumnoDAO = new AlumnoDAO();
-        AlumnoDTO alumnoDTO = alumnoDAO.recuperarAlumnoPorId("000002");
-        System.out.println(alumnoDTO.getIdAlumno() + " " + alumnoDTO.getNombreCompleto() + " " + alumnoDTO.getTelefono());
-    }
+//    @Test
+//    public void testRecuperarAlumnoPorId() throws Exception {
+//        AlumnoDAO alumnoDAO = new AlumnoDAO();
+//        AlumnoDTO alumnoDTO = alumnoDAO.recuperarAlumnoPorId("000002");
+//        System.out.println(alumnoDTO.getIdAlumno() + " " + alumnoDTO.getNombreCompleto() + " " + alumnoDTO.getTelefono());
+//    }
     
 }

@@ -20,6 +20,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.regex;
 import com.mongodb.client.model.Updates;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
@@ -141,6 +142,131 @@ public class PlatilloDAO implements IPlatilloDAO {
     }
 
     @Override
+    public List<PlatilloDTO> buscarPorCategoria(String categoria) {
+        List<PlatilloDTO> listaDTO = new ArrayList<>();
+        MongoClient conexion = null;
+
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
+
+            Bson filtro = eq("categoria", categoria);
+
+            try (MongoCursor<Document> cursor = coleccion.find(filtro).iterator()) {
+                while (cursor.hasNext()) {
+                    Document doc = cursor.next();
+                    Platillo platillo = new Platillo();
+
+                    platillo.setIdPlatillo(doc.getObjectId("_id").toHexString());
+                    platillo.setNombre(doc.getString("nombre"));
+                    platillo.setDescripcion(doc.getString("descripcion"));
+                    platillo.setPrecio(doc.getDouble("precio"));
+                    platillo.setExistencias(doc.getInteger("existencias"));
+                    platillo.setCategoria(doc.getString("categoria"));
+                    platillo.setDisponible(doc.getBoolean("disponible"));
+
+                    PlatilloDTO dto = PlatilloMapper.toDTO(platillo);
+                    listaDTO.add(dto);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error al buscar platillos por categoría: " + e.getMessage());
+        } finally {
+            Conexion.getInstancia().cerrarConexion(conexion);
+        }
+
+        return listaDTO;
+    }
+    
+    
+    @Override
+    public List<PlatilloDTO> buscarPorNombre(String nombre) {
+    List<PlatilloDTO> listaDTO = new ArrayList<>();
+    MongoClient conexion = null;
+
+    try {
+        conexion = Conexion.getInstancia().crearConexion();
+        MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
+
+        Bson filtro = regex("nombre", nombre, "i"); 
+
+        try (MongoCursor<Document> cursor = coleccion.find(filtro).iterator()) {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Platillo platillo = new Platillo();
+
+                platillo.setIdPlatillo(doc.getObjectId("_id").toHexString());
+                platillo.setNombre(doc.getString("nombre"));
+                platillo.setDescripcion(doc.getString("descripcion"));
+                platillo.setPrecio(doc.getDouble("precio"));
+                platillo.setExistencias(doc.getInteger("existencias"));
+                platillo.setCategoria(doc.getString("categoria"));
+                platillo.setDisponible(doc.getBoolean("disponible"));
+
+                PlatilloDTO dto = PlatilloMapper.toDTO(platillo);
+                listaDTO.add(dto);
+            }
+        }
+
+    } catch (Exception e) {
+        System.err.println("Error al buscar platillos por nombre: " + e.getMessage());
+    } finally {
+        Conexion.getInstancia().cerrarConexion(conexion);
+    }
+
+    return listaDTO;
+}
+
+    
+    
+    @Override
+    public List<PlatilloDTO> buscarPorCategoriaYNombre(String categoria, String nombre) {
+    List<PlatilloDTO> listaDTO = new ArrayList<>();
+    MongoClient conexion = null;
+
+    try {
+        conexion = Conexion.getInstancia().crearConexion();
+        MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
+
+        Bson filtro = and(
+            eq("categoria", categoria),
+            regex("nombre", nombre, "i")
+        );
+
+        try (MongoCursor<Document> cursor = coleccion.find(filtro).iterator()) {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Platillo platillo = new Platillo();
+
+                platillo.setIdPlatillo(doc.getObjectId("_id").toHexString());
+                platillo.setNombre(doc.getString("nombre"));
+                platillo.setDescripcion(doc.getString("descripcion"));
+                platillo.setPrecio(doc.getDouble("precio"));
+                platillo.setExistencias(doc.getInteger("existencias"));
+                platillo.setCategoria(doc.getString("categoria"));
+                platillo.setDisponible(doc.getBoolean("disponible"));
+
+                PlatilloDTO dto = PlatilloMapper.toDTO(platillo);
+                listaDTO.add(dto);
+            }
+        }
+
+    } catch (Exception e) {
+        System.err.println("Error al buscar platillos por categoría y nombre: " + e.getMessage());
+    } finally {
+        Conexion.getInstancia().cerrarConexion(conexion);
+    }
+
+    return listaDTO;
+}
+
+    
+
+    @Override
     public Platillo obtenerPlatilloPorNombre(String nombrePlatillo) {
         MongoClient conexion = null;
         try {
@@ -194,13 +320,12 @@ public class PlatilloDAO implements IPlatilloDAO {
 
             Platillo platillo = obtenerPlatilloPorNombre(platilloDTO.getNombre());
             if (platillo != null) {
-                throw new Exception ("Un platillo con el mismo nombre ya Existe");
+                throw new Exception("Un platillo con el mismo nombre ya Existe");
             }
-            
-            
+
             coleccionPlatillos.insertOne(platilloDoc);
 
-            return true; 
+            return true;
 
         } catch (MongoException e) {
             throw new Exception("Error al registrar el platillo: " + e.getMessage());
@@ -335,7 +460,7 @@ public class PlatilloDAO implements IPlatilloDAO {
     }
 
     @Override
-        public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
+    public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
         MongoClient conexion = null;
         boolean todoCorrecto = true;
         try {

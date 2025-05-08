@@ -11,6 +11,8 @@ import Interfaces.IPedidoBO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -70,18 +72,25 @@ public class PedidoBO implements IPedidoBO{
         return pedidoDAO.mapearPedidoCompleto(pedidoDTO, listaDetalleDTO, idAlumno, idCocinero, idRepartidor);
     }
 
-    @Override
-    public boolean crearPedidoBO(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno) {
-        if (pedidoDTO == null) {
-            throw new IllegalArgumentException("El pedido no puede ser nulo.");
-        }
-        if (detalleDTOs == null || detalleDTOs.isEmpty()) {
-            throw new IllegalArgumentException("Los detalles del pedido no pueden ser nulos o vacíos.");
-        }
-        if (idAlumno == null || idAlumno.trim().isEmpty()) {
-            throw new IllegalArgumentException("El ID del alumno no puede ser nulo o vacío.");
-        }
 
-        return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
+@Override
+public boolean crearPedidoBO(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno) {
+    if (pedidoDTO == null || detalleDTOs == null || detalleDTOs.isEmpty() || idAlumno == null || idAlumno.trim().isEmpty()) {
+        throw new IllegalArgumentException("Parámetros inválidos para crear el pedido.");
     }
+
+    List<DetallePedido> detalles = convertirADetallePedidoEntityBO(detalleDTOs);
+    
+    StringBuilder mensajeError = new StringBuilder();
+    if (!pedidoDAO.revisarExistenciasPlatillo(detalles, mensajeError)) {
+        try {
+            throw new Exception(mensajeError.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(PedidoBO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
+}
+
 }

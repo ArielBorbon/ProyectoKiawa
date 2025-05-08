@@ -32,4 +32,10 @@ public interface IPlatilloBO {
     boolean modificarPlatilloBO(String nombreOriginal, PlatilloDTO platilloDTO);
 
     boolean hayExistenciasSuficientesSBBO(List<DetallePedido> detalles, StringBuilder mensajeError);
+
+    public List<PlatilloDTO> buscarPorCategoriaBO(String categoria);
+
+    public List<PlatilloDTO> buscarPorNombreBO(String nombre);
+
+    public List<PlatilloDTO> buscarPorCategoriaYNombreBO(String categoria, String nombre);
 }

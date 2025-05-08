@@ -9,6 +9,7 @@ import Entidades.DetallePedido;
 import Entidades.Platillo;
 import Interfaces.IPlatilloBO;
 import dto.PlatilloDTO;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,4 +123,32 @@ public class PlatilloBO implements IPlatilloBO {
         return platilloDAO.hayExistenciasSuficientesSB(detalles, mensajeError);
     }
 
+    @Override
+    public List<PlatilloDTO> buscarPorCategoriaBO(String categoria) {
+        if (categoria == null || categoria.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return platilloDAO.buscarPorCategoria(categoria.trim());
+    }
+
+    @Override
+    public List<PlatilloDTO> buscarPorNombreBO(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return platilloDAO.buscarPorNombre(nombre.trim());
+    }
+
+    @Override
+    public List<PlatilloDTO> buscarPorCategoriaYNombreBO(String categoria, String nombre) {
+        if ((categoria == null || categoria.trim().isEmpty())
+                && (nombre == null || nombre.trim().isEmpty())) {
+            return new ArrayList<>();
+        }
+
+        return platilloDAO.buscarPorCategoriaYNombre(
+                categoria != null ? categoria.trim() : "",
+                nombre != null ? nombre.trim() : ""
+        );
+    }
 }
