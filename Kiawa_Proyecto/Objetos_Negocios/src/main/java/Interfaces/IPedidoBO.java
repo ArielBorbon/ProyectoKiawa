@@ -4,10 +4,31 @@
  */
 package Interfaces;
 
+import Entidades.DetallePedido;
+import Entidades.Pedido;
+import dto.DetallePedidoDTO;
+import dto.PedidoDTO;
+import java.util.List;
+
 /**
  *
  * @author PC Gamer
  */
 public interface IPedidoBO {
-    
+
+    boolean existePedidoConFolioBO(String folio);
+
+    String crearFolioPedidoBO();
+
+    List<DetallePedido> convertirADetallePedidoEntityBO(List<DetallePedidoDTO> detalleDTOs);
+
+    Pedido mapearPedidoCompletoBO(
+            PedidoDTO pedidoDTO,
+            List<DetallePedidoDTO> listaDetalleDTO,
+            String idAlumno,
+            String idCocinero,
+            String idRepartidor
+    ) throws Exception;
+
+    boolean crearPedidoBO(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno);
 }
