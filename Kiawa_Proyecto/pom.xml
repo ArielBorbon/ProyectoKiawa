@@ -13,6 +13,9 @@
         <module>Subsistema_Platillos</module>
         <module>Subsistema_Ubicaciones</module>
         <module>Subsistema_Pedidos</module>
+        <module>Subsistema_MedioPago</module>
+        <module>Subsistema_Empleado</module>
+        <module>Presentacion_Kiawa</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
