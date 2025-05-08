@@ -15,6 +15,13 @@ import dto.LoginRequestDTO;
  */
 public class AlumnoBO implements IAlumnoBO {
 
+    public AlumnoBO() {
+    }
+    
+    
+    
+    
+
     @Override
     public AlumnoDTO recuperarAlumno(LoginRequestDTO loginRequest) throws Exception {
         Fachada_CIA fachadaCIA = new Fachada_CIA();

@@ -18,7 +18,14 @@ import java.util.List;
  */
 public class PedidoBO implements IPedidoBO{
 
-    private PedidoDAO pedidoDAO = new PedidoDAO();
+    private PedidoDAO pedidoDAO;
+
+    public PedidoBO(PedidoDAO pedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
+    }
+    
+    
+    
 
     @Override
     public boolean existePedidoConFolioBO(String folio) {
@@ -30,7 +37,7 @@ public class PedidoBO implements IPedidoBO{
 
     @Override
     public String crearFolioPedidoBO() {
-        return pedidoDAO.crearFolioPedido(); // No necesita validación
+        return pedidoDAO.crearFolioPedido();
     }
 
     @Override
@@ -60,7 +67,6 @@ public class PedidoBO implements IPedidoBO{
             throw new IllegalArgumentException("El ID del alumno no puede ser nulo o vacío.");
         }
 
-        // Id del cocinero y repartidor pueden ser null si aún no se han asignado
         return pedidoDAO.mapearPedidoCompleto(pedidoDTO, listaDetalleDTO, idAlumno, idCocinero, idRepartidor);
     }
 
