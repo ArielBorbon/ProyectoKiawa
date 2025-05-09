@@ -4,8 +4,7 @@
  */
 package Buscadores;
 
-import BO.PlatilloBO;
-import Fabricas.FactoryBO;
+import Subsistema.FSubsistema_Platillos;
 import dto.DetallePedidoDTO;
 import dto.PlatilloDTO;
 import java.awt.event.MouseAdapter;
@@ -67,17 +66,17 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
             if (nombre.isEmpty()) {
                 nombre = null;
             }
-            PlatilloBO platilloBO = FactoryBO.crearPlatilloBO();
+            FSubsistema_Platillos subsistemaP = new FSubsistema_Platillos();
             List<PlatilloDTO> platillos;
 
             if (nombre == null && categoria == null) {
-                platillos = platilloBO.obtenerListaPlatillosTodosBO();
+                platillos = subsistemaP.obtenerPlatillosDisponibles();
             } else if (nombre == null) {
-                platillos = platilloBO.buscarPorCategoriaBO(categoria);
+                platillos = subsistemaP.buscarPorCategoria(categoria);
             } else if (categoria == null) {
-                platillos = platilloBO.buscarPorNombreBO(nombre);
+                platillos = subsistemaP.buscarPorNombre(nombre);
             } else {
-                platillos = platilloBO.buscarPorCategoriaYNombreBO(categoria, nombre);
+                platillos = subsistemaP.buscarPorCategoriaYNombre(categoria, nombre);
             }
 
             DefaultTableModel modelo = (DefaultTableModel) tblPlatillos.getModel();

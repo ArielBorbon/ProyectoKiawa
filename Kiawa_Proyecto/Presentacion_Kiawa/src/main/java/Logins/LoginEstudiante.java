@@ -5,9 +5,12 @@
 package Logins;
 
 import BO.AlumnoBO;
+import CIA.Fachada_CIA;
 import Fabricas.FactoryBO;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
@@ -125,22 +128,25 @@ public class LoginEstudiante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEstudianteActionPerformed
-        
+
         try {
-            String id = this.txtId.toString();
-            String contrasena = this.txtContrasena.toString();
-            AlumnoBO alumnoBO = FactoryBO.crearAlumnoBO();
-            LoginRequestDTO login = new LoginRequestDTO(id,contrasena);
-            AlumnoDTO alumno = alumnoBO.recuperarAlumno(login);
-            System.out.println(alumno.getNombreCompleto());
-            System.out.println(alumno.getTelefono());
+            String id = this.txtId.getText().trim();
+            String contrasena = new String(this.txtContrasena.getPassword());
+
+        //    AlumnoBO alumnoBO = FactoryBO.crearAlumnoBO();
+            LoginRequestDTO login = new LoginRequestDTO(id, contrasena);
+            Fachada_CIA fachadaCIA = new Fachada_CIA();
+            AlumnoDTO alumno = fachadaCIA.recuperarAlumnoExterno(login);
             if (alumno != null) {
-                JOptionPane.showMessageDialog(this, "Bienvenido: " + alumno.getNombreCompleto()  , "Exito" , INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Bienvenido: " + alumno.getNombreCompleto(), "Exito", INFORMATION_MESSAGE);
+                this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Usuario o Contraseña Incorrectos. Intente De nuevo." , "Error" , JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(LoginEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Usuario o Contraseña Incorrectos. Intente De nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
+
     }//GEN-LAST:event_btnLoginEstudianteActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
