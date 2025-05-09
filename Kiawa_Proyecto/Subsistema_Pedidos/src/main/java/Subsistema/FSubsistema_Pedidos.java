@@ -25,14 +25,17 @@ public class FSubsistema_Pedidos {
     private final UbicacionBO ubicacionBO;
 
     public FSubsistema_Pedidos() throws Exception {
-        this.pedidoBO     = FactoryBO.crearPedidoBO();
-        this.platilloBO   = FactoryBO.crearPlatilloBO();
-        this.ubicacionBO  = FactoryBO.crearUbicacionBO();
+        this.pedidoBO = FactoryBO.crearPedidoBO();
+        this.platilloBO = FactoryBO.crearPlatilloBO();
+        this.ubicacionBO = FactoryBO.crearUbicacionBO();
     }
 
-    /** 1. Verificar si un folio ya existe
+    /**
+     * 1. Verificar si un folio ya existe
+     *
      * @param folio
-     * @return  */
+     * @return
+     */
     public boolean existePedidoConFolio(String folio) {
         return pedidoBO.existePedidoConFolioBO(folio);
     }
@@ -45,7 +48,7 @@ public class FSubsistema_Pedidos {
         return pedidoBO.convertirADetallePedidoEntityBO(detalleDTOs);
     }
 
-    public Pedido mapearPedidoCompleto( PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno, String idCocinero, String idRepartidor ) throws Exception {
+    public Pedido mapearPedidoCompleto(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno, String idCocinero, String idRepartidor) throws Exception {
         ubicacionBO.buscarUbicacionPorEdificioYSalonBO(pedidoDTO.getUbicacionEntrega());
         List<DetallePedido> detalles = pedidoBO.convertirADetallePedidoEntityBO(detalleDTOs);
         StringBuilder msgErr = new StringBuilder();
@@ -55,7 +58,6 @@ public class FSubsistema_Pedidos {
         return pedidoBO.mapearPedidoCompletoBO(pedidoDTO, detalleDTOs, idAlumno, idCocinero, idRepartidor);
     }
 
-  
     public boolean crearPedido(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno) throws Exception {
         ubicacionBO.buscarUbicacionPorEdificioYSalonBO(pedidoDTO.getUbicacionEntrega());
         List<DetallePedido> detalles = pedidoBO.convertirADetallePedidoEntityBO(detalleDTOs);
@@ -65,5 +67,8 @@ public class FSubsistema_Pedidos {
         }
         return pedidoBO.crearPedidoBO(pedidoDTO, detalleDTOs, idAlumno);
     }
-}
 
+    public boolean cambiarEstadoPedido(String folio, String nuevoEstado) {
+        return pedidoBO.cambiarEstadoPedidoBO(folio, nuevoEstado);
+    }
+}

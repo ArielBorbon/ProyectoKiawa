@@ -18,16 +18,13 @@ import java.util.logging.Logger;
  *
  * @author PC Gamer
  */
-public class PedidoBO implements IPedidoBO{
+public class PedidoBO implements IPedidoBO {
 
     private PedidoDAO pedidoDAO;
 
     public PedidoBO(PedidoDAO pedidoDAO) {
         this.pedidoDAO = pedidoDAO;
     }
-    
-    
-    
 
     @Override
     public boolean existePedidoConFolioBO(String folio) {
@@ -72,25 +69,27 @@ public class PedidoBO implements IPedidoBO{
         return pedidoDAO.mapearPedidoCompleto(pedidoDTO, listaDetalleDTO, idAlumno, idCocinero, idRepartidor);
     }
 
-
-@Override
-public boolean crearPedidoBO(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno) {
-    if (pedidoDTO == null || detalleDTOs == null || detalleDTOs.isEmpty() || idAlumno == null || idAlumno.trim().isEmpty()) {
-        throw new IllegalArgumentException("Parámetros inválidos para crear el pedido.");
-    }
-
-    List<DetallePedido> detalles = convertirADetallePedidoEntityBO(detalleDTOs);
-    
-    StringBuilder mensajeError = new StringBuilder();
-    if (!pedidoDAO.revisarExistenciasPlatillo(detalles, mensajeError)) {
-        try {
-            throw new Exception(mensajeError.toString());
-        } catch (Exception ex) {
-            Logger.getLogger(PedidoBO.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public boolean crearPedidoBO(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno) {
+        if (pedidoDTO == null || detalleDTOs == null || detalleDTOs.isEmpty() || idAlumno == null || idAlumno.trim().isEmpty()) {
+            throw new IllegalArgumentException("Parámetros inválidos para crear el pedido.");
         }
+
+        List<DetallePedido> detalles = convertirADetallePedidoEntityBO(detalleDTOs);
+
+        StringBuilder mensajeError = new StringBuilder();
+        if (!pedidoDAO.revisarExistenciasPlatillo(detalles, mensajeError)) {
+            try {
+                throw new Exception(mensajeError.toString());
+            } catch (Exception ex) {
+                Logger.getLogger(PedidoBO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
     }
 
-    return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
-}
-
+    public boolean cambiarEstadoPedidoBO(String folio, String nuevoEstado) {
+        return pedidoDAO.cambiarEstadoPedido(folio, nuevoEstado);
+    }
 }
