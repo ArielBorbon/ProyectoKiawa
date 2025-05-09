@@ -31,5 +31,7 @@ public interface IPedidoDAO {
     ) throws Exception;
     
     boolean crearPedido(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno);
+    
+    boolean cambiarEstadoPedido(String folio, String nuevoEstado);
 }
 

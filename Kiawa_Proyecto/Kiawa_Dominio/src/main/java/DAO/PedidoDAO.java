@@ -12,11 +12,14 @@ import Entidades.Platillo;
 import Entidades.Ubicacion;
 import Mappers.DetallePedidoMapper;
 import Mappers.PedidoMapper;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
 import dto.AlumnoDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
@@ -252,28 +255,48 @@ public class PedidoDAO implements IPedidoDAO {
             }
         }
     }
-    
-    
-    
-    
+
     public boolean revisarExistenciasPlatillo(List<DetallePedido> detalles, StringBuilder mensajeError) {
-    PlatilloDAO platilloDAO = new PlatilloDAO();
-    for (DetallePedido detalle : detalles) {
-        Platillo platillo = platilloDAO.obtenerPlatilloPorNombre(detalle.getNombrePlatillo());
-        if (platillo == null) {
-            mensajeError.append("No se encontró el platillo: ").append(detalle.getNombrePlatillo()).append("\n");
-            return false;
-        }
-        if (detalle.getCantidad() > platillo.getExistencias()) {
-            mensajeError.append("No hay suficientes existencias para: ")
+        PlatilloDAO platilloDAO = new PlatilloDAO();
+        for (DetallePedido detalle : detalles) {
+            Platillo platillo = platilloDAO.obtenerPlatilloPorNombre(detalle.getNombrePlatillo());
+            if (platillo == null) {
+                mensajeError.append("No se encontró el platillo: ").append(detalle.getNombrePlatillo()).append("\n");
+                return false;
+            }
+            if (detalle.getCantidad() > platillo.getExistencias()) {
+                mensajeError.append("No hay suficientes existencias para: ")
                         .append(detalle.getNombrePlatillo())
                         .append(" (disponible: ").append(platillo.getExistencias())
                         .append(", solicitado: ").append(detalle.getCantidad()).append(")\n");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean cambiarEstadoPedido(String folio, String nuevoEstado) {
+        MongoClient conexion = null;
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = db.getCollection("Pedidos");
+
+            Bson filtro = Filters.eq("folio", folio);
+            Bson actualizacion = Updates.set("estado", nuevoEstado);
+
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+
+        } catch (MongoException e) {
+            System.err.println("Error al cambiar el estado del pedido: " + e.getMessage());
             return false;
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
         }
     }
-    return true;
-}
-
-
 }
