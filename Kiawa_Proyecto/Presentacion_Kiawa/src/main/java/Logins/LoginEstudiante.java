@@ -4,6 +4,7 @@
  */
 package Logins;
 
+import Menu.MenuRol;
 import BO.AlumnoBO;
 import CIA.Fachada_CIA;
 import Fabricas.FactoryBO;
@@ -11,8 +12,14 @@ import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.accessibility.AccessibleContext;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import javax.swing.JPasswordField;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -150,7 +157,7 @@ public class LoginEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginEstudianteActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        MenuRol menuPrincipal = new MenuRol();
         menuPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -189,6 +196,97 @@ public class LoginEstudiante extends javax.swing.JFrame {
             }
         });
     }
+
+    public JButton getBtnLoginEstudiante() {
+        return btnLoginEstudiante;
+    }
+
+    public void setBtnLoginEstudiante(JButton btnLoginEstudiante) {
+        this.btnLoginEstudiante = btnLoginEstudiante;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public void setBtnRegresar(JButton btnRegresar) {
+        this.btnRegresar = btnRegresar;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JPasswordField getTxtContrasena() {
+        return txtContrasena;
+    }
+
+    public void setTxtContrasena(JPasswordField txtContrasena) {
+        this.txtContrasena = txtContrasena;
+    }
+
+    public JTextField getTxtId() {
+        return txtId;
+    }
+
+    public void setTxtId(JTextField txtId) {
+        this.txtId = txtId;
+    }
+
+    @Override
+    public JRootPane getRootPane() {
+        return rootPane;
+    }
+
+    @Override
+    public void setRootPane(JRootPane rootPane) {
+        this.rootPane = rootPane;
+    }
+
+    @Override
+    public boolean isRootPaneCheckingEnabled() {
+        return rootPaneCheckingEnabled;
+    }
+
+    @Override
+    public void setRootPaneCheckingEnabled(boolean rootPaneCheckingEnabled) {
+        this.rootPaneCheckingEnabled = rootPaneCheckingEnabled;
+    }
+
+    @Override
+    public AccessibleContext getAccessibleContext() {
+        return accessibleContext;
+    }
+
+    public void setAccessibleContext(AccessibleContext accessibleContext) {
+        this.accessibleContext = accessibleContext;
+    }
+
+
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoginEstudiante;

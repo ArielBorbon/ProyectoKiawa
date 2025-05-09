@@ -6,6 +6,13 @@ package CasosDeUso.CU.Equipo;
 
 import Buscadores.BuscadorPlatillos;
 import dto.DetallePedidoDTO;
+import javax.accessibility.AccessibleContext;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,7 +36,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     
 
     
-    private void actualizarTablaSeleccionados() {
+    public void actualizarTablaSeleccionados() {
     DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
     modelo.setRowCount(0);
 
@@ -43,6 +50,125 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         });
     }
 }
+
+    public BuscadorPlatillos getBuscadorPlatillos() {
+        return buscadorPlatillos;
+    }
+
+    public void setBuscadorPlatillos(BuscadorPlatillos buscadorPlatillos) {
+        this.buscadorPlatillos = buscadorPlatillos;
+    }
+
+    public JButton getBtnContinuar() {
+        return btnContinuar;
+    }
+
+    public void setBtnContinuar(JButton btnContinuar) {
+        this.btnContinuar = btnContinuar;
+    }
+
+    public JButton getBtnEditarNota() {
+        return btnEditarNota;
+    }
+
+    public void setBtnEditarNota(JButton btnEditarNota) {
+        this.btnEditarNota = btnEditarNota;
+    }
+
+    public JButton getBtnEliminarPlatillo() {
+        return btnEliminarPlatillo;
+    }
+
+    public void setBtnEliminarPlatillo(JButton btnEliminarPlatillo) {
+        this.btnEliminarPlatillo = btnEliminarPlatillo;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    public void setjLabel4(JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JPanel getPnlBuscadorPlatillos() {
+        return pnlBuscadorPlatillos;
+    }
+
+    public void setPnlBuscadorPlatillos(JPanel pnlBuscadorPlatillos) {
+        this.pnlBuscadorPlatillos = pnlBuscadorPlatillos;
+    }
+
+    public JTable getTblPlatillosHastaElMomento() {
+        return tblPlatillosHastaElMomento;
+    }
+
+    public void setTblPlatillosHastaElMomento(JTable tblPlatillosHastaElMomento) {
+        this.tblPlatillosHastaElMomento = tblPlatillosHastaElMomento;
+    }
+
+    @Override
+    public JRootPane getRootPane() {
+        return rootPane;
+    }
+
+    @Override
+    public void setRootPane(JRootPane rootPane) {
+        this.rootPane = rootPane;
+    }
+
+    @Override
+    public boolean isRootPaneCheckingEnabled() {
+        return rootPaneCheckingEnabled;
+    }
+
+    @Override
+    public void setRootPaneCheckingEnabled(boolean rootPaneCheckingEnabled) {
+        this.rootPaneCheckingEnabled = rootPaneCheckingEnabled;
+    }
+
+    @Override
+    public AccessibleContext getAccessibleContext() {
+        return accessibleContext;
+    }
+
+    public void setAccessibleContext(AccessibleContext accessibleContext) {
+        this.accessibleContext = accessibleContext;
+    }
+
+ 
 
     
     

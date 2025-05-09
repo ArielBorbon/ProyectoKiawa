@@ -30,6 +30,14 @@ public class FSubsistema_Pedidos {
         this.ubicacionBO = FactoryBO.crearUbicacionBO();
     }
 
+    public FSubsistema_Pedidos(PedidoBO pedidoBO, PlatilloBO platilloBO, UbicacionBO ubicacionBO) {
+        this.pedidoBO = pedidoBO;
+        this.platilloBO = platilloBO;
+        this.ubicacionBO = ubicacionBO;
+    }
+    
+    
+
     /**
      * 1. Verificar si un folio ya existe
      *

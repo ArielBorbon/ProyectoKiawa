@@ -4,6 +4,7 @@
  */
 package Logins;
 
+import Menu.MenuRol;
 import BO.AlumnoBO;
 import CIA.Fachada_CIA;
 import Fabricas.FactoryBO;
@@ -146,7 +147,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginEstudianteActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        MenuRol menuPrincipal = new MenuRol();
         menuPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
