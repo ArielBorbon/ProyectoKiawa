@@ -5,6 +5,8 @@
 package CasosDeUso.CU.Equipo;
 
 import Buscadores.BuscadorPlatillos;
+import dto.DetallePedidoDTO;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +24,33 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         this.buscadorPlatillos.getLblDisponible().setVisible(false);
         this.buscadorPlatillos.setVisible(true);
     }
+    
+    
+    
+
+    
+    private void actualizarTablaSeleccionados() {
+    DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
+    modelo.setRowCount(0);
+
+    for (DetallePedidoDTO d : control.ControlPresentacion.getInstancia().getDetallesSeleccionados()) {
+        modelo.addRow(new Object[]{
+            d.getNombrePlatillo(),
+            d.getCantidad(),
+            d.getPrecioUnitario(),
+            d.getNota(),
+            d.getSubtotal()
+        });
+    }
+}
+
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,11 +64,13 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         pnlBuscadorPlatillos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPlatillosHastaElMomento = new javax.swing.JTable();
         btnEliminarPlatillo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnContinuar = new javax.swing.JButton();
+        btnEditarNota = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,7 +79,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel1.setText("Carrito de Compras");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPlatillosHastaElMomento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -71,23 +102,23 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(120);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(120);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(80);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(130);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(130);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(130);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(100);
+        jScrollPane1.setViewportView(tblPlatillosHastaElMomento);
+        if (tblPlatillosHastaElMomento.getColumnModel().getColumnCount() > 0) {
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setMinWidth(120);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setMaxWidth(120);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setMinWidth(80);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setMaxWidth(80);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(2).setMinWidth(100);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(2).setMaxWidth(100);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMinWidth(130);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setPreferredWidth(130);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMaxWidth(130);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(4).setMinWidth(100);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         btnEliminarPlatillo.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
@@ -104,8 +135,19 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jLabel3.setText("Doble Click para Seleccionar Platillos");
 
-        jButton1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
-        jButton1.setText("Continuar");
+        btnContinuar.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
+        btnContinuar.setText("Continuar");
+
+        btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btnEditarNota.setText("Editar Nota");
+        btnEditarNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarNotaActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setText("Total:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,47 +157,57 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlBuscadorPlatillos, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnEliminarPlatillo)
                                         .addGap(11, 11, 11)))
                                 .addGap(49, 49, 49))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(170, 170, 170))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEditarNota)
+                                .addGap(48, 48, 48))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(145, 145, 145))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(pnlBuscadorPlatillos, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(btnEditarNota))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarPlatillo))
-                    .addComponent(pnlBuscadorPlatillos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminarPlatillo)
+                            .addComponent(jLabel4))))
                 .addGap(46, 46, 46)
-                .addComponent(jButton1)
+                .addComponent(btnContinuar)
                 .addGap(96, 96, 96))
         );
 
@@ -165,6 +217,10 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     private void btnEliminarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPlatilloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarPlatilloActionPerformed
+
+    private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarNotaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,13 +258,15 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnContinuar;
+    private javax.swing.JButton btnEditarNota;
     private javax.swing.JButton btnEliminarPlatillo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlBuscadorPlatillos;
+    private javax.swing.JTable tblPlatillosHastaElMomento;
     // End of variables declaration//GEN-END:variables
 }

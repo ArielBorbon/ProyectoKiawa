@@ -6,7 +6,10 @@ package Buscadores;
 
 import BO.PlatilloBO;
 import Fabricas.FactoryBO;
+import dto.DetallePedidoDTO;
 import dto.PlatilloDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -43,9 +46,6 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
     public void setLblDisponible(JLabel lblDisponible) {
         this.lblDisponible = lblDisponible;
     }
-    
-    
-    
 
     private void llenarTablaPlatillos() {
         try {
@@ -57,8 +57,6 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
                 categoria = null;
             }
 
-            
-            
             Boolean estaDisponible = null;
             if (disponible.equalsIgnoreCase("Sí")) {
                 estaDisponible = true;                                                  //pendiente
@@ -66,9 +64,6 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
                 estaDisponible = false;
             }
 
-            
-            
-            
             if (nombre.isEmpty()) {
                 nombre = null;
             }
@@ -93,7 +88,6 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
             modelo.addColumn("Descripción");
             modelo.addColumn("Existencias");
             modelo.addColumn("Categoria");
-            
 
             for (PlatilloDTO p : platillos) {
                 modelo.addRow(new Object[]{
@@ -109,6 +103,50 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al llenar la tabla de platillos: " + e.getMessage());
         }
     }
+private void agregarListenerDobleClick() {
+    tblPlatillos.addMouseListener ( 
+        new MouseAdapter() {
+    @Override
+        public void mouseClicked
+        (MouseEvent e
+        
+            ) {
+        if (e.getClickCount() == 2) {
+                int fila = tblPlatillos.getSelectedRow();
+                if (fila >= 0) {
+                    String nombre = tblPlatillos.getValueAt(fila, 0).toString();
+                    double precio = Double.parseDouble(tblPlatillos.getValueAt(fila, 1).toString());
+                    int existencias = Integer.parseInt(tblPlatillos.getValueAt(fila, 3).toString());
+
+                    String input = JOptionPane.showInputDialog(BuscadorPlatillos.this, "¿Cuántas unidades deseas?");
+                    if (input != null) {
+                        try {
+                            int cantidad = Integer.parseInt(input);
+                            if (cantidad > 0 && cantidad <= existencias) {
+                                DetallePedidoDTO detalle = new DetallePedidoDTO(nombre, cantidad, precio, "", precio * cantidad);
+                                control.ControlPresentacion.getInstancia().agregarDetalle(detalle);
+                                JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Platillo agregado.");
+                            } else {
+                                JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Cantidad no válida (mayor a existencias o negativa).");
+                            }
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Debes ingresar un número válido.");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    );
+    
+    
+    
+};
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
