@@ -4,7 +4,7 @@
  */
 package Buscadores;
 
-import Control.ControlAlumno;
+import Menu.MenuRol;
 
 /**
  *
@@ -12,8 +12,9 @@ import Control.ControlAlumno;
  */
 public class PruebaRapida {
     
-    
     public static void main(String[] args) {
-        ControlAlumno.getInstancia().iniciarFlujo();
+        
+        MenuRol menuRol = new MenuRol();
+        menuRol.setVisible(true);
     }
 }

@@ -21,13 +21,22 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BuscadorPlatillos extends javax.swing.JPanel {
 
+    private Runnable onPlatilloAgregado;
+
     /**
      * Creates new form BuscadorPlatillos
      */
     public BuscadorPlatillos() {
         initComponents();
         llenarTablaPlatillos();
+        agregarListenerDobleClick();
+
         this.cmbDisponible.setEnabled(false);
+
+    }
+
+    public void setOnPlatilloAgregado(Runnable callback) {
+        this.onPlatilloAgregado = callback;
     }
 
     public JComboBox<String> getCmbDisponible() {
@@ -79,7 +88,8 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
                 platillos = subsistemaP.buscarPorCategoriaYNombre(categoria, nombre);
             }
 
-            DefaultTableModel modelo = (DefaultTableModel) tblPlatillos.getModel();
+            NonEditableTableModel modelo = new NonEditableTableModel();
+            tblPlatillos.setModel(modelo);
             modelo.setRowCount(0);
             modelo.setColumnCount(0);
             modelo.addColumn("Nombre");
@@ -102,46 +112,57 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al llenar la tabla de platillos: " + e.getMessage());
         }
     }
-private void agregarListenerDobleClick() {
-    tblPlatillos.addMouseListener ( 
-        new MouseAdapter() {
-    @Override
-        public void mouseClicked
-        (MouseEvent e
-        
-            ) {
-        if (e.getClickCount() == 2) {
-                int fila = tblPlatillos.getSelectedRow();
-                if (fila >= 0) {
-                    String nombre = tblPlatillos.getValueAt(fila, 0).toString();
-                    double precio = Double.parseDouble(tblPlatillos.getValueAt(fila, 1).toString());
-                    int existencias = Integer.parseInt(tblPlatillos.getValueAt(fila, 3).toString());
 
-                    String input = JOptionPane.showInputDialog(BuscadorPlatillos.this, "¿Cuántas unidades deseas?");
-                    if (input != null) {
-                        try {
-                            int cantidad = Integer.parseInt(input);
-                            if (cantidad > 0 && cantidad <= existencias) {
-                                DetallePedidoDTO detalle = new DetallePedidoDTO(nombre, cantidad, precio, "", precio * cantidad);
-                                control.ControlPresentacion.getInstancia().agregarDetalle(detalle);
-                                JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Platillo agregado.");
-                            } else {
-                                JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Cantidad no válida (mayor a existencias o negativa).");
+    class NonEditableTableModel extends DefaultTableModel {
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+
+    private void agregarListenerDobleClick() {
+        tblPlatillos.addMouseListener(
+                new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e
+            ) {
+                if (e.getClickCount() == 2) {
+                    int fila = tblPlatillos.getSelectedRow();
+                    if (fila >= 0) {
+                        String nombre = tblPlatillos.getValueAt(fila, 0).toString();
+                        double precio = Double.parseDouble(tblPlatillos.getValueAt(fila, 1).toString());
+                        int existencias = Integer.parseInt(tblPlatillos.getValueAt(fila, 3).toString());
+
+                        String input = JOptionPane.showInputDialog(BuscadorPlatillos.this, "¿Cuántas unidades deseas?");
+                        if (input != null) {
+                            try {
+                                int cantidad = Integer.parseInt(input);
+                                if (cantidad > 0 && cantidad <= existencias) {
+
+                                    DetallePedidoDTO detalle = new DetallePedidoDTO(nombre, cantidad, precio, "", precio * cantidad);
+                                    control.ControlPresentacion.getInstancia().agregarDetalle(detalle);
+                                    JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Platillo agregado.");
+                                    if (onPlatilloAgregado != null) {
+                                        onPlatilloAgregado.run();
+                                    }
+
+                                } else {
+                                    JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Cantidad no válida (mayor a existencias o negativa).");
+                                }
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Debes ingresar un número válido.");
                             }
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(BuscadorPlatillos.this, "Debes ingresar un número válido.");
                         }
                     }
                 }
             }
         }
+        );
+
     }
 
-    );
-    
-    
-    
-};
+    ;
     
     
     

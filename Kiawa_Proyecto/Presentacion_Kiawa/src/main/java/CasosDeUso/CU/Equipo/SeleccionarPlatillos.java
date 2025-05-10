@@ -5,14 +5,10 @@
 package CasosDeUso.CU.Equipo;
 
 import Buscadores.BuscadorPlatillos;
+import control.ControlPresentacion;
 import dto.DetallePedidoDTO;
-import javax.accessibility.AccessibleContext;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,7 +16,9 @@ import javax.swing.table.DefaultTableModel;
  * @author rayoa
  */
 public class SeleccionarPlatillos extends javax.swing.JFrame {
+
     BuscadorPlatillos buscadorPlatillos = new BuscadorPlatillos();
+
     /**
      * Creates new form SeleccionarPlatillos
      */
@@ -30,33 +28,38 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         this.buscadorPlatillos.getCmbDisponible().setVisible(false);
         this.buscadorPlatillos.getLblDisponible().setVisible(false);
         this.buscadorPlatillos.setVisible(true);
-    }
-    
-    
-    
+        this.setLocationRelativeTo(null);
+        buscadorPlatillos.setOnPlatilloAgregado(() -> actualizarTablaSeleccionados());
 
-    
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        if (b) {
+            actualizarTablaSeleccionados();
+        }
+    }
+
     public void actualizarTablaSeleccionados() {
-    DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
-    modelo.setRowCount(0);
+        DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
+        modelo.setRowCount(0);
 
-    for (DetallePedidoDTO d : control.ControlPresentacion.getInstancia().getDetallesSeleccionados()) {
-        modelo.addRow(new Object[]{
-            d.getNombrePlatillo(),
-            d.getCantidad(),
-            d.getPrecioUnitario(),
-            d.getNota(),
-            d.getSubtotal()
-        });
-    }
-}
+        double total = 0.0;
 
-    public BuscadorPlatillos getBuscadorPlatillos() {
-        return buscadorPlatillos;
-    }
+        for (DetallePedidoDTO d : control.ControlPresentacion.getInstancia().getDetallesSeleccionados()) {
+            modelo.addRow(new Object[]{
+                d.getNombrePlatillo(),
+                d.getCantidad(),
+                d.getPrecioUnitario(),
+                d.getNota(),
+                d.getSubtotal()
+            });
+            total += d.getSubtotal();
+        }
 
-    public void setBuscadorPlatillos(BuscadorPlatillos buscadorPlatillos) {
-        this.buscadorPlatillos = buscadorPlatillos;
+        lblTotal.setText(String.format("$ %.2f", total));
+        ControlPresentacion.getInstancia().setTotal(total);
     }
 
     public JButton getBtnContinuar() {
@@ -66,117 +69,6 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     public void setBtnContinuar(JButton btnContinuar) {
         this.btnContinuar = btnContinuar;
     }
-
-    public JButton getBtnEditarNota() {
-        return btnEditarNota;
-    }
-
-    public void setBtnEditarNota(JButton btnEditarNota) {
-        this.btnEditarNota = btnEditarNota;
-    }
-
-    public JButton getBtnEliminarPlatillo() {
-        return btnEliminarPlatillo;
-    }
-
-    public void setBtnEliminarPlatillo(JButton btnEliminarPlatillo) {
-        this.btnEliminarPlatillo = btnEliminarPlatillo;
-    }
-
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
-    public JLabel getjLabel2() {
-        return jLabel2;
-    }
-
-    public void setjLabel2(JLabel jLabel2) {
-        this.jLabel2 = jLabel2;
-    }
-
-    public JLabel getjLabel3() {
-        return jLabel3;
-    }
-
-    public void setjLabel3(JLabel jLabel3) {
-        this.jLabel3 = jLabel3;
-    }
-
-    public JLabel getjLabel4() {
-        return jLabel4;
-    }
-
-    public void setjLabel4(JLabel jLabel4) {
-        this.jLabel4 = jLabel4;
-    }
-
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
-    }
-
-    public JPanel getPnlBuscadorPlatillos() {
-        return pnlBuscadorPlatillos;
-    }
-
-    public void setPnlBuscadorPlatillos(JPanel pnlBuscadorPlatillos) {
-        this.pnlBuscadorPlatillos = pnlBuscadorPlatillos;
-    }
-
-    public JTable getTblPlatillosHastaElMomento() {
-        return tblPlatillosHastaElMomento;
-    }
-
-    public void setTblPlatillosHastaElMomento(JTable tblPlatillosHastaElMomento) {
-        this.tblPlatillosHastaElMomento = tblPlatillosHastaElMomento;
-    }
-
-    @Override
-    public JRootPane getRootPane() {
-        return rootPane;
-    }
-
-    @Override
-    public void setRootPane(JRootPane rootPane) {
-        this.rootPane = rootPane;
-    }
-
-    @Override
-    public boolean isRootPaneCheckingEnabled() {
-        return rootPaneCheckingEnabled;
-    }
-
-    @Override
-    public void setRootPaneCheckingEnabled(boolean rootPaneCheckingEnabled) {
-        this.rootPaneCheckingEnabled = rootPaneCheckingEnabled;
-    }
-
-    @Override
-    public AccessibleContext getAccessibleContext() {
-        return accessibleContext;
-    }
-
-    public void setAccessibleContext(AccessibleContext accessibleContext) {
-        this.accessibleContext = accessibleContext;
-    }
-
- 
-
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,8 +89,11 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         btnContinuar = new javax.swing.JButton();
         btnEditarNota = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1247, 778));
 
         pnlBuscadorPlatillos.setLayout(new java.awt.BorderLayout());
 
@@ -231,20 +126,17 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblPlatillosHastaElMomento);
         if (tblPlatillosHastaElMomento.getColumnModel().getColumnCount() > 0) {
             tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setMinWidth(120);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setPreferredWidth(110);
             tblPlatillosHastaElMomento.getColumnModel().getColumn(0).setMaxWidth(120);
             tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setMinWidth(80);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setPreferredWidth(50);
             tblPlatillosHastaElMomento.getColumnModel().getColumn(1).setMaxWidth(80);
             tblPlatillosHastaElMomento.getColumnModel().getColumn(2).setMinWidth(100);
             tblPlatillosHastaElMomento.getColumnModel().getColumn(2).setPreferredWidth(100);
             tblPlatillosHastaElMomento.getColumnModel().getColumn(2).setMaxWidth(100);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMinWidth(130);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setPreferredWidth(130);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMaxWidth(130);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(4).setMinWidth(100);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(4).setPreferredWidth(100);
-            tblPlatillosHastaElMomento.getColumnModel().getColumn(4).setMaxWidth(100);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMinWidth(150);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
         btnEliminarPlatillo.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
@@ -263,6 +155,11 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
 
         btnContinuar.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         btnContinuar.setText("Continuar");
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContinuarActionPerformed(evt);
+            }
+        });
 
         btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnEditarNota.setText("Editar Nota");
@@ -275,6 +172,17 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("Total:");
 
+        lblTotal.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        lblTotal.setText("---");
+
+        btnRegresar.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,22 +192,30 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlBuscadorPlatillos, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 35, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnEliminarPlatillo)
-                                        .addGap(11, 11, 11)))
-                                .addGap(49, 49, 49))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEditarNota)
-                                .addGap(48, 48, 48))))
+                                        .addGap(60, 60, 60))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnEditarNota)
+                                        .addGap(48, 48, 48))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(145, 145, 145))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(26, 26, 26)
@@ -307,8 +223,8 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145))
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(199, 199, 199))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,67 +247,88 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEliminarPlatillo)
-                            .addComponent(jLabel4))))
+                            .addComponent(jLabel4)
+                            .addComponent(lblTotal))))
                 .addGap(46, 46, 46)
                 .addComponent(btnContinuar)
-                .addGap(96, 96, 96))
+                .addGap(18, 18, 18)
+                .addComponent(btnRegresar)
+                .addGap(45, 45, 45))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPlatilloActionPerformed
-        // TODO add your handling code here:
+           int filaSeleccionada = tblPlatillosHastaElMomento.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debes seleccionar un platillo para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este platillo del carrito?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        control.ControlPresentacion.getInstancia().getDetallesSeleccionados().remove(filaSeleccionada);
+
+        DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
+        modelo.removeRow(filaSeleccionada);
+        JOptionPane.showMessageDialog(this, "Platillo Eliminado.", "Exito" , JOptionPane.INFORMATION_MESSAGE);
+
+        actualizarTablaSeleccionados();
+    }
     }//GEN-LAST:event_btnEliminarPlatilloActionPerformed
 
     private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
-        // TODO add your handling code here:
+            int filaSeleccionada = tblPlatillosHastaElMomento.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debes seleccionar un platillo de la tabla.", "Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String notaActual = (String) tblPlatillosHastaElMomento.getValueAt(filaSeleccionada, 3);
+    String nuevaNota = JOptionPane.showInputDialog(this, "Introduce Nota:", notaActual);
+
+    if (nuevaNota != null) {
+        tblPlatillosHastaElMomento.setValueAt(nuevaNota, filaSeleccionada, 3);
+        
+        
+        DetallePedidoDTO detalle = control.ControlPresentacion.getInstancia().getDetallesSeleccionados().get(filaSeleccionada);
+        detalle.setNota(nuevaNota);
+    }
     }//GEN-LAST:event_btnEditarNotaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarPlatillos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarPlatillos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarPlatillos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarPlatillos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SeleccionarPlatillos().setVisible(true);
-            }
-        });
+
+    }//GEN-LAST:event_btnContinuarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+    this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
     }
+
+    public void setBtnRegresar(JButton btnRegresar) {
+        this.btnRegresar = btnRegresar;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnEditarNota;
     private javax.swing.JButton btnEliminarPlatillo;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel pnlBuscadorPlatillos;
     private javax.swing.JTable tblPlatillosHastaElMomento;
     // End of variables declaration//GEN-END:variables

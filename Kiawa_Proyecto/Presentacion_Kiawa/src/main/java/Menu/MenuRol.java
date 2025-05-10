@@ -4,7 +4,7 @@
  */
 package Menu;
 
-import Logins.LoginEstudiante;
+import Control.ControlAlumno;
 
 /**
  *
@@ -17,6 +17,7 @@ public class MenuRol extends javax.swing.JFrame {
      */
     public MenuRol() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -41,7 +42,7 @@ public class MenuRol extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
         jLabel5.setText("Selecciona Tu Rol");
 
-        btnEstudiante.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnEstudiante.setFont(new java.awt.Font("Arial Black", 1, 16)); // NOI18N
         btnEstudiante.setText("Estudiante");
         btnEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,9 +136,9 @@ public class MenuRol extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministradorActionPerformed
 
     private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
-       LoginEstudiante loginEstudiante = new LoginEstudiante();
-       loginEstudiante.setVisible(true);
-       this.dispose();
+
+        ControlAlumno.getInstancia().iniciarFlujo();
+        this.dispose();
     }//GEN-LAST:event_btnEstudianteActionPerformed
 
     private void btnCocineroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCocineroActionPerformed

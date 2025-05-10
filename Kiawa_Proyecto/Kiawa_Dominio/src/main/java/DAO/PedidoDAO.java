@@ -20,13 +20,17 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
+import static com.mongodb.internal.authentication.AwsCredentialHelper.LOGGER;
 import dto.AlumnoDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
+import java.util.logging.Logger;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -248,6 +252,7 @@ public class PedidoDAO implements IPedidoDAO {
 
         } catch (Exception e) {
             System.err.println("Error al crear pedido: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Error al crear pedido", e);
             return false;
         } finally {
             if (conexion != null) {
@@ -255,6 +260,7 @@ public class PedidoDAO implements IPedidoDAO {
             }
         }
     }
+private static final Logger LOGGER = Logger.getLogger(PedidoDAO.class.getName());
 
     public boolean revisarExistenciasPlatillo(List<DetallePedido> detalles, StringBuilder mensajeError) {
         PlatilloDAO platilloDAO = new PlatilloDAO();

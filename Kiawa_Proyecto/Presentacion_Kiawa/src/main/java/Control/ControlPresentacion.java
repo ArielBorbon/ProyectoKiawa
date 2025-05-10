@@ -8,6 +8,7 @@ public class ControlPresentacion {
 
     private static ControlPresentacion instancia;
     private List<DetallePedidoDTO> detallesSeleccionados;
+    private Double total;
 
     private ControlPresentacion() {
         detallesSeleccionados = new ArrayList<>();
@@ -35,4 +36,16 @@ public class ControlPresentacion {
     public void limpiarDetalles() {
         detallesSeleccionados.clear();
     }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+    
+    
+    
+    
 }

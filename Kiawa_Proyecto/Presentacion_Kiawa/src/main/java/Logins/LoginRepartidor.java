@@ -26,6 +26,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
      */
     public LoginRepartidor() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

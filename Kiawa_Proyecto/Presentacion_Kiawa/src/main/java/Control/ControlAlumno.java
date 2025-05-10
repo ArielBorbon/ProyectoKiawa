@@ -17,6 +17,8 @@ import dto.LoginRequestDTO;
 import dto.UbicacionDTO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,16 +27,26 @@ import javax.swing.JOptionPane;
  */
 public class ControlAlumno {
 
+    private  Stack<JFrame> historialFrames = new Stack<>();
+
     private static ControlAlumno instancia = new ControlAlumno();
     private AlumnoDTO alumno;
     private List<DetallePedidoDTO> detallesSeleccionados;
     private UbicacionDTO ubicacionSeleccionada;
     private String instruccionesEntrega;
+    private Double total;
 
     private ControlAlumno() {
         detallesSeleccionados = new ArrayList<>();
     }
-    
+
+    public Stack<JFrame> getHistorialFrames() {
+        return historialFrames;
+    }
+
+    public void setHistorialFrames(Stack<JFrame> historialFrames) {
+        this.historialFrames = historialFrames;
+    }
     
     
     
@@ -75,78 +87,157 @@ public class ControlAlumno {
         this.instruccionesEntrega = instruccionesEntrega;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public void cerrarSesion() {
+        this.alumno = null;
+        this.detallesSeleccionados.clear();
+        this.ubicacionSeleccionada = null;
+        this.instruccionesEntrega = null;
+        this.total = null;
+
+        // Limpia también el ControlPresentacion
+        ControlPresentacion.getInstancia().limpiarDetalles();
+    }
+
     public void iniciarFlujo() {
         LoginEstudiante login = new LoginEstudiante();
+
         login.getBtnLoginEstudiante().addActionListener(e -> {
             try {
                 String id = login.getTxtId().getText().trim();
                 String pwd = new String(login.getTxtContrasena().getPassword());
                 AlumnoDTO a = FactoryBO.crearAlumnoBO().recuperarAlumno(new LoginRequestDTO(id, pwd));
                 ControlAlumno.getInstancia().setAlumno(a);
+
                 login.dispose();
                 mostrarMenuEstudiante();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(login, "Credenciales inválidas");
             }
         });
+
         login.setVisible(true);
     }
 
     private void mostrarMenuEstudiante() {
         MenuEstudiante menu = new MenuEstudiante();
+
+        // AÑADE esta línea antes de dispose:
         menu.getBtnOrdenarPlatillos().addActionListener(e -> {
+            historialFrames.push(menu);
             menu.dispose();
             mostrarSeleccionarPlatillos();
         });
+
+        menu.getBtnCerrarSesion().addActionListener(e -> {
+            menu.dispose();
+            historialFrames.clear();
+            ControlAlumno.getInstancia().cerrarSesion();
+            iniciarFlujo();
+        });
+
         menu.setVisible(true);
     }
+    
+    public void mostrarMenuEstudianteP(){
+    mostrarMenuEstudiante();
+            }
 
     private void mostrarSeleccionarPlatillos() {
         SeleccionarPlatillos sel = new SeleccionarPlatillos();
-        // Cuando el usuario hace click en “Continuar”:
+
         sel.getBtnContinuar().addActionListener(e -> {
-            // Refrescar la tabla destino por si cambió
+            if (ControlPresentacion.getInstancia().getDetallesSeleccionados().isEmpty()) {
+                JOptionPane.showMessageDialog(sel, "Por favor, selecciona al menos un platillo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             sel.actualizarTablaSeleccionados();
-            // Guardar la lista global en el control
             ControlAlumno.getInstancia().setDetallesSeleccionados(
                     ControlPresentacion.getInstancia().getDetallesSeleccionados()
             );
+            ControlAlumno.getInstancia().setTotal(ControlPresentacion.getInstancia().getTotal());
+
+            historialFrames.push(sel);
             sel.dispose();
+
             mostrarSeleccionarUbicacion();
         });
+
+        sel.getBtnRegresar().addActionListener(e -> regresar());
+
         sel.setVisible(true);
     }
 
-private SeleccionarUbicacion seleccionarUbicacion;
+    public void regresar() {
+        if (!historialFrames.isEmpty()) {
+            JFrame actual = historialFrames.pop();
+            actual.dispose();
+        }
 
-private void mostrarSeleccionarUbicacion() {
-    seleccionarUbicacion = new SeleccionarUbicacion();
-    seleccionarUbicacion.getBtnContinuar().addActionListener(e -> {
-        String ed = seleccionarUbicacion.getTxtEdificio().getText();
-        String au = seleccionarUbicacion.getTxtAula().getText();
-        String ins = seleccionarUbicacion.getTxtInstruccionesEntrega().getText();
-        ControlAlumno.getInstancia().setUbicacionSeleccionada(new UbicacionDTO(ed, au));
-        ControlAlumno.getInstancia().setInstruccionesEntrega(ins);
-        seleccionarUbicacion.dispose();
-        mostrarConfirmarPedido();
-    });
-    seleccionarUbicacion.setVisible(true);
-}
-
-    
-    
-    
-private ConfirmarPedido confirmarPedido;
-
-public void mostrarConfirmarPedido() {
-    if (confirmarPedido == null) {
-        confirmarPedido = new ConfirmarPedido();
+        if (!historialFrames.isEmpty()) {
+            JFrame anterior = historialFrames.peek();
+            anterior.setVisible(true);
+        } else {
+            mostrarMenuEstudiante();
+        }
     }
-    confirmarPedido.acomodarTodo(); 
-    confirmarPedido.setVisible(true);
-    seleccionarUbicacion.setVisible(false);
-}
 
+    private SeleccionarUbicacion seleccionarUbicacion;
 
+    private void mostrarSeleccionarUbicacion() {
+        seleccionarUbicacion = new SeleccionarUbicacion();
+        if (ubicacionSeleccionada != null) {
+            seleccionarUbicacion.getTxtAula().setText(ubicacionSeleccionada.getSalon());
+            seleccionarUbicacion.getTxtEdificio().setText(ubicacionSeleccionada.getEdificio());
+            seleccionarUbicacion.getTxtInstruccionesEntrega().setText(instruccionesEntrega);
+        }
+
+        historialFrames.push(seleccionarUbicacion);
+
+        seleccionarUbicacion.getBtnContinuar().addActionListener(e -> {
+            if (seleccionarUbicacion.getTxtAula().getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(seleccionarUbicacion, "Por favor, selecciona ubicación.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            // Guardar datos y avanzar
+            String ed = seleccionarUbicacion.getTxtEdificio().getText();
+            String au = seleccionarUbicacion.getTxtAula().getText();
+            String ins = seleccionarUbicacion.getTxtInstruccionesEntrega().getText();
+
+            ControlAlumno.getInstancia().setUbicacionSeleccionada(new UbicacionDTO(ed, au));
+            ControlAlumno.getInstancia().setInstruccionesEntrega(ins);
+
+            seleccionarUbicacion.dispose();
+            mostrarConfirmarPedido();
+        });
+
+        seleccionarUbicacion.getBtnRegresar().addActionListener(e -> regresar());
+
+        seleccionarUbicacion.setVisible(true);
+    }
+
+    private ConfirmarPedido confirmarPedido;
+
+    public void mostrarConfirmarPedido() {
+        if (confirmarPedido == null) {
+            confirmarPedido = new ConfirmarPedido();
+        }
+
+        historialFrames.push(confirmarPedido);
+
+        confirmarPedido.acomodarTodo();
+
+        confirmarPedido.getBtnRegresar().addActionListener(e -> regresar());
+
+        confirmarPedido.setVisible(true);
+    }
 
 }

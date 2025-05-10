@@ -13,8 +13,8 @@ public class DetallePedidoDTO {
     private String nombrePlatillo;
     private Integer cantidad;
     private Double precioUnitario;
-    private String nota; //la entidad tiene subtotal que se saca con cantidad * precio unitario, pero el DTO no tiene 
-    private double subtotal;
+    private String nota;
+    private Double subtotal;
 
     public DetallePedidoDTO() {
     }
@@ -24,9 +24,10 @@ public class DetallePedidoDTO {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.nota = nota;
+        this.subtotal = cantidad * precioUnitario;
     }
 
-    public DetallePedidoDTO(String nombrePlatillo, Integer cantidad, Double precioUnitario, String nota, double subtotal) {
+    public DetallePedidoDTO(String nombrePlatillo, Integer cantidad, Double precioUnitario, String nota, Double subtotal) {
         this.nombrePlatillo = nombrePlatillo;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
@@ -38,7 +39,7 @@ public class DetallePedidoDTO {
         return subtotal;
     }
 
-    public void setSubtotal(double subtotal) {
+    public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
     
