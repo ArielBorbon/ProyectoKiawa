@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Entidades.DetallePedido;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.UbicacionDTO;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -96,4 +100,22 @@ public class PedidoDAOTest {
 //        
 //    }
 //    
+//
+//    @Test
+//    public void testObtenerHistorialPlatillosPorAlumno() {
+//        PedidoDAO dao = new PedidoDAO();
+//
+//        String idAlumno = "Ariel Borbon"; 
+//        int CANTIDAD_ESPERADA = 12;
+//        
+//        List<DetallePedido> historial = dao.obtenerHistorialPlatillosPorAlumno(idAlumno);
+//
+//        assertNotNull(historial);
+//        assertTrue(historial.size() >= 0); 
+//        assertEquals(CANTIDAD_ESPERADA, historial.size());
+//        
+//        for (DetallePedido detalle : historial) {
+//            System.out.println(detalle.getNombrePlatillo() + " x" + detalle.getCantidad());
+//        }
+//    }
 }

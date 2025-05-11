@@ -33,5 +33,7 @@ public interface IPedidoDAO {
     boolean crearPedido(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno);
     
     boolean cambiarEstadoPedido(String folio, String nuevoEstado);
+    
+    public List<DetallePedido> obtenerHistorialPlatillosPorAlumno(String nombreAlumno);
 }
 

@@ -88,8 +88,18 @@ public class PedidoBO implements IPedidoBO {
 
         return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
     }
-
+    
+    @Override
     public boolean cambiarEstadoPedidoBO(String folio, String nuevoEstado) {
         return pedidoDAO.cambiarEstadoPedido(folio, nuevoEstado);
+    }
+
+    @Override
+    public List<DetallePedido> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno) {
+        if (nombreAlumno == null || nombreAlumno.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del alumno no puede ser nulo o vacío.");
+        }
+
+        return pedidoDAO.obtenerHistorialPlatillosPorAlumno(nombreAlumno);
     }
 }

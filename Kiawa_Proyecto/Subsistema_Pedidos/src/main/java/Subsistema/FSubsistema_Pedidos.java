@@ -35,8 +35,6 @@ public class FSubsistema_Pedidos {
         this.platilloBO = platilloBO;
         this.ubicacionBO = ubicacionBO;
     }
-    
-    
 
     /**
      * 1. Verificar si un folio ya existe
@@ -78,5 +76,9 @@ public class FSubsistema_Pedidos {
 
     public boolean cambiarEstadoPedido(String folio, String nuevoEstado) {
         return pedidoBO.cambiarEstadoPedidoBO(folio, nuevoEstado);
+    }
+
+    public List<DetallePedido> obtenerHistorialPorNombreAlumno(String nombreAlumno) {
+        return pedidoBO.obtenerHistorialPorNombreAlumnoBO(nombreAlumno);
     }
 }

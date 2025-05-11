@@ -31,4 +31,8 @@ public interface IPedidoBO {
     ) throws Exception;
 
     boolean crearPedidoBO(PedidoDTO pedidoDTO, List<DetallePedidoDTO> detalleDTOs, String idAlumno);
+    
+    boolean cambiarEstadoPedidoBO(String folio, String nuevoEstado);
+    
+    List<DetallePedido> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno);
 }

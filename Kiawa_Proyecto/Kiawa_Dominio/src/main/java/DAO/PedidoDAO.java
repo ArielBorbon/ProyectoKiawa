@@ -13,6 +13,7 @@ import Entidades.Ubicacion;
 import Mappers.DetallePedidoMapper;
 import Mappers.PedidoMapper;
 import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -28,6 +29,7 @@ import java.util.logging.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -260,7 +262,7 @@ public class PedidoDAO implements IPedidoDAO {
             }
         }
     }
-private static final Logger LOGGER = Logger.getLogger(PedidoDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PedidoDAO.class.getName());
 
     public boolean revisarExistenciasPlatillo(List<DetallePedido> detalles, StringBuilder mensajeError) {
         PlatilloDAO platilloDAO = new PlatilloDAO();
@@ -304,5 +306,46 @@ private static final Logger LOGGER = Logger.getLogger(PedidoDAO.class.getName())
                 conexion.close();
             }
         }
+    }
+
+    @Override
+    public List<DetallePedido> obtenerHistorialPlatillosPorAlumno(String nombreAlumno) {
+        List<DetallePedido> historial = new ArrayList<>();
+        MongoClient conexion = null;
+
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Pedidos");
+
+            Bson filtro = Filters.eq("nombreAlumno", nombreAlumno);
+            try (MongoCursor<Document> cursor = coleccion.find(filtro).iterator()) {
+                while (cursor.hasNext()) {
+                    Document pedidoDoc = cursor.next();
+                    List<Document> platillos = (List<Document>) pedidoDoc.get("platillos");
+
+                    for (Document platilloDoc : platillos) {
+                        DetallePedido detalle = new DetallePedido();
+                        detalle.setIdPlatillo(platilloDoc.getString("idPlatillo"));
+                        detalle.setNombrePlatillo(platilloDoc.getString("nombrePlatillo"));
+                        detalle.setCantidad(platilloDoc.getInteger("cantidad"));
+                        detalle.setPrecioUnitario(platilloDoc.getDouble("precioUnitario"));
+                        detalle.setSubtotal(platilloDoc.getDouble("subtotal"));
+                        detalle.setNota(platilloDoc.getString("nota"));
+                        historial.add(detalle);
+                    }
+                }
+            }
+
+        } catch (MongoException e) {
+            System.err.println("Error al obtener historial de platillos por nombre: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Error al obtener historial de platillos por nombre", e);
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+
+        return historial;
     }
 }
