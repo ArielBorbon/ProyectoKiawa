@@ -13,6 +13,7 @@ import Subsistema.FSubsistema_Repartidor;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
 import dto.RepartidorDTO;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -34,6 +35,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
     public LoginRepartidor() {
         initComponents();
         this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0xc4c4c4));
     }
 
     /**
