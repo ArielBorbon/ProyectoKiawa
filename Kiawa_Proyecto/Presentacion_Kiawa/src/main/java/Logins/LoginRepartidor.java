@@ -8,12 +8,19 @@ import Menu.MenuRol;
 import BO.AlumnoBO;
 import CIA.Fachada_CIA;
 import Fabricas.FactoryBO;
+import CasosDeUso.CU.EntregarPedido.PedidosRepartidor;
+import Subsistema.FSubsistema_Repartidor;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
+import dto.RepartidorDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
@@ -43,7 +50,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtContrasena = new javax.swing.JPasswordField();
         txtId = new javax.swing.JTextField();
-        btnLoginEstudiante = new javax.swing.JButton();
+        btnLoginRepartidor = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,11 +68,11 @@ public class LoginRepartidor extends javax.swing.JFrame {
 
         txtId.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        btnLoginEstudiante.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        btnLoginEstudiante.setText("Iniciar Sesion");
-        btnLoginEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        btnLoginRepartidor.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnLoginRepartidor.setText("Iniciar Sesion");
+        btnLoginRepartidor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginEstudianteActionPerformed(evt);
+                btnLoginRepartidorActionPerformed(evt);
             }
         });
 
@@ -96,7 +103,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLoginEstudiante)
+                                .addComponent(btnLoginRepartidor)
                                 .addGap(35, 35, 35))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
@@ -120,7 +127,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
                         .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnLoginEstudiante)
+                        .addComponent(btnLoginRepartidor)
                         .addGap(18, 18, 18)
                         .addComponent(btnRegresar)
                         .addGap(28, 28, 28))))
@@ -129,23 +136,31 @@ public class LoginRepartidor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEstudianteActionPerformed
+    private void btnLoginRepartidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginRepartidorActionPerformed
 
         try {
             String id = this.txtId.getText().trim();
             String contrasena = new String(this.txtContrasena.getPassword());
 
-        
             LoginRequestDTO login = new LoginRequestDTO(id, contrasena);
+            FSubsistema_Repartidor subsistemaRepartidor = new FSubsistema_Repartidor();
 
+            RepartidorDTO repartidor = subsistemaRepartidor.iniciarSesion(login.getId(), login.getContrasena());
+
+            if (repartidor != null) {
+                JOptionPane.showMessageDialog(this, "Bienvenido: " + repartidor.getNombreCompleto(), "Exito", INFORMATION_MESSAGE);
+                new PedidosRepartidor().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
             }
-         catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(LoginAdministrador.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Usuario o Contraseña Incorrectos. Intente De nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-         }
+        }
 
 
-    }//GEN-LAST:event_btnLoginEstudianteActionPerformed
+    }//GEN-LAST:event_btnLoginRepartidorActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         MenuRol menuPrincipal = new MenuRol();
@@ -191,8 +206,66 @@ public class LoginRepartidor extends javax.swing.JFrame {
         });
     }
 
+    public JButton getBtnLoginRepartidor() {
+        return btnLoginRepartidor;
+    }
+
+    public void setBtnLoginRepartidor(JButton btnLoginRepartidor) {
+        this.btnLoginRepartidor = btnLoginRepartidor;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public void setBtnRegresar(JButton btnRegresar) {
+        this.btnRegresar = btnRegresar;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JPasswordField getTxtContrasena() {
+        return txtContrasena;
+    }
+
+    public void setTxtContrasena(JPasswordField txtContrasena) {
+        this.txtContrasena = txtContrasena;
+    }
+
+    public JTextField getTxtId() {
+        return txtId;
+    }
+
+    public void setTxtId(JTextField txtId) {
+        this.txtId = txtId;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLoginEstudiante;
+    private javax.swing.JButton btnLoginRepartidor;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

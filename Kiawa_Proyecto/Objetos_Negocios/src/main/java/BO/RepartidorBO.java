@@ -81,5 +81,14 @@ public class RepartidorBO implements IRepartidorBO {
     public List<RepartidorDTO> obtenerTodosLosRepartidoresBO() {
         return repartidorDAO.obtenerTodosLosRepartidores(); 
     }
+    
+    @Override
+    public RepartidorDTO iniciarSesionRepartidorBO(String idRepartidor, String contrasena) {
+        if (idRepartidor == null || idRepartidor.isBlank() || contrasena == null || contrasena.isBlank()) {
+            return null;
+        }
+
+        return repartidorDAO.iniciarSesionRepartidor(idRepartidor, contrasena);
+    }
 }
 

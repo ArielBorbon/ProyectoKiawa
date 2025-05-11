@@ -29,5 +29,7 @@ public interface IRepartidorDAO {
     Repartidor buscarRepartidorPorIdFriendly(String idFriendly);
     
     String crearIDFriendly();
+    
+    RepartidorDTO iniciarSesionRepartidor(String idRepartidor, String contrasena);
 }
 

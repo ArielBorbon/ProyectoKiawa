@@ -29,4 +29,6 @@ public interface IRepartidorBO {
     List<RepartidorDTO> obtenerTrabajadoresDeshabilitadosBO();
 
     List<RepartidorDTO> obtenerTodosLosRepartidoresBO();
+    
+    public RepartidorDTO iniciarSesionRepartidorBO(String idRepartidor, String contrasena);
 }

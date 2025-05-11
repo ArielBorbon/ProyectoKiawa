@@ -284,4 +284,46 @@ public class RepartidorDAO implements IRepartidorDAO {
         return repartidores;
     }
 
+    @Override
+    public RepartidorDTO iniciarSesionRepartidor(String idRepartidor, String contrasena) {
+        MongoClient clienteMongo = null;
+        Conexion conexion = Conexion.getInstancia();
+
+        try {
+            clienteMongo = conexion.crearConexion();
+            MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+            MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
+
+            Document filtro = new Document("idRepartidor", idRepartidor);
+            Document resultado = coleccion.find(filtro).first();
+
+            if (resultado != null) {
+                String contrasenaAlmacenada = resultado.getString("contrasena");
+                if (contrasenaAlmacenada != null && contrasenaAlmacenada.equals(contrasena)) {
+                    RepartidorDTO repartidorDTO = new RepartidorDTO(
+                            resultado.getString("idRepartidor"),
+                            resultado.getString("nombreCompleto"),
+                            resultado.getString("telefono"),
+                            resultado.getBoolean("disponible"),
+                            resultado.getString("domicilio"),
+                            resultado.getString("apodo"),
+                            resultado.getDouble("salarioDiario"),
+                            resultado.getString("diasTrabajo"),
+                            resultado.getString("horario"),
+                            resultado.getString("consideracionesExtras")
+                    );
+                    return repartidorDTO; 
+                }
+            }
+
+        } catch (MongoException e) {
+            System.err.println("Error al iniciar sesión: " + e.getMessage());
+        } finally {
+            if (clienteMongo != null) {
+                conexion.cerrarConexion(clienteMongo);
+            }
+        }
+
+        return null; 
+    }
 }
