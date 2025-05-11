@@ -30,7 +30,7 @@ public class FSubsistema_Repartidor {
         return repartidorBO.crearRepartidorBO(dto);
     }
 
-    public String crearIDFriendly() {
+    public String crearIDFriendlyRepartidor() {
         return repartidorBO.crearIDFriendlyBO();
     }
 

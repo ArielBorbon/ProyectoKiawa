@@ -29,5 +29,7 @@ public interface ICocineroDAO {
     List<CocineroDTO> obtenerTodosLosCocineros();
     
     Cocinero buscarCocineroPorIdFriendly(String idFriendly);
+    
+    public CocineroDTO loginCocinero(String idFriendly, String contrasena) throws Exception;
 }
 

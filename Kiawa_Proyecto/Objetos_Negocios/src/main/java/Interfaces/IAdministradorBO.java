@@ -26,4 +26,6 @@ public interface IAdministradorBO {
     List<RepartidorDTO> obtenerTodosLosEmpleadosBO();
 
     List<RepartidorDTO> obtenerTodosLosEmpleadosPorDisponibilidadBO(boolean disponibilidad);
+    
+    public AdministradorDTO loginAdministradorBO(String idFriendly, String contrasena) throws Exception;
 }

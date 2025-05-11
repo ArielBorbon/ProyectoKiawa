@@ -79,5 +79,29 @@ public class CocineroBO implements ICocineroBO {
     public List<CocineroDTO> obtenerTodosLosCocinerosBO() {
         return cocineroDAO.obtenerTodosLosCocineros();
     }
+    
+    
+    @Override
+    public CocineroDTO loginCocineroBO(String idFriendly, String contrasena) throws Exception {
+    if (idFriendly == null || idFriendly.trim().isEmpty()) {
+        throw new Exception("El ID del cocinero no puede estar vacío.");
+    }
+
+    if (contrasena == null || contrasena.trim().isEmpty()) {
+        throw new Exception("La contraseña no puede estar vacía.");
+    }
+
+    CocineroDTO dto = cocineroDAO.loginCocinero(idFriendly, contrasena);
+
+    if (dto == null) {
+        throw new Exception("ID o contraseña incorrectos.");
+    }
+
+    return dto;
+}
+
+    
+    
+    
 }
 

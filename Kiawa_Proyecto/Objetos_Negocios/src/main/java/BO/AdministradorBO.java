@@ -83,5 +83,26 @@ public class AdministradorBO implements IAdministradorBO{
     public List<RepartidorDTO> obtenerTodosLosEmpleadosPorDisponibilidadBO(boolean disponibilidad) {
         return administradorDAO.obtenerTodosLosEmpleadosPorDisponibilidad(disponibilidad);
     }
+    
+    @Override
+    public AdministradorDTO loginAdministradorBO(String idFriendly, String contrasena) throws Exception {
+        if (idFriendly == null || idFriendly.trim().isEmpty()) {
+            throw new Exception("El ID del administrador no puede estar vacío.");
+        }
+
+        if (contrasena == null || contrasena.trim().isEmpty()) {
+            throw new Exception("La contraseña no puede estar vacía.");
+        }
+
+        AdministradorDTO admin = administradorDAO.loginAdministrador(idFriendly, contrasena);
+        if (admin == null) {
+            throw new Exception("ID o contraseña incorrectos.");
+        }
+
+        return admin;
+    }
+    
+    
+    
 }
 

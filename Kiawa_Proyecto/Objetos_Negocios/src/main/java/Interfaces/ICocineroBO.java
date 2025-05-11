@@ -29,4 +29,6 @@ public interface ICocineroBO {
     List<CocineroDTO> obtenerTrabajadoresDeshabilitadosBO();
 
     List<CocineroDTO> obtenerTodosLosCocinerosBO();
+    
+    public CocineroDTO loginCocineroBO(String idFriendly, String contrasena) throws Exception;
 }

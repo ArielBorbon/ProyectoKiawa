@@ -206,4 +206,46 @@ public class AdministradorDAO implements IAdministradorDAO {
         return lista;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    @Override
+public AdministradorDTO loginAdministrador(String idFriendly, String contrasena) throws Exception {
+    MongoClient clienteMongo = null;
+    Conexion conexion = Conexion.getInstancia();
+
+    try {
+        clienteMongo = conexion.crearConexion();
+        MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Administradores");
+
+        Document filtro = new Document("idAdministrador", idFriendly)
+                .append("contrasena", contrasena);
+
+        Document resultado = coleccion.find(filtro).first();
+
+        if (resultado != null) {
+            AdministradorDTO dto = new AdministradorDTO();
+            dto.setIdAdministrador(resultado.getString("idAdministrador"));
+            dto.setNombreCompleto(resultado.getString("nombreCompleto"));
+            dto.setTelefono(resultado.getString("telefono"));
+            return dto;
+        } else {
+            return null; 
+        }
+
+    } catch (MongoException e) {
+        throw new Exception("Error al iniciar sesión del administrador: " + e.getMessage());
+    } finally {
+        if (clienteMongo != null) {
+            conexion.cerrarConexion(clienteMongo);
+        }
+    }
+}
+
 }

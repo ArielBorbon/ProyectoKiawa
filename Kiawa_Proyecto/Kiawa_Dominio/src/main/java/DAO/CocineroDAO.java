@@ -296,5 +296,55 @@ public class CocineroDAO implements ICocineroDAO {
 
         return cocineros;
     }
+    
+    
+    
+    @Override
+public CocineroDTO loginCocinero(String idFriendly, String contrasena) throws Exception {
+    MongoClient clienteMongo = null;
+    Conexion conexion = Conexion.getInstancia();
+
+    try {
+        clienteMongo = conexion.crearConexion();
+        MongoDatabase baseDatos = conexion.obtenerBaseDatos(clienteMongo);
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Cocineros");
+
+        Document filtro = new Document("idCocinero", idFriendly).append("contrasena", contrasena);
+        Document doc = coleccion.find(filtro).first();
+
+        if (doc != null) {
+            Cocinero cocinero = new Cocinero();
+            cocinero.setIdCocinero(doc.getString("idCocinero"));
+            cocinero.setNombreCompleto(doc.getString("nombreCompleto"));
+            cocinero.setTelefono(doc.getString("telefono"));
+            cocinero.setDisponible(doc.getBoolean("disponible"));
+            cocinero.setContrasena(doc.getString("contrasena"));
+            cocinero.setDomicilio(doc.getString("domicilio"));
+            cocinero.setApodo(doc.getString("apodo"));
+            cocinero.setSalarioDiario(doc.getDouble("salarioDiario"));
+            cocinero.setDiasTrabajo(doc.getString("diasTrabajo"));
+            cocinero.setHorario(doc.getString("Horario"));
+            cocinero.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+
+            return CocineroMapper.toDTO(cocinero);
+        } else {
+            return null;
+        }
+
+    } catch (MongoException e) {
+        throw new Exception("Error al intentar login: " + e.getMessage());
+    } finally {
+        if (clienteMongo != null) {
+            conexion.cerrarConexion(clienteMongo);
+        }
+    }
+}
+
+    
+    
+    
+    
+    
+    
 
 }
