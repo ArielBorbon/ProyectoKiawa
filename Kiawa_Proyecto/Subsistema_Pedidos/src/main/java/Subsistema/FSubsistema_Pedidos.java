@@ -82,12 +82,10 @@ public class FSubsistema_Pedidos {
         return pedidoBO.obtenerHistorialPorNombreAlumnoBO(nombreAlumno);
     }
     
+    public List<PedidoDTO> recuperarPedidos(){
+        return pedidoBO.recuperarPedidos();
+    }
     
-    
-    
-    
-    
-
     public List<PedidoDTO> obtenerPedidosPendientes() {
         return pedidoBO.obtenerPedidosPendientesBO();
     }
@@ -98,5 +96,4 @@ public class FSubsistema_Pedidos {
 
     public PedidoDTO obtenerPedidoPorFolio(String folio) {
         return pedidoBO.obtenerPedidoPorFolioBO(folio);
-    }
 }

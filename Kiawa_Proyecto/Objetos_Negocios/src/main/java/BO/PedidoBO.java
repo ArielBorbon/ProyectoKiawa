@@ -88,7 +88,7 @@ public class PedidoBO implements IPedidoBO {
 
         return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
     }
-
+    
     @Override
     public boolean cambiarEstadoPedidoBO(String folio, String nuevoEstado) {
         return pedidoDAO.cambiarEstadoPedido(folio, nuevoEstado);
@@ -102,13 +102,12 @@ public class PedidoBO implements IPedidoBO {
 
         return pedidoDAO.obtenerHistorialPlatillosPorAlumno(nombreAlumno);
     }
-    
-    
-    
-    
-    
-    
 
+    @Override
+    public List<PedidoDTO> recuperarPedidos() {
+        return pedidoDAO.recuperarPedidos();
+    }
+    
     public List<PedidoDTO> obtenerPedidosPendientesBO() {
         return pedidoDAO.obtenerPedidosPendientes();
     }
@@ -133,5 +132,4 @@ public class PedidoBO implements IPedidoBO {
         }
 
         return pedidoDAO.obtenerPedidoPorFolio(folio);
-    }
 }

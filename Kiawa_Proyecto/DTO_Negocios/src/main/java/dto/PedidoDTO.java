@@ -47,6 +47,13 @@ public class PedidoDTO {
         this.folio = folio;
     }
 
+    public PedidoDTO(String idPedido, Date fechaPedido, String estado, String nombreRepartidor) {
+        this.idPedido = idPedido;
+        this.fechaPedido = fechaPedido;
+        this.estado = estado;
+        this.nombreRepartidor = nombreRepartidor;
+    }
+
     
     
     
