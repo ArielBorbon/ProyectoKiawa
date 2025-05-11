@@ -4,6 +4,7 @@
  */
 package Control;
 
+import CasosDeUso.CU.EntregarPedido.DetallesPedido;
 import CasosDeUso.CU.EntregarPedido.PedidosRepartidor;
 import Fabricas.FactoryBO;
 import Logins.LoginRepartidor;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
  * @author Alberto Jimenez
  */
 public class ControlRepartidor {
+
     private Stack<JFrame> historialFrames = new Stack<>();
 
     private static ControlRepartidor instancia = new ControlRepartidor();
@@ -51,59 +53,59 @@ public class ControlRepartidor {
     public void setRepartidor(RepartidorDTO repartidor) {
         this.repartidor = repartidor;
     }
-    
-    public void cerrarSesion(){
+
+    public void cerrarSesion() {
         this.repartidor = null;
-        
+
         ControlPresentacion.getInstancia().limpiarDetalles();
     }
-    
-    public void iniciarFlujo(){
+
+    public void iniciarFlujo() {
         LoginRepartidor login = new LoginRepartidor();
-        
+
         login.getBtnLoginRepartidor().addActionListener(e -> {
-            
-            try{
+
+            try {
                 String id = login.getTxtId().getText().trim();
                 String pwd = new String(login.getTxtContrasena().getPassword());
-                RepartidorDTO r = FactoryBO.crearRepartidorBO().iniciarSesionRepartidorBO(id,pwd);
-                
-                if(r == null){
+                RepartidorDTO r = FactoryBO.crearRepartidorBO().iniciarSesionRepartidorBO(id, pwd);
+
+                if (r == null) {
                     JOptionPane.showMessageDialog(login, "Credenciales Invalidas");
                     throw new Exception();
                 }
-               ControlRepartidor.getInstancia().setRepartidor(r);
-               
-               login.dispose();
-               mostrarMenuRepartidor();
-                
-            } catch(Exception ex){
-                
+                ControlRepartidor.getInstancia().setRepartidor(r);
+
+                login.dispose();
+                mostrarMenuRepartidor();
+
+            } catch (Exception ex) {
+
             }
-            
+
         });
         login.setVisible(true);
     }
-    
-    public void mostrarMenuRepartidor(){
+
+    public void mostrarMenuRepartidor() {
         MenuRepartidor menu = new MenuRepartidor();
-        
+
         menu.getBtnSeleccionarPedido().addActionListener(e -> {
             historialFrames.push(menu);
             menu.dispose();
             mostrarSeleccionarPedidos();
         });
-        
+
         menu.getBtnCerrarSesion().addActionListener(e -> {
             menu.dispose();
             historialFrames.clear();
             ControlRepartidor.getInstancia().cerrarSesion();
             iniciarFlujo();
         });
-        
+
         menu.setVisible(true);
     }
-    
+
     public void regresar() {
         if (!historialFrames.isEmpty()) {
             JFrame actual = historialFrames.pop();
@@ -117,20 +119,44 @@ public class ControlRepartidor {
             mostrarMenuRepartidor();
         }
     }
-    
-    private void mostrarSeleccionarPedidos(){
+
+    private void mostrarSeleccionarPedidos() {
         PedidosRepartidor seleccionarPedido = new PedidosRepartidor();
-        
+
         seleccionarPedido.getBtnSeleccionarPedido().addActionListener(e -> {
             if (ControlPresentacion.getInstancia().getDetallesSeleccionados().isEmpty()) {
-                JOptionPane.showMessageDialog(seleccionarPedido, "Por favor, selecciona al menos un platillo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(seleccionarPedido, "Por favor, seleccionar un pedido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             seleccionarPedido.seleccionarPedido();
+            mostrarDetallesPedido();
+            seleccionarPedido.dispose();
         });
-        
-        seleccionarPedido.getBtnRegresar().addActionListener(e -> {regresar();});
+
+        seleccionarPedido.getBtnRegresar().addActionListener(e -> {
+            regresar();
+        });
         seleccionarPedido.setVisible(true);
     }
+
+    private void mostrarDetallesPedido() {
+        DetallesPedido detallesPedido = new DetallesPedido();
+
+        detallesPedido.getBtnEntregarPedido().addActionListener(e -> {
+
+        });
+        detallesPedido.getBtnDevolverPedido().addActionListener(e -> {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No se ha encontrado al alumno, se devolverá el producto.",
+                    "Devolución de pedido",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            regresar();
+            detallesPedido.dispose();
+        });
+        detallesPedido.setVisible(true);
+    }
+
 }

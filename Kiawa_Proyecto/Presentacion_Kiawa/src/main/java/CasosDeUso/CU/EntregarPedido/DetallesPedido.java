@@ -5,6 +5,7 @@
 package CasosDeUso.CU.EntregarPedido;
 
 import java.awt.Color;
+import javax.swing.JButton;
 
 /**
  *
@@ -176,6 +177,22 @@ public class DetallesPedido extends javax.swing.JFrame {
     private void txtAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlumnoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAlumnoActionPerformed
+
+    public JButton getBtnDevolverPedido() {
+        return btnDevolverPedido;
+    }
+
+    public void setBtnDevolverPedido(JButton btnDevolverPedido) {
+        this.btnDevolverPedido = btnDevolverPedido;
+    }
+
+    public JButton getBtnEntregarPedido() {
+        return btnEntregarPedido;
+    }
+
+    public void setBtnEntregarPedido(JButton btnEntregarPedido) {
+        this.btnEntregarPedido = btnEntregarPedido;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
