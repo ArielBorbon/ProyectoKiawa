@@ -5,6 +5,7 @@
 package Control;
 
 import CasosDeUso.CU.Equipo.ConfirmarPedido;
+import CasosDeUso.CU.Equipo.HistorialPedidos;
 import CasosDeUso.CU.Equipo.SeleccionarPlatillos;
 import CasosDeUso.CU.Equipo.SeleccionarUbicacion;
 import Fabricas.FactoryBO;
@@ -18,6 +19,8 @@ import dto.UbicacionDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -102,7 +105,6 @@ public class ControlAlumno {
         this.instruccionesEntrega = null;
         this.total = null;
 
-        // Limpia también el ControlPresentacion
         ControlPresentacion.getInstancia().limpiarDetalles();
     }
 
@@ -110,17 +112,25 @@ public class ControlAlumno {
         LoginEstudiante login = new LoginEstudiante();
 
         login.getBtnLoginEstudiante().addActionListener(e -> {
+
             try {
                 String id = login.getTxtId().getText().trim();
                 String pwd = new String(login.getTxtContrasena().getPassword());
                 AlumnoDTO a = FactoryBO.crearAlumnoBO().recuperarAlumno(new LoginRequestDTO(id, pwd));
+                
+                if (a == null) {
+                    JOptionPane.showMessageDialog(login, "Credenciales inválidas");
+                    throw new Exception();
+                }
+
                 ControlAlumno.getInstancia().setAlumno(a);
 
                 login.dispose();
                 mostrarMenuEstudiante();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(login, "Credenciales inválidas");
+                
             }
+
         });
 
         login.setVisible(true);
@@ -129,7 +139,6 @@ public class ControlAlumno {
     private void mostrarMenuEstudiante() {
         MenuEstudiante menu = new MenuEstudiante();
 
-        // AÑADE esta línea antes de dispose:
         menu.getBtnOrdenarPlatillos().addActionListener(e -> {
             historialFrames.push(menu);
             menu.dispose();
@@ -142,9 +151,41 @@ public class ControlAlumno {
             ControlAlumno.getInstancia().cerrarSesion();
             iniciarFlujo();
         });
+        
+        menu.getBtnVerHistorial().addActionListener(e -> {
+    historialFrames.push(menu);
+    menu.dispose();
+            try {
+                mostrarHistorialPedidos();
+            } catch (Exception ex) {
+                Logger.getLogger(ControlAlumno.class.getName()).log(Level.SEVERE, null, ex);
+            }
+});
+
 
         menu.setVisible(true);
     }
+    
+    
+    
+    private HistorialPedidos historialPedidosFrame;
+
+public void mostrarHistorialPedidos() throws Exception {
+    historialPedidosFrame = new HistorialPedidos();
+
+    historialFrames.push(historialPedidosFrame);
+
+    historialPedidosFrame.getBtnRegresar().addActionListener(e -> regresar());
+
+    historialPedidosFrame.setVisible(true);
+}
+
+    
+    
+    
+    
+    
+    
     
     public void mostrarMenuEstudianteP(){
     mostrarMenuEstudiante();

@@ -95,7 +95,7 @@ public class PedidoBO implements IPedidoBO {
     }
 
     @Override
-    public List<DetallePedido> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno) {
+    public List<PedidoDTO> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno) {
         if (nombreAlumno == null || nombreAlumno.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del alumno no puede ser nulo o vacío.");
         }

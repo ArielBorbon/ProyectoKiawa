@@ -4,6 +4,7 @@
  */
 package Menu;
 
+import java.awt.Color;
 import javax.accessibility.AccessibleContext;
 import javax.swing.JButton;
 import javax.swing.JRootPane;
@@ -20,7 +21,7 @@ public class MenuEstudiante extends javax.swing.JFrame {
     public MenuEstudiante() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.btnHistorial.setVisible(false);
+        getContentPane().setBackground(new Color(0xffff90));
     }
 
     /**
@@ -36,27 +37,30 @@ public class MenuEstudiante extends javax.swing.JFrame {
         btnOrdenarPlatillos = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnHistorial = new javax.swing.JButton();
+        btnVerHistorial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("French Script MT", 3, 72)); // NOI18N
         jLabel1.setText("Kiawa Systems");
 
+        btnOrdenarPlatillos.setBackground(new java.awt.Color(153, 255, 153));
         btnOrdenarPlatillos.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnOrdenarPlatillos.setText("Pedir Platillos");
 
+        btnCerrarSesion.setBackground(new java.awt.Color(255, 153, 153));
         btnCerrarSesion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesion");
 
         jLabel2.setFont(new java.awt.Font("Goudy Old Style", 3, 24)); // NOI18N
         jLabel2.setText("ESTUDIANTE");
 
-        btnHistorial.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        btnHistorial.setText("Historial Platillos");
-        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+        btnVerHistorial.setBackground(new java.awt.Color(153, 204, 255));
+        btnVerHistorial.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        btnVerHistorial.setText("Historial Platillos");
+        btnVerHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialActionPerformed(evt);
+                btnVerHistorialActionPerformed(evt);
             }
         });
 
@@ -67,7 +71,7 @@ public class MenuEstudiante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHistorial)
+                    .addComponent(btnVerHistorial)
                     .addComponent(btnOrdenarPlatillos, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -91,7 +95,7 @@ public class MenuEstudiante extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnOrdenarPlatillos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHistorial)
+                .addComponent(btnVerHistorial)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrarSesion)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -100,9 +104,17 @@ public class MenuEstudiante extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+    private void btnVerHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerHistorialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnHistorialActionPerformed
+    }//GEN-LAST:event_btnVerHistorialActionPerformed
+
+    public JButton getBtnVerHistorial() {
+        return btnVerHistorial;
+    }
+
+    public void setBtnVerHistorial(JButton btnVerHistorial) {
+        this.btnVerHistorial = btnVerHistorial;
+    }
 
 
     public JButton getBtnOrdenarPlatillos() {
@@ -136,8 +148,8 @@ public class MenuEstudiante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnOrdenarPlatillos;
+    private javax.swing.JButton btnVerHistorial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

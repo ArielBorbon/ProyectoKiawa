@@ -34,5 +34,5 @@ public interface IPedidoBO {
     
     boolean cambiarEstadoPedidoBO(String folio, String nuevoEstado);
     
-    List<DetallePedido> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno);
+    List<PedidoDTO> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno);
 }

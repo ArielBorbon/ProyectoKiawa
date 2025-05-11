@@ -6,6 +6,7 @@ package CasosDeUso.CU.Equipo;
 
 import Subsistema.FSubsistema_Ubicaciones;
 import dto.UbicacionDTO;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -32,6 +33,7 @@ public class SeleccionarUbicacion extends javax.swing.JFrame {
         initComponents();
         llenarTablaUbicaciones(null);
         this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0xffff90));
         tblUbicaciones.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent evt) {
@@ -275,6 +277,7 @@ class NonEditableTableModel extends DefaultTableModel {
         jLabel3.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel3.setText("Aula:");
 
+        btnFiltrar.setBackground(new java.awt.Color(204, 204, 204));
         btnFiltrar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
@@ -291,9 +294,11 @@ class NonEditableTableModel extends DefaultTableModel {
         jLabel5.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel5.setText("Instrucciones De Entrega");
 
+        btnContinuar.setBackground(new java.awt.Color(153, 255, 153));
         btnContinuar.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnContinuar.setText("Continuar");
 
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {

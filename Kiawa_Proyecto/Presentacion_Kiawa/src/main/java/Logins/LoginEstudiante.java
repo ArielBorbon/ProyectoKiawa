@@ -10,6 +10,7 @@ import CIA.Fachada_CIA;
 import Fabricas.FactoryBO;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.accessibility.AccessibleContext;
@@ -33,6 +34,7 @@ public class LoginEstudiante extends javax.swing.JFrame {
     public LoginEstudiante() {
         initComponents();
         this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0xc4c4c4));
     }
 
     /**

@@ -29,7 +29,9 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -459,44 +461,65 @@ public class PlatilloDAO implements IPlatilloDAO {
         }
     }
 
-    @Override
-    public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
-        MongoClient conexion = null;
-        boolean todoCorrecto = true;
-        try {
-            conexion = Conexion.getInstancia().crearConexion();
-            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-            MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
+@Override
+public boolean hayExistenciasSuficientesSB(List<DetallePedido> detalles, StringBuilder mensajeError) {
+    MongoClient conexion = null;
+    boolean todoCorrecto = true;
+    try {
+        // 1) Sumar cantidades por platillo
+        Map<String, Integer> totalesPorPlatillo = new HashMap<>();
+        for (DetallePedido det : detalles) {
+            totalesPorPlatillo.merge(
+                det.getNombrePlatillo(),
+                det.getCantidad(),
+                Integer::sum
+            );
+        }
 
-            for (DetallePedido detalle : detalles) {
-                Document filtro = new Document("nombre", detalle.getNombrePlatillo());
-                Document platilloDoc = coleccion.find(filtro).first();
+        // 2) Abrir conexión una vez
+        conexion = Conexion.getInstancia().crearConexion();
+        MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
-                if (platilloDoc == null) {
-                    mensajeError.append("El platillo '").append(detalle.getNombrePlatillo()).append("' no existe.\n");
-                    todoCorrecto = false;
-                    continue;
-                }
+        // 3) Para cada platillo, comprobar stock
+        for (Map.Entry<String,Integer> entry : totalesPorPlatillo.entrySet()) {
+            String nombre = entry.getKey();
+            int cantidadSolicitada = entry.getValue();
 
-                int existencias = platilloDoc.getInteger("existencias", 0);
-                if (existencias < detalle.getCantidad()) {
-                    mensajeError.append("No hay existencias suficientes para el platillo '")
-                            .append(detalle.getNombrePlatillo())
-                            .append("'. Requiere: ").append(detalle.getCantidad())
-                            .append(", disponibles: ").append(existencias)
-                            .append("\n");
-                    todoCorrecto = false;
-                }
+            Document filtro = new Document("nombre", nombre);
+            Document platilloDoc = coleccion.find(filtro).first();
+
+            if (platilloDoc == null) {
+                mensajeError.append("El platillo '")
+                            .append(nombre)
+                            .append("' no existe.\n");
+                todoCorrecto = false;
+                continue;
             }
 
-            return todoCorrecto;
-
-        } catch (Exception e) {
-            mensajeError.append("Error al verificar existencias: ").append(e.getMessage());
-            return false;
-        } finally {
-            Conexion.getInstancia().cerrarConexion(conexion);
+            int existencias = platilloDoc.getInteger("existencias", 0);
+            if (existencias < cantidadSolicitada) {
+                mensajeError.append("No hay suficientes existencias para '")
+                            .append(nombre)
+                            .append("'. Solicitado: ")
+                            .append(cantidadSolicitada)
+                            .append(", disponibles: ")
+                            .append(existencias)
+                            .append(".\n");
+                todoCorrecto = false;
+            }
         }
+
+    } catch (Exception e) {
+        // opcional: loguea
+        todoCorrecto = false;
+        mensajeError.append("Error al validar existencias: ").append(e.getMessage());
+    } finally {
+        Conexion.getInstancia().cerrarConexion(conexion);
     }
+
+    return todoCorrecto;
+}
+
 
 }

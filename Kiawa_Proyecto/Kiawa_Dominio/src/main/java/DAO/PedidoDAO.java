@@ -21,15 +21,14 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
-import static com.mongodb.internal.authentication.AwsCredentialHelper.LOGGER;
 import dto.AlumnoDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
+import dto.UbicacionDTO;
 import java.util.logging.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -308,44 +307,72 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
 
-    @Override
-    public List<DetallePedido> obtenerHistorialPlatillosPorAlumno(String nombreAlumno) {
-        List<DetallePedido> historial = new ArrayList<>();
-        MongoClient conexion = null;
+@Override
+public List<PedidoDTO> obtenerHistorialPlatillosPorAlumno(String nombreAlumno) {
+    MongoClient conexion = null;
+    List<PedidoDTO> historial = new ArrayList<>();
 
-        try {
-            conexion = Conexion.getInstancia().crearConexion();
-            MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
-            MongoCollection<Document> coleccion = baseDatos.getCollection("Pedidos");
+    try {
+        conexion = Conexion.getInstancia().crearConexion();
+        MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
+        MongoCollection<Document> coleccion = db.getCollection("Pedidos");
 
-            Bson filtro = Filters.eq("nombreAlumno", nombreAlumno);
-            try (MongoCursor<Document> cursor = coleccion.find(filtro).iterator()) {
-                while (cursor.hasNext()) {
-                    Document pedidoDoc = cursor.next();
-                    List<Document> platillos = (List<Document>) pedidoDoc.get("platillos");
+        // Filtro por nombre del alumno
+        Bson filtro = Filters.eq("nombreAlumno", nombreAlumno);
+        FindIterable<Document> documentos = coleccion.find(filtro);
 
-                    for (Document platilloDoc : platillos) {
-                        DetallePedido detalle = new DetallePedido();
-                        detalle.setIdPlatillo(platilloDoc.getString("idPlatillo"));
-                        detalle.setNombrePlatillo(platilloDoc.getString("nombrePlatillo"));
-                        detalle.setCantidad(platilloDoc.getInteger("cantidad"));
-                        detalle.setPrecioUnitario(platilloDoc.getDouble("precioUnitario"));
-                        detalle.setSubtotal(platilloDoc.getDouble("subtotal"));
-                        detalle.setNota(platilloDoc.getString("nota"));
-                        historial.add(detalle);
-                    }
+        for (Document doc : documentos) {
+            PedidoDTO pedido = new PedidoDTO();
+            pedido.setFolio(doc.getString("folio"));
+            pedido.setNombreAlumno(doc.getString("nombreAlumno"));
+            pedido.setTelefonoContacto(doc.getString("telefonoContacto"));
+            pedido.setInstruccionesEntrega(doc.getString("instruccionesEntrega"));
+            pedido.setFechaPedido(doc.getDate("fechaPedido"));
+            pedido.setEstado(doc.getString("estado"));
+            pedido.setNombreCocinero(doc.getString("nombreCocinero"));
+            pedido.setNombreRepartidor(doc.getString("nombreRepartidor"));
+            pedido.setTotal(doc.getDouble("total"));
+            pedido.setPagado(doc.getBoolean("pagado"));
+
+            // Ubicación
+            Document ubicacionDoc = (Document) doc.get("ubicacionEntrega");
+            if (ubicacionDoc != null) {
+                UbicacionDTO ubicacionDTO = new UbicacionDTO();
+                ubicacionDTO.setEdificio(ubicacionDoc.getString("edificio"));
+                ubicacionDTO.setSalon(ubicacionDoc.getString("salon"));
+                pedido.setUbicacionEntrega(ubicacionDTO);
+            }
+
+            // Lista de platillos
+            List<DetallePedidoDTO> detalles = new ArrayList<>();
+            List<Document> platillosDocs = (List<Document>) doc.get("platillos");
+            if (platillosDocs != null) {
+                for (Document detDoc : platillosDocs) {
+                    DetallePedidoDTO detalle = new DetallePedidoDTO();
+                    detalle.setNombrePlatillo(detDoc.getString("nombrePlatillo"));
+                    detalle.setCantidad(detDoc.getInteger("cantidad"));
+                    detalle.setPrecioUnitario(detDoc.getDouble("precioUnitario"));
+                    detalle.setSubtotal(detDoc.getDouble("subtotal"));
+                    detalle.setNota(detDoc.getString("nota"));
+                    detalles.add(detalle);
                 }
             }
 
-        } catch (MongoException e) {
-            System.err.println("Error al obtener historial de platillos por nombre: " + e.getMessage());
-            LOGGER.log(Level.SEVERE, "Error al obtener historial de platillos por nombre", e);
-        } finally {
-            if (conexion != null) {
-                conexion.close();
-            }
+            pedido.setPlatillos(detalles);
+
+            historial.add(pedido);
         }
 
-        return historial;
+    } catch (Exception e) {
+        System.err.println("Error al obtener historial: " + e.getMessage());
+        LOGGER.log(Level.SEVERE, "Error al obtener historial de pedidos por alumno", e);
+    } finally {
+        if (conexion != null) {
+            conexion.close();
+        }
     }
+
+    return historial;
+}
+
 }

@@ -10,6 +10,7 @@ import CIA.Fachada_CIA;
 import Fabricas.FactoryBO;
 import dto.AlumnoDTO;
 import dto.LoginRequestDTO;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ public class LoginCocinero extends javax.swing.JFrame {
     public LoginCocinero() {
         initComponents();
         this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0xc4c4c4));
     }
 
     /**

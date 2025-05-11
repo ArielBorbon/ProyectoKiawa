@@ -7,6 +7,7 @@ package CasosDeUso.CU.Equipo;
 import Buscadores.BuscadorPlatillos;
 import control.ControlPresentacion;
 import dto.DetallePedidoDTO;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +31,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         this.buscadorPlatillos.setVisible(true);
         this.setLocationRelativeTo(null);
         buscadorPlatillos.setOnPlatilloAgregado(() -> actualizarTablaSeleccionados());
+        getContentPane().setBackground(new Color(0xffff90));
 
     }
 
@@ -139,6 +141,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
             tblPlatillosHastaElMomento.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
+        btnEliminarPlatillo.setBackground(new java.awt.Color(255, 153, 153));
         btnEliminarPlatillo.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnEliminarPlatillo.setText("Eliminar Platillo");
         btnEliminarPlatillo.addActionListener(new java.awt.event.ActionListener() {
@@ -153,6 +156,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jLabel3.setText("Doble Click para Seleccionar Platillos");
 
+        btnContinuar.setBackground(new java.awt.Color(153, 255, 153));
         btnContinuar.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         btnContinuar.setText("Continuar");
         btnContinuar.addActionListener(new java.awt.event.ActionListener() {
@@ -161,6 +165,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
             }
         });
 
+        btnEditarNota.setBackground(new java.awt.Color(204, 204, 204));
         btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnEditarNota.setText("Editar Nota");
         btnEditarNota.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +180,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         lblTotal.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
         lblTotal.setText("---");
 
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {

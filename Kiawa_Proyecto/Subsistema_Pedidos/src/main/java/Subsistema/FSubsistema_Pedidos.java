@@ -78,7 +78,7 @@ public class FSubsistema_Pedidos {
         return pedidoBO.cambiarEstadoPedidoBO(folio, nuevoEstado);
     }
 
-    public List<DetallePedido> obtenerHistorialPorNombreAlumno(String nombreAlumno) {
+    public List<PedidoDTO> obtenerHistorialPorNombreAlumno(String nombreAlumno) {
         return pedidoBO.obtenerHistorialPorNombreAlumnoBO(nombreAlumno);
     }
 }

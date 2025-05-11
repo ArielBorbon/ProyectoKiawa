@@ -10,6 +10,7 @@ import dto.AlumnoDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.UbicacionDTO;
+import java.awt.Color;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
@@ -29,6 +30,7 @@ public class ConfirmarPedido extends javax.swing.JFrame {
     public ConfirmarPedido() {
         initComponents();
         this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0xffff90));
     }
 
     
@@ -156,6 +158,7 @@ public class ConfirmarPedido extends javax.swing.JFrame {
         txtInstruccionesEntrega.setEditable(false);
         txtInstruccionesEntrega.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
+        btnConfirmar.setBackground(new java.awt.Color(153, 255, 153));
         btnConfirmar.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         btnConfirmar.setText("Confirmar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +173,7 @@ public class ConfirmarPedido extends javax.swing.JFrame {
         lblTotal.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         lblTotal.setText("---");
 
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -281,6 +285,11 @@ public class ConfirmarPedido extends javax.swing.JFrame {
         if (exito) {
             JOptionPane.showMessageDialog(this, "¡Pedido registrado exitosamente con folio: " + folio + "!");
             this.dispose();
+            ControlAlumno.getInstancia().getDetallesSeleccionados().clear();
+            ControlAlumno.getInstancia().getUbicacionSeleccionada().setEdificio("");
+            ControlAlumno.getInstancia().getUbicacionSeleccionada().setSalon("");
+            ControlAlumno.getInstancia().setTotal(0.0);
+            ControlAlumno.getInstancia().setInstruccionesEntrega("");
             ControlAlumno.getInstancia().getHistorialFrames().clear();
 
             ControlAlumno.getInstancia().mostrarMenuEstudianteP();
