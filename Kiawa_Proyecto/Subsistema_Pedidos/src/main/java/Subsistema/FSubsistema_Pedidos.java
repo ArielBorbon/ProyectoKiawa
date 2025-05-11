@@ -81,4 +81,22 @@ public class FSubsistema_Pedidos {
     public List<PedidoDTO> obtenerHistorialPorNombreAlumno(String nombreAlumno) {
         return pedidoBO.obtenerHistorialPorNombreAlumnoBO(nombreAlumno);
     }
+    
+    
+    
+    
+    
+    
+
+    public List<PedidoDTO> obtenerPedidosPendientes() {
+        return pedidoBO.obtenerPedidosPendientesBO();
+    }
+
+    public boolean asignarCocineroAPedido(String folioPedido, String idCocinero, String nombreCocinero) {
+        return pedidoBO.asignarCocineroAPedidoBO(folioPedido, idCocinero, nombreCocinero);
+    }
+
+    public PedidoDTO obtenerPedidoPorFolio(String folio) {
+        return pedidoBO.obtenerPedidoPorFolioBO(folio);
+    }
 }

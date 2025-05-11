@@ -88,7 +88,7 @@ public class PedidoBO implements IPedidoBO {
 
         return pedidoDAO.crearPedido(pedidoDTO, detalleDTOs, idAlumno);
     }
-    
+
     @Override
     public boolean cambiarEstadoPedidoBO(String folio, String nuevoEstado) {
         return pedidoDAO.cambiarEstadoPedido(folio, nuevoEstado);
@@ -101,5 +101,37 @@ public class PedidoBO implements IPedidoBO {
         }
 
         return pedidoDAO.obtenerHistorialPlatillosPorAlumno(nombreAlumno);
+    }
+    
+    
+    
+    
+    
+    
+
+    public List<PedidoDTO> obtenerPedidosPendientesBO() {
+        return pedidoDAO.obtenerPedidosPendientes();
+    }
+
+    public boolean asignarCocineroAPedidoBO(String folioPedido, String idCocinero, String nombreCocinero) {
+        if (folioPedido == null || folioPedido.trim().isEmpty()) {
+            throw new IllegalArgumentException("El folio del pedido no puede estar vacío");
+        }
+        if (idCocinero == null || idCocinero.trim().isEmpty()) {
+            throw new IllegalArgumentException("El ID del cocinero no puede estar vacío");
+        }
+        if (nombreCocinero == null || nombreCocinero.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del cocinero no puede estar vacío");
+        }
+
+        return pedidoDAO.asignarCocineroAPedido(folioPedido, idCocinero, nombreCocinero);
+    }
+
+    public PedidoDTO obtenerPedidoPorFolioBO(String folio) {
+        if (folio == null || folio.trim().isEmpty()) {
+            throw new IllegalArgumentException("El folio no puede estar vacío");
+        }
+
+        return pedidoDAO.obtenerPedidoPorFolio(folio);
     }
 }
