@@ -5,6 +5,7 @@
 package Menu;
 
 import Control.ControlAlumno;
+import Control.ControlRepartidor;
 import java.awt.Color;
 
 /**
@@ -154,7 +155,9 @@ public class MenuRol extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCocineroActionPerformed
 
     private void btnRepartidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepartidorActionPerformed
-        // TODO add your handling code here:
+        
+        ControlRepartidor.getInstancia().iniciarFlujo();
+        this.dispose();
     }//GEN-LAST:event_btnRepartidorActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

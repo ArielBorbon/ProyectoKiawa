@@ -266,44 +266,43 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPlatilloActionPerformed
-           int filaSeleccionada = tblPlatillosHastaElMomento.getSelectedRow();
+        int filaSeleccionada = tblPlatillosHastaElMomento.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debes seleccionar un platillo para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un platillo para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este platillo del carrito?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este platillo del carrito?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        control.ControlPresentacion.getInstancia().getDetallesSeleccionados().remove(filaSeleccionada);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            control.ControlPresentacion.getInstancia().getDetallesSeleccionados().remove(filaSeleccionada);
 
-        DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
-        modelo.removeRow(filaSeleccionada);
-        JOptionPane.showMessageDialog(this, "Platillo Eliminado.", "Exito" , JOptionPane.INFORMATION_MESSAGE);
+            DefaultTableModel modelo = (DefaultTableModel) tblPlatillosHastaElMomento.getModel();
+            modelo.removeRow(filaSeleccionada);
+            JOptionPane.showMessageDialog(this, "Platillo Eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
 
-        actualizarTablaSeleccionados();
-    }
+            actualizarTablaSeleccionados();
+        }
     }//GEN-LAST:event_btnEliminarPlatilloActionPerformed
 
     private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
-            int filaSeleccionada = tblPlatillosHastaElMomento.getSelectedRow();
+        int filaSeleccionada = tblPlatillosHastaElMomento.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debes seleccionar un platillo de la tabla.", "Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un platillo de la tabla.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    String notaActual = (String) tblPlatillosHastaElMomento.getValueAt(filaSeleccionada, 3);
-    String nuevaNota = JOptionPane.showInputDialog(this, "Introduce Nota:", notaActual);
+        String notaActual = (String) tblPlatillosHastaElMomento.getValueAt(filaSeleccionada, 3);
+        String nuevaNota = JOptionPane.showInputDialog(this, "Introduce Nota:", notaActual);
 
-    if (nuevaNota != null) {
-        tblPlatillosHastaElMomento.setValueAt(nuevaNota, filaSeleccionada, 3);
-        
-        
-        DetallePedidoDTO detalle = control.ControlPresentacion.getInstancia().getDetallesSeleccionados().get(filaSeleccionada);
-        detalle.setNota(nuevaNota);
-    }
+        if (nuevaNota != null) {
+            tblPlatillosHastaElMomento.setValueAt(nuevaNota, filaSeleccionada, 3);
+
+            DetallePedidoDTO detalle = control.ControlPresentacion.getInstancia().getDetallesSeleccionados().get(filaSeleccionada);
+            detalle.setNota(nuevaNota);
+        }
     }//GEN-LAST:event_btnEditarNotaActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
@@ -312,7 +311,7 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     public JButton getBtnRegresar() {

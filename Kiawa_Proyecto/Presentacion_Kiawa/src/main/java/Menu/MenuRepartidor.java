@@ -4,6 +4,9 @@
  */
 package Menu;
 
+import java.awt.Color;
+import javax.swing.JButton;
+
 /**
  *
  * @author Alberto Jimenez
@@ -15,6 +18,7 @@ public class MenuRepartidor extends javax.swing.JFrame {
      */
     public MenuRepartidor() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -40,6 +44,7 @@ public class MenuRepartidor extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Goudy Old Style", 3, 24)); // NOI18N
         jLabel2.setText("REPARTIDOR");
 
+        btnSeleccionarPedido.setBackground(new java.awt.Color(153, 255, 153));
         btnSeleccionarPedido.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnSeleccionarPedido.setText("Seleccionar Pedido");
         btnSeleccionarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -48,6 +53,7 @@ public class MenuRepartidor extends javax.swing.JFrame {
             }
         });
 
+        btnHistorialEntregas.setBackground(new java.awt.Color(153, 204, 255));
         btnHistorialEntregas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnHistorialEntregas.setText("Historial Entregas");
         btnHistorialEntregas.addActionListener(new java.awt.event.ActionListener() {
@@ -56,6 +62,7 @@ public class MenuRepartidor extends javax.swing.JFrame {
             }
         });
 
+        btnCerrarSesion.setBackground(new java.awt.Color(255, 153, 153));
         btnCerrarSesion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesion");
 
@@ -105,40 +112,31 @@ public class MenuRepartidor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHistorialEntregasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuRepartidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuRepartidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuRepartidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuRepartidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuRepartidor().setVisible(true);
-            }
-        });
+    public JButton getBtnCerrarSesion() {
+        return btnCerrarSesion;
     }
+
+    public void setBtnCerrarSesion(JButton btnCerrarSesion) {
+        this.btnCerrarSesion = btnCerrarSesion;
+    }
+
+    public JButton getBtnHistorialEntregas() {
+        return btnHistorialEntregas;
+    }
+
+    public void setBtnHistorialEntregas(JButton btnHistorialEntregas) {
+        this.btnHistorialEntregas = btnHistorialEntregas;
+    }
+
+    public JButton getBtnSeleccionarPedido() {
+        return btnSeleccionarPedido;
+    }
+
+    public void setBtnSeleccionarPedido(JButton btnSeleccionarPedido) {
+        this.btnSeleccionarPedido = btnSeleccionarPedido;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;

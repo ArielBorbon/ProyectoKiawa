@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
  */
 public class ControlAlumno {
 
-    private  Stack<JFrame> historialFrames = new Stack<>();
+    private Stack<JFrame> historialFrames = new Stack<>();
 
     private static ControlAlumno instancia = new ControlAlumno();
     private AlumnoDTO alumno;
@@ -50,9 +50,6 @@ public class ControlAlumno {
     public void setHistorialFrames(Stack<JFrame> historialFrames) {
         this.historialFrames = historialFrames;
     }
-    
-    
-    
 
     public static ControlAlumno getInstancia() {
         return instancia;
@@ -117,7 +114,7 @@ public class ControlAlumno {
                 String id = login.getTxtId().getText().trim();
                 String pwd = new String(login.getTxtContrasena().getPassword());
                 AlumnoDTO a = FactoryBO.crearAlumnoBO().recuperarAlumno(new LoginRequestDTO(id, pwd));
-                
+
                 if (a == null) {
                     JOptionPane.showMessageDialog(login, "Credenciales inválidas");
                     throw new Exception();
@@ -128,7 +125,7 @@ public class ControlAlumno {
                 login.dispose();
                 mostrarMenuEstudiante();
             } catch (Exception ex) {
-                
+
             }
 
         });
@@ -151,45 +148,35 @@ public class ControlAlumno {
             ControlAlumno.getInstancia().cerrarSesion();
             iniciarFlujo();
         });
-        
+
         menu.getBtnVerHistorial().addActionListener(e -> {
-    historialFrames.push(menu);
-    menu.dispose();
+            historialFrames.push(menu);
+            menu.dispose();
             try {
                 mostrarHistorialPedidos();
             } catch (Exception ex) {
                 Logger.getLogger(ControlAlumno.class.getName()).log(Level.SEVERE, null, ex);
             }
-});
-
+        });
 
         menu.setVisible(true);
     }
-    
-    
-    
+
     private HistorialPedidos historialPedidosFrame;
 
-public void mostrarHistorialPedidos() throws Exception {
-    historialPedidosFrame = new HistorialPedidos();
+    public void mostrarHistorialPedidos() throws Exception {
+        historialPedidosFrame = new HistorialPedidos();
 
-    historialFrames.push(historialPedidosFrame);
+        historialFrames.push(historialPedidosFrame);
 
-    historialPedidosFrame.getBtnRegresar().addActionListener(e -> regresar());
+        historialPedidosFrame.getBtnRegresar().addActionListener(e -> regresar());
 
-    historialPedidosFrame.setVisible(true);
-}
+        historialPedidosFrame.setVisible(true);
+    }
 
-    
-    
-    
-    
-    
-    
-    
-    public void mostrarMenuEstudianteP(){
-    mostrarMenuEstudiante();
-            }
+    public void mostrarMenuEstudianteP() {
+        mostrarMenuEstudiante();
+    }
 
     private void mostrarSeleccionarPlatillos() {
         SeleccionarPlatillos sel = new SeleccionarPlatillos();
