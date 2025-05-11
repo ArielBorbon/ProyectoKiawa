@@ -18,7 +18,9 @@ public class MenuRepartidor extends javax.swing.JFrame {
      */
     public MenuRepartidor() {
         initComponents();
+        btnHistorialEntregas.setVisible(false);
         this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0x22EEE5));
     }
 
     /**

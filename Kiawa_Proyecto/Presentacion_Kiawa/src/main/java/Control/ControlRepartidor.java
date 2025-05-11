@@ -4,6 +4,7 @@
  */
 package Control;
 
+import CasosDeUso.CU.EntregarPedido.PedidosRepartidor;
 import Fabricas.FactoryBO;
 import Logins.LoginRepartidor;
 import Menu.MenuRepartidor;
@@ -87,6 +88,12 @@ public class ControlRepartidor {
     public void mostrarMenuRepartidor(){
         MenuRepartidor menu = new MenuRepartidor();
         
+        menu.getBtnSeleccionarPedido().addActionListener(e -> {
+            historialFrames.push(menu);
+            menu.dispose();
+            mostrarSeleccionarPedidos();
+        });
+        
         menu.getBtnCerrarSesion().addActionListener(e -> {
             menu.dispose();
             historialFrames.clear();
@@ -109,5 +116,21 @@ public class ControlRepartidor {
         } else {
             mostrarMenuRepartidor();
         }
+    }
+    
+    private void mostrarSeleccionarPedidos(){
+        PedidosRepartidor seleccionarPedido = new PedidosRepartidor();
+        
+        seleccionarPedido.getBtnSeleccionarPedido().addActionListener(e -> {
+            if (ControlPresentacion.getInstancia().getDetallesSeleccionados().isEmpty()) {
+                JOptionPane.showMessageDialog(seleccionarPedido, "Por favor, selecciona al menos un platillo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            seleccionarPedido.seleccionarPedido();
+        });
+        
+        seleccionarPedido.getBtnRegresar().addActionListener(e -> {regresar();});
+        seleccionarPedido.setVisible(true);
     }
 }

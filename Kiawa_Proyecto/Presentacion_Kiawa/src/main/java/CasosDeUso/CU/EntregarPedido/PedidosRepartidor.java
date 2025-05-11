@@ -4,7 +4,13 @@
  */
 package CasosDeUso.CU.EntregarPedido;
 
+import BO.PedidoBO;
+import dto.PedidoDTO;
+import java.awt.Color;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +23,9 @@ public class PedidosRepartidor extends javax.swing.JFrame {
      */
     public PedidosRepartidor() {
         initComponents();
+//        llenarTablaPedidos();
+        this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0x22EEE5));
     }
 
     /**
@@ -30,16 +39,17 @@ public class PedidosRepartidor extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPlatillosHastaElMomento = new javax.swing.JTable();
+        tblPedidosRepartidor = new javax.swing.JTable();
         btnSeleccionarPedido = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setText("Seleccionador Pedidos");
 
-        tblPlatillosHastaElMomento.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidosRepartidor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -62,9 +72,10 @@ public class PedidosRepartidor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblPlatillosHastaElMomento);
+        jScrollPane1.setViewportView(tblPedidosRepartidor);
 
-        btnSeleccionarPedido.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        btnSeleccionarPedido.setBackground(new java.awt.Color(153, 255, 153));
+        btnSeleccionarPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         btnSeleccionarPedido.setText("Seleccionar Pedido");
         btnSeleccionarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +83,8 @@ public class PedidosRepartidor extends javax.swing.JFrame {
             }
         });
 
-        btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
+        btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,23 +92,32 @@ public class PedidosRepartidor extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Arial Black", 2, 12)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("**CLIC PARA SELECCIONAR PEDIDO**");
+        jLabel2.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSeleccionarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(236, 236, 236))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(276, 276, 276)
-                        .addComponent(btnSeleccionarPedido))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnRegresar)
+                            .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,11 +126,13 @@ public class PedidosRepartidor extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSeleccionarPedido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -123,6 +146,15 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    public JButton getBtnSeleccionarPedido() {
+        return btnSeleccionarPedido;
+    }
+
+    public void setBtnSeleccionarPedido(JButton btnSeleccionarPedido) {
+        this.btnSeleccionarPedido = btnSeleccionarPedido;
+    }
+
+    
     public JButton getBtnRegresar() {
         return btnRegresar;
     }
@@ -131,12 +163,53 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         this.btnRegresar = btnRegresar;
     }
 
+    public void seleccionarPedido() {
+        int filaSeleccionada = tblPedidosRepartidor.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+            String alumno = tblPedidosRepartidor.getValueAt(filaSeleccionada, 0).toString();
+            String ubicacion = tblPedidosRepartidor.getValueAt(filaSeleccionada, 1).toString();
+            String metodoPago = "Efectivo";
+            double total = Double.parseDouble(tblPedidosRepartidor.getValueAt(filaSeleccionada, 3).toString());
+
+            DetallesPedido detalles = new DetallesPedido(alumno, ubicacion, metodoPago, total);
+            detalles.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un pedido de la tabla.");
+        }
+    }
+    
+//    private void llenarTablaPedidos(){
+//        try{
+//            List<PedidoDTO> pedidos;
+//            DefaultTableModel modelo = new DefaultTableModel();
+//            tblPedidosRepartidor.setModel(modelo);
+//            modelo.setRowCount(0);
+//            modelo.setColumnCount(0);
+//            modelo.addColumn("Alumno");
+//            modelo.addColumn("Ubicación");
+//            modelo.addColumn("Total Pagar");
+//            
+//            for (PedidoDTO p : pedidos) {
+//                modelo.addRow(new Object[]{
+//                    p.getNombreAlumno(),
+//                    p.getUbicacionEntrega(),
+//                    p.getTotal()
+//                });
+//            }
+//        }catch(Exception ex){
+//            JOptionPane.showMessageDialog(this, "Error al llenar la tabla de platillos: " + ex.getMessage());
+//        }
+//    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionarPedido;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblPlatillosHastaElMomento;
+    private javax.swing.JTable tblPedidosRepartidor;
     // End of variables declaration//GEN-END:variables
 }
