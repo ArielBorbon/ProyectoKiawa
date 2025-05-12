@@ -39,5 +39,12 @@ public interface IPedidoDAO {
     public List<PedidoDTO> recuperarPedidos();
     
     List<PedidoDTO> obtenerPedidosAsignadosARepartidor(String idRepartidor);
+    public List<PedidoDTO> obtenerPedidosPendientes();
+    
+    public boolean asignarCocineroAPedido(String folioPedido, String idCocinero, String nombreCocinero);
+    
+    public PedidoDTO obtenerPedidoPorFolio(String folio);
+    
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor);
 }
 

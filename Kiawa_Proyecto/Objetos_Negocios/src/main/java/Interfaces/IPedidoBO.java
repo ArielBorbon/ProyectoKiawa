@@ -36,7 +36,8 @@ public interface IPedidoBO {
     
     List<PedidoDTO> obtenerHistorialPorNombreAlumnoBO(String nombreAlumno);
     
-    List<PedidoDTO> recuperarPedidos();
+    public List<PedidoDTO> recuperarPedidos();
     
     List<PedidoDTO> obtenerPedidosAsignadosARepartidorBO(String idRepartidor);
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor);
 }

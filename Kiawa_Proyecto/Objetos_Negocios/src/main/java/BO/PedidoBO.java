@@ -133,7 +133,7 @@ public class PedidoBO implements IPedidoBO {
 
         return pedidoDAO.obtenerPedidoPorFolio(folio);
     }
-    
+
     @Override
     public List<PedidoDTO> obtenerPedidosAsignadosARepartidorBO(String idRepartidor) {
         if (idRepartidor == null || idRepartidor.trim().isEmpty()) {

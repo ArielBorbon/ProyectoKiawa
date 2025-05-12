@@ -375,19 +375,20 @@ public class PedidoDAO implements IPedidoDAO {
         return historial;
     }
 
+    
     //Probar si funciona
     @Override
-    public List<PedidoDTO> recuperarPedidos() {
+    public List<PedidoDTO> recuperarPedidos(){
         MongoClient conexion = null;
         List<PedidoDTO> pedidos = new ArrayList<>();
-
+        
         try {
             conexion = Conexion.getInstancia().crearConexion();
             MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
             MongoCollection<Document> coleccion = db.getCollection("Pedidos");
-
+            
             FindIterable<Document> documentos = coleccion.find();
-
+            
             for (Document doc : documentos) {
                 PedidoDTO pedido = new PedidoDTO();
                 pedido.setFolio(doc.getString("folio"));
@@ -424,24 +425,30 @@ public class PedidoDAO implements IPedidoDAO {
                         detalles.add(detalle);
                     }
                 }
-
+                
                 pedido.setPlatillos(detalles);
 
                 pedidos.add(pedido);
             }
-
-        } catch (Exception e) {
+            
+            
+            
+            
+        }catch(Exception e){
             System.err.println("Error al obtener los pedidos: " + e.getMessage());
             LOGGER.log(Level.SEVERE, "Error al obtener los pedidos", e);
-        } finally {
+        }finally{
             if (conexion != null) {
                 conexion.close();
             }
         }
-
+        
         return pedidos;
     }
-
+    
+    
+    
+    @Override
     public List<PedidoDTO> obtenerPedidosPendientes() {
         MongoClient conexion = null;
         List<PedidoDTO> pedidosPendientes = new ArrayList<>();
@@ -469,6 +476,7 @@ public class PedidoDAO implements IPedidoDAO {
         return pedidosPendientes;
     }
 
+    @Override
     public boolean asignarCocineroAPedido(String folioPedido, String idCocinero, String nombreCocinero) {
         MongoClient conexion = null;
         try {
@@ -495,7 +503,35 @@ public class PedidoDAO implements IPedidoDAO {
             }
         }
     }
-
+    
+    //Metodo que asigna un pedido a un repartidor
+    @Override
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor) {
+        MongoClient conexion = null;
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = db.getCollection("Pedidos");
+            
+            Bson filtro = Filters.eq("folio", folioPedido); 
+            Bson actualizacion = Updates.combine(
+                    
+                    Updates.set("nombreRepartidor", nombreRepartidor),
+                    Updates.set("estado", "En proceso")
+            );
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+            return resultado.getModifiedCount() > 0;
+            
+        }catch(MongoException e){
+            System.err.println("Error al asignar repartidor al pedido: " + e.getMessage());
+            return false;
+        }finally{
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+    }
+    
     private PedidoDTO construirPedidoDesdeDocumento(Document doc) {
         PedidoDTO pedido = new PedidoDTO();
         pedido.setFolio(doc.getString("folio"));
@@ -528,6 +564,7 @@ public class PedidoDAO implements IPedidoDAO {
         return pedido;
     }
 
+    @Override
     public PedidoDTO obtenerPedidoPorFolio(String folio) {
         MongoClient conexion = null;
         try {

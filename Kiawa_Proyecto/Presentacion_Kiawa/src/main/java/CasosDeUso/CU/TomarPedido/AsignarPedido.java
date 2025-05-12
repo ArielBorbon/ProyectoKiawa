@@ -4,19 +4,40 @@
  */
 package CasosDeUso.CU.TomarPedido;
 
+import Control.ControlPedido;
+import dto.PedidoDTO;
+import dto.RepartidorDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jalt2
  */
 public class AsignarPedido extends javax.swing.JFrame {
-
+    
+    private ControlPedido control;
+    private PedidoDTO pedidoSeleccionado;
+    
     /**
      * Creates new form AsignarPedido
      */
     public AsignarPedido() {
         initComponents();
+        control = ControlPedido.getInstance();
+        pedidoSeleccionado = control.recuperarPedidoSeleccionado();
+        llenarComboBoxRepartidores();
+        this.txtPedidoSeleccionado.setText(pedidoSeleccionado.getIdPedido());
     }
-
+    
+    private void llenarComboBoxRepartidores(){
+        List<RepartidorDTO> listaRepartidores = control.recuperarRepartidoresDisponibles();
+        
+        for(RepartidorDTO r : listaRepartidores){
+            this.cmbRepartidores.addItem(r.getNombreCompleto());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +61,11 @@ public class AsignarPedido extends javax.swing.JFrame {
 
         btnAsignarPedido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAsignarPedido.setText("Asignar Pedido");
+        btnAsignarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarPedidoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,6 +104,12 @@ public class AsignarPedido extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAsignarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPedidoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(rootPane, "El pedido fue asignado a "+cmbRepartidores.getSelectedItem().toString(), "Pedido asignado", JOptionPane.INFORMATION_MESSAGE);
+        control.asignarPedidoRepartidor(pedidoSeleccionado.getFolio(), pedidoSeleccionado.getNombreRepartidor());
+    }//GEN-LAST:event_btnAsignarPedidoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,12 +6,9 @@ package CasosDeUso.CU.TomarPedido;
 
 import Control.ControlPedido;
 import Subsistema.FSubsistema_Pedidos;
-import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -151,6 +148,10 @@ public class PedidosAsignar extends javax.swing.JFrame {
         }
     }
 
+    public PedidoDTO guardarPedidoSeleccionado(){
+        return pedidoSeleccionado;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeleccionarPedido;
     private javax.swing.JScrollPane jScrollPane1;
