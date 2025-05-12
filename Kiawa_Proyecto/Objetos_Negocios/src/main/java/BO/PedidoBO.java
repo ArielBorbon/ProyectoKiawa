@@ -141,4 +141,17 @@ public class PedidoBO implements IPedidoBO {
         }
         return pedidoDAO.obtenerPedidosAsignadosARepartidor(idRepartidor);
     }
+
+    @Override
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor) {
+        if (folioPedido == null || folioPedido.trim().isEmpty()) {
+            throw new IllegalArgumentException("El folio no puede estar vacío");
+        }
+
+        if (nombreRepartidor == null || nombreRepartidor.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del cocinero no puede estar vacío");
+        }
+        
+        return pedidoDAO.asignarPedidoRepartidor(folioPedido, nombreRepartidor);
+    }
 }
