@@ -132,4 +132,5 @@ public class PedidoBO implements IPedidoBO {
         }
 
         return pedidoDAO.obtenerPedidoPorFolio(folio);
+    }
 }

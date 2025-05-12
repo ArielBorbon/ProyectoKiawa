@@ -376,7 +376,75 @@ public class PedidoDAO implements IPedidoDAO {
     }
 
     
-    
+    //Probar si funciona
+    @Override
+    public List<PedidoDTO> recuperarPedidos(){
+        MongoClient conexion = null;
+        List<PedidoDTO> pedidos = new ArrayList<>();
+        
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = db.getCollection("Pedidos");
+            
+            FindIterable<Document> documentos = coleccion.find();
+            
+            for (Document doc : documentos) {
+                PedidoDTO pedido = new PedidoDTO();
+                pedido.setFolio(doc.getString("folio"));
+                pedido.setNombreAlumno(doc.getString("nombreAlumno"));
+                pedido.setTelefonoContacto(doc.getString("telefonoContacto"));
+                pedido.setInstruccionesEntrega(doc.getString("instruccionesEntrega"));
+                pedido.setFechaPedido(doc.getDate("fechaPedido"));
+                pedido.setEstado(doc.getString("estado"));
+                pedido.setNombreCocinero(doc.getString("nombreCocinero"));
+                pedido.setNombreRepartidor(doc.getString("nombreRepartidor"));
+                pedido.setTotal(doc.getDouble("total"));
+                pedido.setPagado(doc.getBoolean("pagado"));
+
+                // Ubicación
+                Document ubicacionDoc = (Document) doc.get("ubicacionEntrega");
+                if (ubicacionDoc != null) {
+                    UbicacionDTO ubicacionDTO = new UbicacionDTO();
+                    ubicacionDTO.setEdificio(ubicacionDoc.getString("edificio"));
+                    ubicacionDTO.setSalon(ubicacionDoc.getString("salon"));
+                    pedido.setUbicacionEntrega(ubicacionDTO);
+                }
+
+                // Lista de platillos
+                List<DetallePedidoDTO> detalles = new ArrayList<>();
+                List<Document> platillosDocs = (List<Document>) doc.get("platillos");
+                if (platillosDocs != null) {
+                    for (Document detDoc : platillosDocs) {
+                        DetallePedidoDTO detalle = new DetallePedidoDTO();
+                        detalle.setNombrePlatillo(detDoc.getString("nombrePlatillo"));
+                        detalle.setCantidad(detDoc.getInteger("cantidad"));
+                        detalle.setPrecioUnitario(detDoc.getDouble("precioUnitario"));
+                        detalle.setSubtotal(detDoc.getDouble("subtotal"));
+                        detalle.setNota(detDoc.getString("nota"));
+                        detalles.add(detalle);
+                    }
+                }
+                
+                pedido.setPlatillos(detalles);
+
+                pedidos.add(pedido);
+            }
+            
+            
+            
+            
+        }catch(Exception e){
+            System.err.println("Error al obtener los pedidos: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Error al obtener los pedidos", e);
+        }finally{
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+        
+        return pedidos;
+    }
     
     
     
@@ -491,4 +559,6 @@ public class PedidoDAO implements IPedidoDAO {
         }
 
     }
+    
+    
 }

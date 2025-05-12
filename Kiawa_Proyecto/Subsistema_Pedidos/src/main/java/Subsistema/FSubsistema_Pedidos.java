@@ -96,4 +96,5 @@ public class FSubsistema_Pedidos {
 
     public PedidoDTO obtenerPedidoPorFolio(String folio) {
         return pedidoBO.obtenerPedidoPorFolioBO(folio);
+    }
 }

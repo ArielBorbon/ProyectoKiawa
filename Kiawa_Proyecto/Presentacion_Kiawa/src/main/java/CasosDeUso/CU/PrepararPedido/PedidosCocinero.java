@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Freddy
  */
 public class PedidosCocinero extends javax.swing.JFrame {
-
+    private List<PedidoDTO> pedidosPendientes;
     /**
      * Creates new form MenuCocinero
      */
@@ -164,22 +164,13 @@ public class PedidosCocinero extends javax.swing.JFrame {
         this.btnRegresar = btnRegresar;
     }
 
-    public class PedidosCocinero extends javax.swing.JFrame {
-
-        private List<PedidoDTO> pedidosPendientes;
-
-        public PedidosCocinero() {
-            initComponents();
-            this.setLocationRelativeTo(null);
-            getContentPane().setBackground(new Color(0x99FF99));
-        }
 
         public void cargarPedidosPendientes() {
             try {
                 FSubsistema_Pedidos subsistemaPedidos = new FSubsistema_Pedidos();
                 pedidosPendientes = subsistemaPedidos.obtenerPedidosPendientes();
 
-                DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
+                DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
                 modelo.setRowCount(0);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -199,14 +190,12 @@ public class PedidosCocinero extends javax.swing.JFrame {
         }
 
         public String getFolioPedidoSeleccionado() {
-            int filaSeleccionada = tblPedidos.getSelectedRow();
+            int filaSeleccionada = tblPedidosRepartidor.getSelectedRow();
             if (filaSeleccionada >= 0 && filaSeleccionada < pedidosPendientes.size()) {
-                return (String) tblPedidos.getValueAt(filaSeleccionada, 0);
+                return (String) tblPedidosRepartidor.getValueAt(filaSeleccionada, 0);
             }
             return null;
         }
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
@@ -217,3 +206,4 @@ public class PedidosCocinero extends javax.swing.JFrame {
     private javax.swing.JTable tblPedidosRepartidor;
     // End of variables declaration//GEN-END:variables
 }
+
