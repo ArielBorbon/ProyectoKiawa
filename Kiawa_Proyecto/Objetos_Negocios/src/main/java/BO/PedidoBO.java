@@ -133,4 +133,12 @@ public class PedidoBO implements IPedidoBO {
 
         return pedidoDAO.obtenerPedidoPorFolio(folio);
     }
+    
+    @Override
+    public List<PedidoDTO> obtenerPedidosAsignadosARepartidorBO(String idRepartidor) {
+        if (idRepartidor == null || idRepartidor.trim().isEmpty()) {
+            throw new IllegalArgumentException("El ID del repartidor no puede ser nulo o vacío.");
+        }
+        return pedidoDAO.obtenerPedidosAsignadosARepartidor(idRepartidor);
+    }
 }

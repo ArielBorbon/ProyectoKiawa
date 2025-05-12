@@ -118,4 +118,15 @@ public class PedidoDAOTest {
 //            System.out.println(detalle.getNombrePlatillo() + " x" + detalle.getCantidad());
 //        }
 //    }
+//
+//    @Test
+//    public void testObtenerPedidosAsignadosARepartidor_existentes() {
+//        String idRepartidorExistente = "000001";
+//        PedidoDAO pedidoDAO = new PedidoDAO();
+//        List<PedidoDTO> pedidos = pedidoDAO.obtenerPedidosAsignadosARepartidor(idRepartidorExistente);
+//
+//        assertNotNull(pedidos, "La lista de pedidos no debe ser null");
+//        assertFalse(pedidos.isEmpty(), "Debe haber al menos un pedido asignado");
+//        
+//    }
 }

@@ -5,7 +5,10 @@
 package CasosDeUso.CU.EntregarPedido;
 
 import BO.PedidoBO;
+import Control.ControlRepartidor;
+import Subsistema.FSubsistema_Pedidos;
 import dto.PedidoDTO;
+import dto.UbicacionDTO;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.JButton;
@@ -23,7 +26,7 @@ public class PedidosRepartidor extends javax.swing.JFrame {
      */
     public PedidosRepartidor() {
         initComponents();
-//        llenarTablaPedidos();
+        llenarTablaPedidos();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
     }
@@ -154,7 +157,6 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         this.btnSeleccionarPedido = btnSeleccionarPedido;
     }
 
-    
     public JButton getBtnRegresar() {
         return btnRegresar;
     }
@@ -178,32 +180,51 @@ public class PedidosRepartidor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecciona un pedido de la tabla.");
         }
     }
-    
-//    private void llenarTablaPedidos(){
-//        try{
-//            List<PedidoDTO> pedidos;
-//            DefaultTableModel modelo = new DefaultTableModel();
-//            tblPedidosRepartidor.setModel(modelo);
-//            modelo.setRowCount(0);
-//            modelo.setColumnCount(0);
-//            modelo.addColumn("Alumno");
-//            modelo.addColumn("Ubicación");
-//            modelo.addColumn("Total Pagar");
-//            
-//            for (PedidoDTO p : pedidos) {
-//                modelo.addRow(new Object[]{
-//                    p.getNombreAlumno(),
-//                    p.getUbicacionEntrega(),
-//                    p.getTotal()
-//                });
-//            }
-//        }catch(Exception ex){
-//            JOptionPane.showMessageDialog(this, "Error al llenar la tabla de platillos: " + ex.getMessage());
-//        }
-//    }
-    
-    
 
+    private void llenarTablaPedidos() {
+        try {
+            String idRepartidor = ControlRepartidor.getInstancia().getRepartidor().getIdRepartidor();
+
+            FSubsistema_Pedidos subsistemaPedidos = new FSubsistema_Pedidos();
+
+            List<PedidoDTO> pedidos = subsistemaPedidos.obtenerPedidosAsignadosARepartidor(idRepartidor);
+
+            NonEditableTableModel modelo = new NonEditableTableModel();
+            tblPedidosRepartidor.setModel(modelo);
+
+            modelo.setRowCount(0);
+            modelo.setColumnCount(0);
+
+            modelo.addColumn("Alumno");
+            modelo.addColumn("Ubicación");
+            modelo.addColumn("Metodo Pago");
+            modelo.addColumn("Total Pagar");
+
+            for (PedidoDTO p : pedidos) {
+                UbicacionDTO ubicacion = p.getUbicacionEntrega();
+                String ubicacionStr = ubicacion.getSalon();
+                String metodoPago = "Efectivo";
+                modelo.addRow(new Object[]{
+                    p.getNombreAlumno(),    
+                    ubicacionStr,
+                    metodoPago,
+                    p.getTotal() 
+                });
+            }
+        } catch (Exception ex) {
+            // Si ocurre un error, mostrar el mensaje de error
+            JOptionPane.showMessageDialog(this, "Error al llenar la tabla de pedidos: " + ex.getMessage());
+        }
+    }
+
+    class NonEditableTableModel extends DefaultTableModel {
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionarPedido;

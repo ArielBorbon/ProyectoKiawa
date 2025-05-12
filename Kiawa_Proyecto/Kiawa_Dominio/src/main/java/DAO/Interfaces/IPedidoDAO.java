@@ -37,5 +37,7 @@ public interface IPedidoDAO {
     public List<PedidoDTO> obtenerHistorialPlatillosPorAlumno(String nombreAlumno);
     
     public List<PedidoDTO> recuperarPedidos();
+    
+    List<PedidoDTO> obtenerPedidosAsignadosARepartidor(String idRepartidor);
 }
 
