@@ -6,6 +6,7 @@ package Control;
 
 import CasosDeUso.CU.EntregarPedido.ConfirmarEntrega;
 import CasosDeUso.CU.EntregarPedido.DetallesPedido;
+import CasosDeUso.CU.EntregarPedido.HistorialEntregas;
 import CasosDeUso.CU.EntregarPedido.PedidosRepartidor;
 import Fabricas.FactoryBO;
 import Logins.LoginRepartidor;
@@ -103,7 +104,13 @@ public class ControlRepartidor {
             menu.dispose();
             mostrarSeleccionarPedidos();
         });
-
+        
+        menu.getBtnHistorialEntregas().addActionListener(e -> {
+            historialFrames.push(menu);
+            menu.dispose();
+            mostrarHistorialEntregas();
+        });
+        
         menu.getBtnCerrarSesion().addActionListener(e -> {
             menu.dispose();
             historialFrames.clear();
@@ -144,6 +151,17 @@ public class ControlRepartidor {
         seleccionarPedido.setVisible(true);
     }
 
+    private void mostrarHistorialEntregas(){
+        HistorialEntregas historialEntregas = new HistorialEntregas();
+        
+        historialEntregas.getBtnRegresar().addActionListener(e -> {
+            regresar();
+            historialEntregas.dispose();
+        });
+        
+        historialEntregas.setVisible(true);
+    }
+    
     private void mostrarDetallesPedido() {
         DetallesPedido detallesPedido = new DetallesPedido();
 

@@ -42,6 +42,7 @@ public class ConfirmarEntrega extends javax.swing.JFrame {
         btnNegarPago = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Confirmación pago");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -58,7 +59,7 @@ public class ConfirmarEntrega extends javax.swing.JFrame {
         btnConfirmarPago.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnConfirmarPago.setText("Confirmar Pago");
 
-        btnNegarPago.setBackground(new java.awt.Color(255, 102, 102));
+        btnNegarPago.setBackground(new java.awt.Color(255, 153, 153));
         btnNegarPago.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnNegarPago.setText("Negar Pago");
         btnNegarPago.addActionListener(new java.awt.event.ActionListener() {

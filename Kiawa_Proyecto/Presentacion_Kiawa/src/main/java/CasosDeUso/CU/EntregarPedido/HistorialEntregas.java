@@ -4,7 +4,6 @@
  */
 package CasosDeUso.CU.EntregarPedido;
 
-import BO.PedidoBO;
 import Control.ControlRepartidor;
 import Subsistema.FSubsistema_Pedidos;
 import dto.PedidoDTO;
@@ -20,14 +19,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alberto Jimenez
  */
-public class PedidosRepartidor extends javax.swing.JFrame {
-
+public class HistorialEntregas extends javax.swing.JFrame {
+    
     private List<PedidoDTO> pedidos = new ArrayList<>();
-
+    
     /**
-     * Creates new form MenuRepartidor
+     * Creates new form HistorialEntregas
      */
-    public PedidosRepartidor() {
+    public HistorialEntregas() {
         initComponents();
         llenarTablaPedidos();
         this.setLocationRelativeTo(null);
@@ -46,15 +45,13 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidosRepartidor = new javax.swing.JTable();
-        btnSeleccionarPedido = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Seleccionador de Pedidos");
+        setTitle("Historial de repartidores");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jLabel1.setText("Seleccionador Pedidos");
+        jLabel1.setText("Historial Pedidos Entregados");
 
         tblPedidosRepartidor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,15 +78,6 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPedidosRepartidor);
 
-        btnSeleccionarPedido.setBackground(new java.awt.Color(153, 255, 153));
-        btnSeleccionarPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        btnSeleccionarPedido.setText("Seleccionar Pedido");
-        btnSeleccionarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeleccionarPedidoActionPerformed(evt);
-            }
-        });
-
         btnRegresar.setBackground(new java.awt.Color(255, 153, 153));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -99,106 +87,41 @@ public class PedidosRepartidor extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Arial Black", 2, 12)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("**CLIC PARA SELECCIONAR PEDIDO**");
-        jLabel2.setToolTipText("");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSeleccionarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(236, 236, 236))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(195, 195, 195)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(188, 188, 188)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(34, 34, 34)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(53, 53, 53)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSeleccionarPedido)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSeleccionarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarPedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSeleccionarPedidoActionPerformed
-
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        this.dispose();
+
     }//GEN-LAST:event_btnRegresarActionPerformed
-
-    public JButton getBtnSeleccionarPedido() {
-        return btnSeleccionarPedido;
-    }
-
-    public void setBtnSeleccionarPedido(JButton btnSeleccionarPedido) {
-        this.btnSeleccionarPedido = btnSeleccionarPedido;
-    }
-
-    public JButton getBtnRegresar() {
-        return btnRegresar;
-    }
-
-    public void setBtnRegresar(JButton btnRegresar) {
-        this.btnRegresar = btnRegresar;
-    }
-
-    public boolean seleccionarPedido() {
-        int filaSeleccionada = tblPedidosRepartidor.getSelectedRow();
-
-        if (filaSeleccionada >= 0) {
-            DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
-
-            String alumno = modelo.getValueAt(filaSeleccionada, 0).toString();
-            String ubicacion = modelo.getValueAt(filaSeleccionada, 1).toString();
-            double total = Double.parseDouble(modelo.getValueAt(filaSeleccionada, 2).toString());
-
-            PedidoDTO pedidoSeleccionado = pedidos.stream()
-                    .filter(p -> p.getNombreAlumno().equals(alumno)
-                    && p.getUbicacionEntrega().getSalon().equals(ubicacion)
-                    && p.getTotal() == total)
-                    .findFirst()
-                    .orElse(null);
-
-            if (pedidoSeleccionado != null) {
-                ControlRepartidor.getInstancia().setPedidoSeleccionado(pedidoSeleccionado);
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontró el pedido.");
-                return false;
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecciona un pedido de la tabla.");
-            return false;
-        }
-    }
-
+  
     private void llenarTablaPedidos() {
         try {
             String idRepartidor = ControlRepartidor.getInstancia().getRepartidor().getIdRepartidor();
@@ -218,7 +141,7 @@ public class PedidosRepartidor extends javax.swing.JFrame {
             modelo.addColumn("Total Pagar");
 
             for (PedidoDTO p : pedidos) {
-                if ("PENDIENTE".equalsIgnoreCase(p.getEstado())) {
+                if ("ENTREGADO".equalsIgnoreCase(p.getEstado())) {
                     UbicacionDTO ubicacion = p.getUbicacionEntrega();
                     String ubicacionStr = ubicacion.getSalon();
                     modelo.addRow(new Object[]{
@@ -241,12 +164,18 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         }
     }
 
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
 
+    public void setBtnRegresar(JButton btnRegresar) {
+        this.btnRegresar = btnRegresar;
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton btnSeleccionarPedido;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPedidosRepartidor;
     // End of variables declaration//GEN-END:variables

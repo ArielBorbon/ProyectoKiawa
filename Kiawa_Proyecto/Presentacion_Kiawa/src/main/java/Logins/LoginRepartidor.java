@@ -35,7 +35,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
     public LoginRepartidor() {
         initComponents();
         this.setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(0xc4c4c4));
+        getContentPane().setBackground(new Color(0x22EEE5));
     }
 
     /**
@@ -56,6 +56,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Iniciar sesión repartidores");
 
         jLabel1.setFont(new java.awt.Font("French Script MT", 3, 72)); // NOI18N
         jLabel1.setText("Kiawa Systems");
@@ -70,6 +71,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
 
         txtId.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
+        btnLoginRepartidor.setBackground(new java.awt.Color(153, 255, 153));
         btnLoginRepartidor.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnLoginRepartidor.setText("Iniciar Sesion");
         btnLoginRepartidor.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +80,7 @@ public class LoginRepartidor extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setBackground(new java.awt.Color(255, 153, 153));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {

@@ -70,6 +70,7 @@ public class DetallesPedido extends javax.swing.JFrame {
         txtTotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Detalles del pedido");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,7 +104,7 @@ public class DetallesPedido extends javax.swing.JFrame {
             }
         });
 
-        btnDevolverPedido.setBackground(new java.awt.Color(255, 102, 102));
+        btnDevolverPedido.setBackground(new java.awt.Color(255, 153, 153));
         btnDevolverPedido.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnDevolverPedido.setText("Devolver Pedido");
 

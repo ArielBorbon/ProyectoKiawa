@@ -18,7 +18,6 @@ public class MenuRepartidor extends javax.swing.JFrame {
      */
     public MenuRepartidor() {
         initComponents();
-        btnHistorialEntregas.setVisible(false);
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
     }
@@ -39,6 +38,7 @@ public class MenuRepartidor extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú de repartidores");
 
         jLabel1.setFont(new java.awt.Font("French Script MT", 3, 72)); // NOI18N
         jLabel1.setText("Kiawa Systems");
