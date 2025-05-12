@@ -295,7 +295,7 @@ public class PedidoDAO implements IPedidoDAO {
 
             UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
 
-            return resultado.getModifiedCount() > 0;
+            return resultado.getMatchedCount() > 0;
 
         } catch (MongoException e) {
             System.err.println("Error al cambiar el estado del pedido: " + e.getMessage());

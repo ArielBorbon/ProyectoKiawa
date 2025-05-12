@@ -10,14 +10,11 @@ import CasosDeUso.CU.EntregarPedido.PedidosRepartidor;
 import Fabricas.FactoryBO;
 import Logins.LoginRepartidor;
 import Menu.MenuRepartidor;
+import Subsistema.FSubsistema_Pedidos;
 import control.ControlPresentacion;
-import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.RepartidorDTO;
-import dto.UbicacionDTO;
-import java.util.List;
 import java.util.Stack;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -137,7 +134,7 @@ public class ControlRepartidor {
         seleccionarPedido.getBtnSeleccionarPedido().addActionListener(e -> {
             if (seleccionarPedido.seleccionarPedido()) {
                 mostrarDetallesPedido();
-                seleccionarPedido.dispose(); 
+                seleccionarPedido.dispose();
             }
         });
 
@@ -155,26 +152,48 @@ public class ControlRepartidor {
             detallesPedido.dispose();
         });
         detallesPedido.getBtnDevolverPedido().addActionListener(e -> {
+            String folio = pedidoSeleccionado.getFolio();
             JOptionPane.showMessageDialog(
                     null,
                     "No se ha encontrado al alumno, se devolverá el producto.",
                     "Devolución de pedido",
                     JOptionPane.WARNING_MESSAGE
             );
+            String devuelto = "DEVUELTO";
+            actualizarEstado(folio, devuelto, detallesPedido);
             regresar();
             detallesPedido.dispose();
         });
         detallesPedido.setVisible(true);
     }
-    
-    private void mostrarConfirmarEntrega(){
+
+    private void mostrarConfirmarEntrega() {
         ConfirmarEntrega confirmarEntrega = new ConfirmarEntrega();
+        String folio = pedidoSeleccionado.getFolio();
         confirmarEntrega.getBtnConfirmarPago().addActionListener(e -> {
-        
+            String entregado = "ENTREGADO";
+            actualizarEstado(folio, entregado, confirmarEntrega);
+            regresar();
+            confirmarEntrega.dispose();
         });
         confirmarEntrega.getBtnNegarPago().addActionListener(e -> {
-            
+            String devuelto = "DEVUELTO";
+            actualizarEstado(folio, devuelto, confirmarEntrega);
+            regresar();
+            confirmarEntrega.dispose();
         });
         confirmarEntrega.setVisible(true);
+    }
+
+    private void actualizarEstado(String folio, String estado, JFrame ventanaActual) {
+        FSubsistema_Pedidos subsistema = new FSubsistema_Pedidos();
+        boolean actualizado = subsistema.cambiarEstadoPedido(folio, estado);
+
+        if (actualizado) {
+            JOptionPane.showMessageDialog(ventanaActual, "Estado actulizado.");
+            ventanaActual.dispose();
+        } else {
+            JOptionPane.showMessageDialog(ventanaActual, "No se pudo actualizar el estado del pedido.");
+        }
     }
 }
