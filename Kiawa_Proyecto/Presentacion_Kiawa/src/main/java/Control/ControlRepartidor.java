@@ -4,6 +4,7 @@
  */
 package Control;
 
+import CasosDeUso.CU.EntregarPedido.ConfirmarEntrega;
 import CasosDeUso.CU.EntregarPedido.DetallesPedido;
 import CasosDeUso.CU.EntregarPedido.PedidosRepartidor;
 import Fabricas.FactoryBO;
@@ -150,7 +151,8 @@ public class ControlRepartidor {
         DetallesPedido detallesPedido = new DetallesPedido();
 
         detallesPedido.getBtnEntregarPedido().addActionListener(e -> {
-
+            mostrarConfirmarEntrega();
+            detallesPedido.dispose();
         });
         detallesPedido.getBtnDevolverPedido().addActionListener(e -> {
             JOptionPane.showMessageDialog(
@@ -164,5 +166,15 @@ public class ControlRepartidor {
         });
         detallesPedido.setVisible(true);
     }
-
+    
+    private void mostrarConfirmarEntrega(){
+        ConfirmarEntrega confirmarEntrega = new ConfirmarEntrega();
+        confirmarEntrega.getBtnConfirmarPago().addActionListener(e -> {
+        
+        });
+        confirmarEntrega.getBtnNegarPago().addActionListener(e -> {
+            
+        });
+        confirmarEntrega.setVisible(true);
+    }
 }
