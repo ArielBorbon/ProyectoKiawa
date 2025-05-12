@@ -124,10 +124,10 @@ public class ControlRepartidor {
         PedidosRepartidor seleccionarPedido = new PedidosRepartidor();
 
         seleccionarPedido.getBtnSeleccionarPedido().addActionListener(e -> {
-            if (ControlPresentacion.getInstancia().getDetallesSeleccionados().isEmpty()) {
-                JOptionPane.showMessageDialog(seleccionarPedido, "Por favor, seleccionar un pedido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+//            if (ControlPresentacion.getInstancia().getDetallesSeleccionados().isEmpty()) {
+//                JOptionPane.showMessageDialog(seleccionarPedido, "Por favor, seleccionar un pedido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+//                return;
+//            }
 
             seleccionarPedido.seleccionarPedido();
             mostrarDetallesPedido();

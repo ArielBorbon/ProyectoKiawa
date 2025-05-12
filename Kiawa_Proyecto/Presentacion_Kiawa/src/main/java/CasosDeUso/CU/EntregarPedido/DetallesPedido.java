@@ -22,11 +22,7 @@ public class DetallesPedido extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(0x22EEE5));
     }
 
-    public DetallesPedido(String alumno, String ubicacion, String metodoPago, double totalPedido) {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(0x22EEE5));
-
+    public void rellenarCampos(String alumno, String ubicacion, String metodoPago, double totalPedido) {
         txtAlumno.setText(alumno);
         txtUbicacion.setText(ubicacion);
         txtMetodoPago.setText(metodoPago);

@@ -98,6 +98,13 @@ public class FSubsistema_Pedidos {
         return pedidoBO.obtenerPedidoPorFolioBO(folio);
     }
     
+    public List<PedidoDTO> obtenerPedidosAsignadosARepartidor(String idRepartidor) {
+        if (idRepartidor == null || idRepartidor.trim().isEmpty()) {
+            throw new IllegalArgumentException("El ID del repartidor no puede ser nulo o vacío.");
+        }
+        return pedidoBO.obtenerPedidosAsignadosARepartidorBO(idRepartidor);
+    }
+    
     public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor){
         return pedidoBO.asignarPedidoRepartidor(folioPedido, nombreRepartidor);
     }
