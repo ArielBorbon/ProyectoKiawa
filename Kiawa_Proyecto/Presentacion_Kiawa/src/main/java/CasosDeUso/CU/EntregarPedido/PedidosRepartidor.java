@@ -10,6 +10,7 @@ import Subsistema.FSubsistema_Pedidos;
 import dto.PedidoDTO;
 import dto.UbicacionDTO;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -20,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Alberto Jimenez
  */
 public class PedidosRepartidor extends javax.swing.JFrame {
+
+    private List<PedidoDTO> pedidos = new ArrayList<>();
 
     /**
      * Creates new form MenuRepartidor
@@ -165,20 +168,34 @@ public class PedidosRepartidor extends javax.swing.JFrame {
         this.btnRegresar = btnRegresar;
     }
 
-    public void seleccionarPedido() {
+    public boolean seleccionarPedido() {
         int filaSeleccionada = tblPedidosRepartidor.getSelectedRow();
 
         if (filaSeleccionada >= 0) {
-            String alumno = tblPedidosRepartidor.getValueAt(filaSeleccionada, 0).toString();
-            String ubicacion = tblPedidosRepartidor.getValueAt(filaSeleccionada, 1).toString();
-            String metodoPago = "Efectivo";
-            double total = Double.parseDouble(tblPedidosRepartidor.getValueAt(filaSeleccionada, 3).toString());
+            DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
 
-            DetallesPedido detalles = new DetallesPedido();
-            detalles.rellenarCampos(alumno, ubicacion, metodoPago, total);
-            detalles.setVisible(true);
+            String alumno = modelo.getValueAt(filaSeleccionada, 0).toString();
+            String ubicacion = modelo.getValueAt(filaSeleccionada, 1).toString();
+            String metodoPago = modelo.getValueAt(filaSeleccionada, 2).toString();
+            double total = Double.parseDouble(modelo.getValueAt(filaSeleccionada, 3).toString());
+
+            PedidoDTO pedidoSeleccionado = pedidos.stream()
+                    .filter(p -> p.getNombreAlumno().equals(alumno)
+                    && p.getUbicacionEntrega().getSalon().equals(ubicacion)
+                    && p.getTotal() == total)
+                    .findFirst()
+                    .orElse(null);
+
+            if (pedidoSeleccionado != null) {
+                ControlRepartidor.getInstancia().setPedidoSeleccionado(pedidoSeleccionado);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el pedido.");
+                return false; 
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona un pedido de la tabla.");
+            return false; 
         }
     }
 
@@ -188,7 +205,7 @@ public class PedidosRepartidor extends javax.swing.JFrame {
 
             FSubsistema_Pedidos subsistemaPedidos = new FSubsistema_Pedidos();
 
-            List<PedidoDTO> pedidos = subsistemaPedidos.obtenerPedidosAsignadosARepartidor(idRepartidor);
+            pedidos = subsistemaPedidos.obtenerPedidosAsignadosARepartidor(idRepartidor);
 
             NonEditableTableModel modelo = new NonEditableTableModel();
             tblPedidosRepartidor.setModel(modelo);

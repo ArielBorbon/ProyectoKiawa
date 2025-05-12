@@ -11,6 +11,7 @@ import Logins.LoginRepartidor;
 import Menu.MenuRepartidor;
 import control.ControlPresentacion;
 import dto.DetallePedidoDTO;
+import dto.PedidoDTO;
 import dto.RepartidorDTO;
 import dto.UbicacionDTO;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ControlRepartidor {
 
     private static ControlRepartidor instancia = new ControlRepartidor();
     private RepartidorDTO repartidor;
+    private PedidoDTO pedidoSeleccionado;
 
     public Stack<JFrame> getHistorialFrames() {
         return historialFrames;
@@ -52,6 +54,14 @@ public class ControlRepartidor {
 
     public void setRepartidor(RepartidorDTO repartidor) {
         this.repartidor = repartidor;
+    }
+
+    public PedidoDTO getPedidoSeleccionado() {
+        return pedidoSeleccionado;
+    }
+
+    public void setPedidoSeleccionado(PedidoDTO pedidoSeleccionado) {
+        this.pedidoSeleccionado = pedidoSeleccionado;
     }
 
     public void cerrarSesion() {
@@ -124,14 +134,10 @@ public class ControlRepartidor {
         PedidosRepartidor seleccionarPedido = new PedidosRepartidor();
 
         seleccionarPedido.getBtnSeleccionarPedido().addActionListener(e -> {
-//            if (ControlPresentacion.getInstancia().getDetallesSeleccionados().isEmpty()) {
-//                JOptionPane.showMessageDialog(seleccionarPedido, "Por favor, seleccionar un pedido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-//                return;
-//            }
-
-            seleccionarPedido.seleccionarPedido();
-            mostrarDetallesPedido();
-            seleccionarPedido.dispose();
+            if (seleccionarPedido.seleccionarPedido()) {
+                mostrarDetallesPedido();
+                seleccionarPedido.dispose(); 
+            }
         });
 
         seleccionarPedido.getBtnRegresar().addActionListener(e -> {

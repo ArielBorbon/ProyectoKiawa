@@ -4,6 +4,8 @@
  */
 package CasosDeUso.CU.EntregarPedido;
 
+import Control.ControlRepartidor;
+import dto.PedidoDTO;
 import java.awt.Color;
 import javax.swing.JButton;
 
@@ -13,6 +15,11 @@ import javax.swing.JButton;
  */
 public class DetallesPedido extends javax.swing.JFrame {
 
+    private String alumno;
+    private String ubicacion;
+    private String metodoPago;
+    private double totalPedido;
+
     /**
      * Creates new form DetallesPedido
      */
@@ -20,13 +27,25 @@ public class DetallesPedido extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
+        cargarDatos();
     }
 
-    public void rellenarCampos(String alumno, String ubicacion, String metodoPago, double totalPedido) {
-        txtAlumno.setText(alumno);
-        txtUbicacion.setText(ubicacion);
-        txtMetodoPago.setText(metodoPago);
-        txtTotal.setText(String.format("%.2f", totalPedido));
+    public void setDatosPedido(String alumno, String ubicacion, String metodoPago, double totalPedido) {
+        this.alumno = alumno;
+        this.ubicacion = ubicacion;
+        this.metodoPago = metodoPago;
+        this.totalPedido = totalPedido;
+    }
+
+    private void cargarDatos() {
+        PedidoDTO pedido = ControlRepartidor.getInstancia().getPedidoSeleccionado();
+
+        if (pedido != null) {
+            txtAlumno.setText(pedido.getNombreAlumno());
+            txtUbicacion.setText(pedido.getUbicacionEntrega().getSalon());
+            txtMetodoPago.setText("Efectivo"); 
+            txtTotal.setText(String.format("%.2f", pedido.getTotal()));
+        }
     }
 
     /**
