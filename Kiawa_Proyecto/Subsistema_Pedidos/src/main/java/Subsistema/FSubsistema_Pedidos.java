@@ -24,7 +24,7 @@ public class FSubsistema_Pedidos {
     private final PlatilloBO platilloBO;
     private final UbicacionBO ubicacionBO;
 
-    public FSubsistema_Pedidos() throws Exception {
+    public FSubsistema_Pedidos(){
         this.pedidoBO = FactoryBO.crearPedidoBO();
         this.platilloBO = FactoryBO.crearPlatilloBO();
         this.ubicacionBO = FactoryBO.crearUbicacionBO();
@@ -96,5 +96,9 @@ public class FSubsistema_Pedidos {
 
     public PedidoDTO obtenerPedidoPorFolio(String folio) {
         return pedidoBO.obtenerPedidoPorFolioBO(folio);
+    }
+    
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor){
+        return pedidoBO.asignarPedidoRepartidor(folioPedido, nombreRepartidor);
     }
 }

@@ -18,7 +18,7 @@ public class FSubsistema_Repartidor {
 
     private final RepartidorBO repartidorBO;
 
-    public FSubsistema_Repartidor() throws Exception {
+    public FSubsistema_Repartidor(){
         this.repartidorBO = FactoryBO.crearRepartidorBO();
     }
 
