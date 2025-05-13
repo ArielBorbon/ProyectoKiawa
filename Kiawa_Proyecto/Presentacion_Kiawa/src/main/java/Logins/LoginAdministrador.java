@@ -5,16 +5,16 @@
 package Logins;
 
 import Menu.MenuRol;
-import BO.AlumnoBO;
-import CIA.Fachada_CIA;
-import Fabricas.FactoryBO;
-import dto.AlumnoDTO;
+import Subsistema.FSubsistema_Administrador;
+import dto.AdministradorDTO;
 import dto.LoginRequestDTO;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
@@ -31,6 +31,23 @@ public class LoginAdministrador extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(0xc4c4c4));
     }
 
+    public JButton getBtnLoginAdministrador() {
+        return btnLoginAdministrador;
+    }
+
+    public JPasswordField getTxtContrasena() {
+        return txtContrasena;
+    }
+
+    public JTextField getTxtId() {
+        return txtId;
+    }
+
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,7 +62,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtContrasena = new javax.swing.JPasswordField();
         txtId = new javax.swing.JTextField();
-        btnLoginEstudiante = new javax.swing.JButton();
+        btnLoginAdministrador = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,13 +80,13 @@ public class LoginAdministrador extends javax.swing.JFrame {
 
         txtId.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        btnLoginEstudiante.setBackground(new java.awt.Color(0, 0, 0));
-        btnLoginEstudiante.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        btnLoginEstudiante.setForeground(new java.awt.Color(255, 255, 255));
-        btnLoginEstudiante.setText("Iniciar Sesion");
-        btnLoginEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        btnLoginAdministrador.setBackground(new java.awt.Color(0, 0, 0));
+        btnLoginAdministrador.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnLoginAdministrador.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoginAdministrador.setText("Iniciar Sesion");
+        btnLoginAdministrador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginEstudianteActionPerformed(evt);
+                btnLoginAdministradorActionPerformed(evt);
             }
         });
 
@@ -101,7 +118,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLoginEstudiante)
+                                .addComponent(btnLoginAdministrador)
                                 .addGap(35, 35, 35))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
@@ -125,7 +142,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
                         .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnLoginEstudiante)
+                        .addComponent(btnLoginAdministrador)
                         .addGap(18, 18, 18)
                         .addComponent(btnRegresar)
                         .addGap(28, 28, 28))))
@@ -134,15 +151,21 @@ public class LoginAdministrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEstudianteActionPerformed
+    private void btnLoginAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAdministradorActionPerformed
 
         try {
             String id = this.txtId.getText().trim();
             String contrasena = new String(this.txtContrasena.getPassword());
 
         
-            LoginRequestDTO login = new LoginRequestDTO(id, contrasena);
-
+           
+            FSubsistema_Administrador subsistemaAdmin = new FSubsistema_Administrador();
+            AdministradorDTO adminDTO = subsistemaAdmin.loginAdministrador(id, contrasena);
+            
+            if (adminDTO == null) {
+                JOptionPane.showMessageDialog(this, "Uusario o contraseña Incorrectos. Intente de nuevo." , "Error" , JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             }
          catch (Exception ex) {
             Logger.getLogger(LoginAdministrador.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,7 +173,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
          }
 
 
-    }//GEN-LAST:event_btnLoginEstudianteActionPerformed
+    }//GEN-LAST:event_btnLoginAdministradorActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         MenuRol menuPrincipal = new MenuRol();
@@ -161,7 +184,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLoginEstudiante;
+    private javax.swing.JButton btnLoginAdministrador;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

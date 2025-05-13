@@ -4,6 +4,7 @@
  */
 package Menu;
 
+import CasosDeUso.CU.DarDeAlta.ControlAdministrador;
 import Control.ControlAlumno;
 import Control.ControlRepartidor;
 import java.awt.Color;
@@ -141,7 +142,9 @@ public class MenuRol extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        ControlAdministrador.getInstancia().iniciarFlujo();
+        
     }//GEN-LAST:event_btnAdministradorActionPerformed
 
     private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
