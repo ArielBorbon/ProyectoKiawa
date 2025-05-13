@@ -210,7 +210,40 @@ public class AdministradorDAO implements IAdministradorDAO {
     
     
     
-    
+    @Override
+public boolean existeEmpleadoConCurp(String curp) throws Exception {
+    if (curp == null || curp.trim().isEmpty()) {
+        throw new IllegalArgumentException("La CURP no puede ser nula o vacía.");
+    }
+
+    MongoClient clienteMongo = null;
+    Conexion conexion = Conexion.getInstancia();
+
+    try {
+        clienteMongo = conexion.crearConexion();
+        MongoDatabase db = conexion.obtenerBaseDatos(clienteMongo);
+
+        // 1. Buscar en Cocineros
+        MongoCollection<Document> cocineroCol = db.getCollection("Cocineros");
+        Document filtroC = new Document("curp", curp);
+        if (cocineroCol.find(filtroC).first() != null) {
+            return true;
+        }
+
+        // 2. Buscar en Repartidores
+        MongoCollection<Document> repartidorCol = db.getCollection("Repartidores");
+        Document filtroR = new Document("curp", curp);
+        return repartidorCol.find(filtroR).first() != null;
+
+    } catch (MongoException e) {
+        throw new Exception("Error al verificar CURP: " + e.getMessage());
+    } finally {
+        if (clienteMongo != null) {
+            conexion.cerrarConexion(clienteMongo);
+        }
+    }
+}
+
     
     
     

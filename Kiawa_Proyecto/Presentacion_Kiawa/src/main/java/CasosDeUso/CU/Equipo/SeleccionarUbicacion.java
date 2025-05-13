@@ -226,6 +226,8 @@ class NonEditableTableModel extends DefaultTableModel {
         btnContinuar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -310,6 +312,13 @@ class NonEditableTableModel extends DefaultTableModel {
         jLabel6.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jLabel6.setText("Doble Click para Seleccionar Platillos");
 
+        jLabel7.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
+        jLabel7.setText("Tipo de Pago:");
+
+        jComboBox1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "VISA****8123", "Añadir nueva Tarjeta..." }));
+        jComboBox1.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -342,7 +351,12 @@ class NonEditableTableModel extends DefaultTableModel {
                                                 .addComponent(txtEdificio)))
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(41, 41, 41)
-                                            .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jComboBox1, 0, 0, Short.MAX_VALUE)))))
                                 .addComponent(btnContinuar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1))
                         .addContainerGap(22, Short.MAX_VALUE))))
@@ -367,7 +381,11 @@ class NonEditableTableModel extends DefaultTableModel {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -407,12 +425,14 @@ class NonEditableTableModel extends DefaultTableModel {
     private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblUbicaciones;
     private javax.swing.JTextField txtAula;

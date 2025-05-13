@@ -196,6 +196,7 @@ public class HistorialPedidos extends javax.swing.JFrame {
         lblUbicacion.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         lblUbicacion.setText("...");
 
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnRegresar.setText("Regresar");
 

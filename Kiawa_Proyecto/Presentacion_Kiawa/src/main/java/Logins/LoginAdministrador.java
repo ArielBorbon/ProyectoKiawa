@@ -63,7 +63,9 @@ public class LoginAdministrador extends javax.swing.JFrame {
 
         txtId.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
+        btnLoginEstudiante.setBackground(new java.awt.Color(0, 0, 0));
         btnLoginEstudiante.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnLoginEstudiante.setForeground(new java.awt.Color(255, 255, 255));
         btnLoginEstudiante.setText("Iniciar Sesion");
         btnLoginEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,6 +73,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {

@@ -29,6 +29,7 @@ public class RepartidorMapper {
         dto.setDiasTrabajo(repartidor.getDiasTrabajo());
         dto.setHorario(repartidor.getHorario());
         dto.setConsideracionesExtras(repartidor.getConsideracionesExtras());
+        dto.setCurp(repartidor.getCurp());
 
         return dto;
     }
@@ -49,7 +50,8 @@ public class RepartidorMapper {
         repartidor.setDiasTrabajo(dto.getDiasTrabajo());
         repartidor.setHorario(dto.getHorario());
         repartidor.setConsideracionesExtras(dto.getConsideracionesExtras());
-        repartidor.setContrasena(contrasena); // La contraseña se pasa externamente
+        repartidor.setContrasena(contrasena);
+        repartidor.setCurp(dto.getCurp());
 
         return repartidor;
     }

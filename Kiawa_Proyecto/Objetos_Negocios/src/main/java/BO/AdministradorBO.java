@@ -104,5 +104,15 @@ public class AdministradorBO implements IAdministradorBO{
     
     
     
+    public boolean existeEmpleadoConCurpBO(String curp) throws Exception {
+    if (curp == null || curp.trim().isEmpty()) {
+        throw new IllegalArgumentException("La CURP no puede estar vacía.");
+    }
+    return administradorDAO.existeEmpleadoConCurp(curp);
+}
+
+    
+    
+    
 }
 

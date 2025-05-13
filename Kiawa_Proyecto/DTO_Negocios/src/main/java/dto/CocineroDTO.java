@@ -20,9 +20,34 @@ public class CocineroDTO {
     private String diasTrabajo;
     private String Horario;
     private String consideracionesExtras;
+    private String curp;
 
     public CocineroDTO() {
     }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+
+    public CocineroDTO(String idCocinero, String nombreCompleto, String telefono, Boolean disponible, String domicilio, String apodo, double salarioDiario, String diasTrabajo, String Horario, String consideracionesExtras, String curp) {
+        this.idCocinero = idCocinero;
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
+        this.disponible = disponible;
+        this.domicilio = domicilio;
+        this.apodo = apodo;
+        this.salarioDiario = salarioDiario;
+        this.diasTrabajo = diasTrabajo;
+        this.Horario = Horario;
+        this.consideracionesExtras = consideracionesExtras;
+        this.curp = curp;
+    }
+    
+    
 
     public CocineroDTO(String idCocinero, String nombreCompleto, String telefono, Boolean disponible, String domicilio, String apodo, double salarioDiario, String diasTrabajo, String Horario, String consideracionesExtras) {
         this.idCocinero = idCocinero;

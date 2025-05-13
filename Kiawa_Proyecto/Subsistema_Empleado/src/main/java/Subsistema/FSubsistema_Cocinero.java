@@ -19,7 +19,7 @@ public class FSubsistema_Cocinero {
 
     private final CocineroBO cocineroBO;
 
-    public FSubsistema_Cocinero(CocineroDAO cocineroDAO) {
+    public FSubsistema_Cocinero() {
         this.cocineroBO = FactoryBO.crearCocineroBO();
     }
 

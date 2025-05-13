@@ -8,19 +8,45 @@ package Entidades;
  *
  * @author PC Gamer
  */
-public class Repartidor {
+    public class Repartidor {
 
-    private String idRepartidor;
-    private String nombreCompleto;
-    private String telefono;
-    private Boolean disponible;
-    private String contrasena;
-    private String domicilio;
-    private String apodo;
-    private double salarioDiario;
-    private String diasTrabajo;
-    private String Horario;
-    private String consideracionesExtras;
+        private String idRepartidor;
+        private String nombreCompleto;
+        private String telefono;
+        private Boolean disponible;
+        private String contrasena;
+        private String domicilio;
+        private String apodo;
+        private double salarioDiario;
+        private String diasTrabajo;
+        private String Horario;
+        private String consideracionesExtras;
+        private String curp;
+
+    public Repartidor(String idRepartidor, String nombreCompleto, String telefono, Boolean disponible, String contrasena, String domicilio, String apodo, double salarioDiario, String diasTrabajo, String Horario, String consideracionesExtras, String curp) {
+        this.idRepartidor = idRepartidor;
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
+        this.disponible = disponible;
+        this.contrasena = contrasena;
+        this.domicilio = domicilio;
+        this.apodo = apodo;
+        this.salarioDiario = salarioDiario;
+        this.diasTrabajo = diasTrabajo;
+        this.Horario = Horario;
+        this.consideracionesExtras = consideracionesExtras;
+        this.curp = curp;
+    }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+    
+    
 
     public Repartidor() {
     }

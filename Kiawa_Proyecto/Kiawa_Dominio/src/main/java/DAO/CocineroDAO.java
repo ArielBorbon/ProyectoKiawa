@@ -54,6 +54,7 @@ public class CocineroDAO implements ICocineroDAO {
                 cocinero.setDiasTrabajo(doc.getString("diasTrabajo"));
                 cocinero.setHorario(doc.getString("Horario"));
                 cocinero.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                cocinero.setCurp(doc.getString("curp"));
             }
 
         } catch (MongoException e) {
@@ -133,6 +134,7 @@ public class CocineroDAO implements ICocineroDAO {
             doc.append("diasTrabajo", cocinero.getDiasTrabajo());
             doc.append("Horario", cocinero.getHorario());
             doc.append("consideracionesExtras", cocinero.getConsideracionesExtras());
+            doc.append("curp", cocinero.getCurp());
 
             coleccion.insertOne(doc);
 
@@ -244,6 +246,7 @@ public class CocineroDAO implements ICocineroDAO {
                 dto.setDiasTrabajo(doc.getString("diasTrabajo"));
                 dto.setHorario(doc.getString("Horario"));
                 dto.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                dto.setCurp(doc.getString("curp"));
                 cocineros.add(dto);
             }
 
@@ -283,6 +286,7 @@ public class CocineroDAO implements ICocineroDAO {
                 dto.setDiasTrabajo(doc.getString("diasTrabajo"));
                 dto.setHorario(doc.getString("Horario"));
                 dto.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                dto.setCurp(doc.getString("curp"));
                 cocineros.add(dto);
             }
 
@@ -325,6 +329,7 @@ public CocineroDTO loginCocinero(String idFriendly, String contrasena) throws Ex
             cocinero.setDiasTrabajo(doc.getString("diasTrabajo"));
             cocinero.setHorario(doc.getString("Horario"));
             cocinero.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+            cocinero.setCurp(doc.getString("curp"));
 
             return CocineroMapper.toDTO(cocinero);
         } else {

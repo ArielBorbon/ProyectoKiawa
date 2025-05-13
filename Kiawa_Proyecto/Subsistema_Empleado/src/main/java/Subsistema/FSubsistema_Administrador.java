@@ -5,7 +5,6 @@
 package Subsistema;
 
 import BO.AdministradorBO;
-import DAO.AdministradorDAO;
 import Entidades.Administrador;
 import Fabricas.FactoryBO;
 import dto.AdministradorDTO;
@@ -50,5 +49,11 @@ public class FSubsistema_Administrador {
     public AdministradorDTO loginAdministrador(String idFriendly, String contrasena) throws Exception {
         return administradorBO.loginAdministradorBO(idFriendly, contrasena);
     }
+    
+    
+    public boolean existeEmpleadoConCurp(String curp) throws Exception {
+    return administradorBO.existeEmpleadoConCurpBO(curp);
+}
+
 }
 

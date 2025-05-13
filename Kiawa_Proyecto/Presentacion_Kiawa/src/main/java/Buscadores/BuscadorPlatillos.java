@@ -222,6 +222,7 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel2.setText("Categorias");
 
+        btnFiltrar.setBackground(new java.awt.Color(199, 184, 148));
         btnFiltrar.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {

@@ -54,7 +54,8 @@ public class RepartidorDAO implements IRepartidorDAO {
                     .append("salarioDiario", repartidor.getSalarioDiario())
                     .append("diasTrabajo", repartidor.getDiasTrabajo())
                     .append("Horario", repartidor.getHorario())
-                    .append("consideracionesExtras", repartidor.getConsideracionesExtras());
+                    .append("consideracionesExtras", repartidor.getConsideracionesExtras())
+                    .append("curp", repartidor.getCurp());
 
             coleccion.insertOne(doc);
             return true;
@@ -231,6 +232,7 @@ public class RepartidorDAO implements IRepartidorDAO {
                 dto.setDiasTrabajo(doc.getString("diasTrabajo"));
                 dto.setHorario(doc.getString("Horario"));
                 dto.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                dto.setCurp(doc.getString("curp"));
                 repartidores.add(dto);
             }
 
@@ -270,6 +272,7 @@ public class RepartidorDAO implements IRepartidorDAO {
                 dto.setDiasTrabajo(doc.getString("diasTrabajo"));
                 dto.setHorario(doc.getString("Horario"));
                 dto.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+                dto.setCurp(doc.getString("curp"));
                 repartidores.add(dto);
             }
 
@@ -310,7 +313,8 @@ public class RepartidorDAO implements IRepartidorDAO {
                             resultado.getDouble("salarioDiario"),
                             resultado.getString("diasTrabajo"),
                             resultado.getString("horario"),
-                            resultado.getString("consideracionesExtras")
+                            resultado.getString("consideracionesExtras"),
+                            resultado.getString("curp")
                     );
                     return repartidorDTO; 
                 }

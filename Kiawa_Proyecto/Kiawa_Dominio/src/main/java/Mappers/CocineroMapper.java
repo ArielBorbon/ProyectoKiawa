@@ -27,6 +27,7 @@ public class CocineroMapper {
         dto.setDiasTrabajo(cocinero.getDiasTrabajo());
         dto.setHorario(cocinero.getHorario());
         dto.setConsideracionesExtras(cocinero.getConsideracionesExtras());
+        dto.setCurp(cocinero.getCurp());
 
         
 
@@ -41,13 +42,14 @@ public class CocineroMapper {
         cocinero.setNombreCompleto(dto.getNombreCompleto());
         cocinero.setTelefono(dto.getTelefono());
         cocinero.setDisponible(dto.getDisponible());
-        cocinero.setContrasena(contrasena); // Se pasa como parámetro seguro (no viene del DTO)
+        cocinero.setContrasena(contrasena);
         cocinero.setDomicilio(dto.getDomicilio());
         cocinero.setApodo(dto.getApodo());
         cocinero.setSalarioDiario(dto.getSalarioDiario());
         cocinero.setDiasTrabajo(dto.getDiasTrabajo());
         cocinero.setHorario(dto.getHorario());
         cocinero.setConsideracionesExtras(dto.getConsideracionesExtras());
+        cocinero.setCurp(dto.getCurp());
 
         return cocinero;
     }
