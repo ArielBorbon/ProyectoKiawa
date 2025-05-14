@@ -19,13 +19,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Freddy
  */
 public class PedidosCocinero extends javax.swing.JFrame {
+
     private List<PedidoDTO> pedidosPendientes;
+
     /**
      * Creates new form MenuCocinero
      */
     public PedidosCocinero() {
         initComponents();
-//        llenarTablaPedidos();
+        llenarTablaPedidos();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
     }
@@ -143,8 +145,41 @@ public class PedidosCocinero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //METODOS
+    private void llenarTablaPedidos() {
+        try {
+            FSubsistema_Pedidos subsistema = new FSubsistema_Pedidos();
+            pedidosPendientes = subsistema.obtenerPedidosPendientes();
+            DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
+            modelo.setRowCount(0);
+
+            for (PedidoDTO p : pedidosPendientes) {
+                Object[] fila = {
+                    p.getNombreAlumno(),
+                    p.getUbicacionEntrega().getEdificio() + " " + p.getUbicacionEntrega().getSalon(),
+                    "Efectivo", //Caso base, dira Efectivo
+                    p.getTotal()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar pedidos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    //BOTONES
+
     private void btnSeleccionarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarPedidoActionPerformed
-        // TODO add your handling code here:
+        int filaSeleccionada = tblPedidosRepartidor.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un pedido de la tabla.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        PedidoDTO pedidoSeleccionado = pedidosPendientes.get(filaSeleccionada);
+        Control.ControlCocinero.getInstancia().setPedidoActual(pedidoSeleccionado);
+        new DetallesPedidos().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnSeleccionarPedidoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -177,4 +212,3 @@ public class PedidosCocinero extends javax.swing.JFrame {
     private javax.swing.JTable tblPedidosRepartidor;
     // End of variables declaration//GEN-END:variables
 }
-

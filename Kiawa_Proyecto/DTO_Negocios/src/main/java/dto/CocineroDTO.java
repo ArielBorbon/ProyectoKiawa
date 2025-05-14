@@ -21,6 +21,7 @@ public class CocineroDTO {
     private String Horario;
     private String consideracionesExtras;
     private String curp;
+    
 
     public CocineroDTO() {
     }

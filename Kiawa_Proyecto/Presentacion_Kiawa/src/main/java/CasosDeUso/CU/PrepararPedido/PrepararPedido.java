@@ -6,6 +6,8 @@ package CasosDeUso.CU.PrepararPedido;
 
 import Subsistema.FSubsistema_Pedidos;
 import BO.PedidoBO;
+import Control.ControlCocinero;
+import dto.DetallePedidoDTO;
 import java.text.SimpleDateFormat;
 import dto.PedidoDTO;
 import java.awt.Color;
@@ -19,15 +21,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Freddy
  */
 public class PrepararPedido extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form MenuCocinero
      */
     public PrepararPedido() {
         initComponents();
-//        llenarTablaPedidos();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
+        cargarPedido();
     }
 
     /**
@@ -180,12 +182,49 @@ public class PrepararPedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //METODOS
+    private void cargarPedido() {
+        PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
+        if (pedido == null) {
+            return;
+        }
+
+        txtNombre.setText(pedido.getNombreAlumno());
+        txtMetodoPago.setText("Efectivo");
+        txtTotal.setText("$" + pedido.getTotal());
+
+        DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
+        modelo.setRowCount(0);
+
+        if (pedido.getPlatillos() != null) {
+            for (DetallePedidoDTO detalle : pedido.getPlatillos()) {
+                Object[] fila = {
+                    detalle.getNombrePlatillo(),
+                    "$" + detalle.getPrecioUnitario()
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+
+    //BOTONES 
+
     private void btnTerminarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarPedidoActionPerformed
-        // TODO add your handling code here:
+        PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
+        boolean actualizado = new FSubsistema_Pedidos().cambiarEstadoPedido(pedido.getFolio(), "PREPARADO");
+
+        if (actualizado) {
+            JOptionPane.showMessageDialog(this, "Pedido terminado con éxito.");
+            this.dispose();
+            ControlCocinero.getInstancia().mostrarPedidosCocinero();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo actualizar el estado del pedido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnTerminarPedidoActionPerformed
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new DetallesPedidos().setVisible(true);
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
 
     private void txtMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMetodoPagoActionPerformed
@@ -208,8 +247,6 @@ public class PrepararPedido extends javax.swing.JFrame {
         this.btnCancelarPedido = btnSeleccionarPedido;
     }
 
-  
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarPedido;
@@ -226,4 +263,3 @@ public class PrepararPedido extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
-

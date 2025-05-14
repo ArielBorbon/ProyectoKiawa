@@ -7,8 +7,10 @@ package Logins;
 import Menu.MenuRol;
 import BO.AlumnoBO;
 import CIA.Fachada_CIA;
+import Control.ControlCocinero;
 import Fabricas.FactoryBO;
 import dto.AlumnoDTO;
+import dto.CocineroDTO;
 import dto.LoginRequestDTO;
 import java.awt.Color;
 import java.util.logging.Level;
@@ -132,19 +134,31 @@ public class LoginCocinero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEstudianteActionPerformed
-
         try {
             String id = this.txtId.getText().trim();
             String contrasena = new String(this.txtContrasena.getPassword());
 
-        
-            LoginRequestDTO login = new LoginRequestDTO(id, contrasena);
-
+            if (id.isEmpty() || contrasena.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor llena todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
             }
-         catch (Exception ex) {
-            Logger.getLogger(LoginAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+
+            CocineroDTO cocinero = FactoryBO.crearCocineroBO().loginCocineroBO(id, contrasena);
+
+            if (cocinero != null) {
+                JOptionPane.showMessageDialog(this, "Bienvenido, " + cocinero.getNombreCompleto(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                ControlCocinero.getInstancia().setCocinero(cocinero); 
+                new Menu.MenuCocinero().setVisible(true); 
+                this.dispose(); 
+
+            } else {
+                JOptionPane.showMessageDialog(this, "ID o Contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(LoginCocinero.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Usuario o Contraseña Incorrectos. Intente De nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-         }
+        }
 
 
     }//GEN-LAST:event_btnLoginEstudianteActionPerformed

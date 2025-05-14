@@ -6,6 +6,8 @@ package CasosDeUso.CU.PrepararPedido;
 
 import Subsistema.FSubsistema_Pedidos;
 import BO.PedidoBO;
+import Control.ControlCocinero;
+import dto.DetallePedidoDTO;
 import java.text.SimpleDateFormat;
 import dto.PedidoDTO;
 import java.awt.Color;
@@ -19,15 +21,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Freddy
  */
 public class DetallesPedidos extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form MenuCocinero
      */
     public DetallesPedidos() {
         initComponents();
-//        llenarTablaPedidos();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
+        cargarDatosPedido();
+        cargarDetallesPedido();
     }
 
     /**
@@ -64,9 +67,17 @@ public class DetallesPedidos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Precio Unitario"
+                "Producto", "Precio Unitario", "Cantidad"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblPedidosRepartidor);
 
         btnCancelarPedido.setBackground(new java.awt.Color(255, 102, 102));
@@ -197,16 +208,51 @@ public class DetallesPedidos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //METODOS
+    private void cargarDatosPedido() {
+        PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
+        if (pedido == null) {
+            return;
+        }
+
+        txtNombre.setText(pedido.getNombreAlumno());
+        txtMetodoPago.setText("Efectivo");
+        txtTotal.setText("$" + pedido.getTotal());
+    }
+
+    private void cargarDetallesPedido() {
+        PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
+        if (pedido == null || pedido.getPlatillos() == null) {
+            return;
+        }
+
+        DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
+        modelo.setRowCount(0);
+
+        for (DetallePedidoDTO detalle : pedido.getPlatillos()) {
+            Object[] fila = {
+                detalle.getNombrePlatillo(),
+                "$" + detalle.getPrecioUnitario(),
+                detalle.getCantidad()
+            };
+            modelo.addRow(fila);
+        }
+    }
+
+    //BOTONES
+
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnPrepararPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrepararPedidoActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new PrepararPedido().setVisible(true);
     }//GEN-LAST:event_btnPrepararPedidoActionPerformed
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new CancelarPedido().setVisible(true);
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
 
     private void txtMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMetodoPagoActionPerformed
@@ -254,4 +300,3 @@ public class DetallesPedidos extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
-

@@ -4,6 +4,8 @@
  */
 package Menu;
 
+import Control.ControlCocinero;
+import Logins.LoginCocinero;
 import java.awt.Color;
 import javax.swing.JButton;
 
@@ -18,7 +20,7 @@ public class MenuCocinero extends javax.swing.JFrame {
      */
     public MenuCocinero() {
         initComponents();
-        btnHistorialEntregas.setVisible(false);
+        btnHistorialPedidos.setVisible(false);
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
     }
@@ -35,7 +37,7 @@ public class MenuCocinero extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnVerPedidos = new javax.swing.JButton();
-        btnHistorialEntregas = new javax.swing.JButton();
+        btnHistorialPedidos = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,18 +57,23 @@ public class MenuCocinero extends javax.swing.JFrame {
             }
         });
 
-        btnHistorialEntregas.setBackground(new java.awt.Color(153, 204, 255));
-        btnHistorialEntregas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        btnHistorialEntregas.setText("Historial Entregas");
-        btnHistorialEntregas.addActionListener(new java.awt.event.ActionListener() {
+        btnHistorialPedidos.setBackground(new java.awt.Color(153, 204, 255));
+        btnHistorialPedidos.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        btnHistorialPedidos.setText("Historial Pedidos");
+        btnHistorialPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialEntregasActionPerformed(evt);
+                btnHistorialPedidosActionPerformed(evt);
             }
         });
 
         btnCerrarSesion.setBackground(new java.awt.Color(255, 153, 153));
         btnCerrarSesion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,7 +90,7 @@ public class MenuCocinero extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnHistorialEntregas, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                    .addComponent(btnHistorialPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                     .addComponent(btnVerPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(48, 48, 48))
         );
@@ -97,7 +104,7 @@ public class MenuCocinero extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnVerPedidos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHistorialEntregas)
+                .addComponent(btnHistorialPedidos)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrarSesion)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -107,17 +114,25 @@ public class MenuCocinero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidosActionPerformed
-        // TODO add your handling code here:
+        Control.ControlCocinero.getInstancia().mostrarPedidosCocinero();
+        this.dispose();
     }//GEN-LAST:event_btnVerPedidosActionPerformed
 
-    private void btnHistorialEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialEntregasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnHistorialEntregasActionPerformed
+    private void btnHistorialPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialPedidosActionPerformed
+        ControlCocinero.getInstancia().mostrarHistorialPedidos();
+        this.dispose();
+    }//GEN-LAST:event_btnHistorialPedidosActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        ControlCocinero.getInstancia().cerrarSesion();
+        new LoginCocinero().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     public JButton getBtnVerPedidos() {
         return btnVerPedidos;
     }
-    
+
     public JButton getBtnCerrarSesion() {
         return btnCerrarSesion;
     }
@@ -127,11 +142,11 @@ public class MenuCocinero extends javax.swing.JFrame {
     }
 
     public JButton getBtnHistorialEntregas() {
-        return btnHistorialEntregas;
+        return btnHistorialPedidos;
     }
 
     public void setBtnHistorialEntregas(JButton btnHistorialEntregas) {
-        this.btnHistorialEntregas = btnHistorialEntregas;
+        this.btnHistorialPedidos = btnHistorialEntregas;
     }
 
     public JButton getBtnSeleccionarPedido() {
@@ -141,12 +156,11 @@ public class MenuCocinero extends javax.swing.JFrame {
     public void setBtnSeleccionarPedido(JButton btnSeleccionarPedido) {
         this.btnVerPedidos = btnSeleccionarPedido;
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnHistorialEntregas;
+    private javax.swing.JButton btnHistorialPedidos;
     private javax.swing.JButton btnVerPedidos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

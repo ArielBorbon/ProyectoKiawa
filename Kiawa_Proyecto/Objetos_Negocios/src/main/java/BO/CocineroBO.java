@@ -24,8 +24,9 @@ public class CocineroBO implements ICocineroBO {
 
     /**
      * Busca un cocinero por su CURP.
+     *
      * @param curp
-     * @return 
+     * @return
      * @throws java.lang.Exception
      */
     @Override
@@ -43,13 +44,14 @@ public class CocineroBO implements ICocineroBO {
     /**
      * Actualiza un cocinero. Se conserva cada campo original si el DTO viene
      * nulo o vacío.
+     *
      * @param dto
      * @param contrasena
-     * @return 
+     * @return
      * @throws java.lang.Exception
      */
     @Override
-    public boolean actualizarCocineroBO(CocineroDTO dto,String contrasena) throws Exception {
+    public boolean actualizarCocineroBO(CocineroDTO dto, String contrasena) throws Exception {
         if (dto == null || dto.getIdCocinero() == null || dto.getIdCocinero().trim().isEmpty()) {
             throw new IllegalArgumentException("El DTO o su idCocinero no pueden estar vacíos.");
         }
@@ -130,6 +132,10 @@ public class CocineroBO implements ICocineroBO {
 
         if (dto == null) {
             throw new Exception("ID o contraseña incorrectos.");
+        }
+
+        if (!dto.getDisponible()) {
+            throw new Exception("El cocinero no está disponible para iniciar sesión.");
         }
 
         return dto;

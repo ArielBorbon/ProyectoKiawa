@@ -27,16 +27,13 @@ public class MenuRol extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0xc4c4c4));
         FSubsistema_Cocinero subCocinero = new FSubsistema_Cocinero();
-        
 
         try {
             LlenarBaseDeDatos.rellenarBD();
         } catch (Exception ex) {
-           
+
         }
-        }
-        
-    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -158,7 +155,7 @@ public class MenuRol extends javax.swing.JFrame {
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
         this.dispose();
         ControlAdministrador.getInstancia().iniciarFlujo();
-        
+
     }//GEN-LAST:event_btnAdministradorActionPerformed
 
     private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
@@ -168,11 +165,12 @@ public class MenuRol extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEstudianteActionPerformed
 
     private void btnCocineroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCocineroActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new Logins.LoginCocinero().setVisible(true);
     }//GEN-LAST:event_btnCocineroActionPerformed
 
     private void btnRepartidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepartidorActionPerformed
-        
+
         ControlRepartidor.getInstancia().iniciarFlujo();
         this.dispose();
     }//GEN-LAST:event_btnRepartidorActionPerformed
@@ -180,7 +178,6 @@ public class MenuRol extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

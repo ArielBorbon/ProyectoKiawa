@@ -6,6 +6,7 @@ package CasosDeUso.CU.PrepararPedido;
 
 import Subsistema.FSubsistema_Pedidos;
 import BO.PedidoBO;
+import Control.ControlCocinero;
 import java.text.SimpleDateFormat;
 import dto.PedidoDTO;
 import java.awt.Color;
@@ -19,13 +20,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Freddy
  */
 public class CancelarPedido extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form MenuCocinero
      */
     public CancelarPedido() {
         initComponents();
-//        llenarTablaPedidos();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
     }
@@ -133,11 +133,27 @@ public class CancelarPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new DetallesPedidos().setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
-        // TODO add your handling code here:
+        String motivo = txtMotivo.getText().trim();
+        if (motivo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar un motivo para cancelar el pedido.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
+        boolean actualizado = new FSubsistema_Pedidos().cambiarEstadoPedido(pedido.getFolio(), "CANCELADO");
+
+        if (actualizado) {
+            JOptionPane.showMessageDialog(this, "Pedido cancelado exitosamente.");
+            this.dispose();
+            ControlCocinero.getInstancia().mostrarPedidosCocinero();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo cancelar el pedido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
 
     private void txtMotivotxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMotivotxtNombreActionPerformed
@@ -152,8 +168,6 @@ public class CancelarPedido extends javax.swing.JFrame {
         this.btnCancelarPedido = btnSeleccionarPedido;
     }
 
-  
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarPedido;
@@ -164,4 +178,3 @@ public class CancelarPedido extends javax.swing.JFrame {
     private javax.swing.JTextField txtMotivo;
     // End of variables declaration//GEN-END:variables
 }
-
