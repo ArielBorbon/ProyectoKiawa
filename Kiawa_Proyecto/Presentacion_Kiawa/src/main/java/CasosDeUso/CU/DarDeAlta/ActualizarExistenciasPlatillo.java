@@ -24,6 +24,7 @@ private FSubsistema_Platillos subsP = new FSubsistema_Platillos();
         initComponents();
         buscadorPlatillos.getCmbDisponible().setEnabled(false);
         buscadorPlatillos.getCmbDisponible().setVisible(false);
+        buscadorPlatillos.getLblDisponible().setVisible(false);
         pnlPlatillos.add(buscadorPlatillos);
         pnlPlatillos.setVisible(true);
                 buscadorPlatillos.setOnPlatilloDoubleClick(dto -> {
