@@ -75,6 +75,9 @@ public class PedidosCocinero extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblPedidosRepartidor);
+        if (tblPedidosRepartidor.getColumnModel().getColumnCount() > 0) {
+            tblPedidosRepartidor.getColumnModel().getColumn(2).setHeaderValue("Metodo Pago");
+        }
 
         btnSeleccionarPedido.setBackground(new java.awt.Color(153, 255, 153));
         btnSeleccionarPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -164,38 +167,6 @@ public class PedidosCocinero extends javax.swing.JFrame {
         this.btnRegresar = btnRegresar;
     }
 
-
-        public void cargarPedidosPendientes() {
-            try {
-                FSubsistema_Pedidos subsistemaPedidos = new FSubsistema_Pedidos();
-                pedidosPendientes = subsistemaPedidos.obtenerPedidosPendientes();
-
-                DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
-                modelo.setRowCount(0);
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-                for (PedidoDTO pedido : pedidosPendientes) {
-                    modelo.addRow(new Object[]{
-                        pedido.getFolio(),
-                        pedido.getNombreAlumno(),
-                        pedido.getUbicacionEntrega().getEdificio() + " - " + pedido.getUbicacionEntrega().getSalon(),
-                        pedido.getTotal(),
-                        sdf.format(pedido.getFechaPedido())
-                    });
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar pedidos: " + e.getMessage());
-            }
-        }
-
-        public String getFolioPedidoSeleccionado() {
-            int filaSeleccionada = tblPedidosRepartidor.getSelectedRow();
-            if (filaSeleccionada >= 0 && filaSeleccionada < pedidosPendientes.size()) {
-                return (String) tblPedidosRepartidor.getValueAt(filaSeleccionada, 0);
-            }
-            return null;
-        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
