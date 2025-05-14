@@ -295,6 +295,8 @@ public class DarDeAltaEmpleado extends javax.swing.JFrame {
             String horario = txtHorario.getText().trim();
             String extras = txtConsideracionesExtras.getText().trim();
             String curp = txtCurp.getText().trim();
+            String contrasena = new String(txtContrasena.getPassword()).trim();
+
             
             
                     double salario;
@@ -320,7 +322,7 @@ public class DarDeAltaEmpleado extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "El salario tiene que ser mayor a 0" , "Error" , JOptionPane.WARNING_MESSAGE);
             }
 
-            if (nombre.isEmpty() || telefono.isEmpty() || domicilio.isEmpty() || apodo.isEmpty() || dias.isEmpty() || horario.isEmpty() || extras.isEmpty() || curp.isEmpty()) {
+            if (nombre.isEmpty() || telefono.isEmpty() || domicilio.isEmpty() || apodo.isEmpty() || dias.isEmpty() || horario.isEmpty() || extras.isEmpty() || curp.isEmpty() || contrasena.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         "Por favor, rellena todos los campos.",
                         "Validación", JOptionPane.WARNING_MESSAGE);
@@ -351,7 +353,7 @@ public class DarDeAltaEmpleado extends javax.swing.JFrame {
                 dto.setConsideracionesExtras(extras);
                 dto.setCurp(curp);
                 dto.setDisponible(true);
-                String contrasena = txtContrasena.getText().trim();
+               
 
                 boolean ok = subsistema.registrarCocinero(dto, contrasena);
                 if (ok) {
@@ -365,7 +367,6 @@ public class DarDeAltaEmpleado extends javax.swing.JFrame {
                 }
 
             } else {
-                // 3b) Crear Repartidor
                 FSubsistema_Repartidor subsistema = new FSubsistema_Repartidor();
                 String nuevoId = subsistema.crearIDFriendlyRepartidor();
                 RepartidorDTO dto = new RepartidorDTO();
@@ -381,7 +382,7 @@ public class DarDeAltaEmpleado extends javax.swing.JFrame {
                 dto.setCurp(curp);
                 dto.setDisponible(true);
 
-                boolean ok = subsistema.crearRepartidor(dto);
+                boolean ok = subsistema.crearRepartidor(dto , contrasena);
                 if (ok) {
                     JOptionPane.showMessageDialog(this,
                             "Repartidor creado con ID " + nuevoId,
@@ -402,6 +403,24 @@ public class DarDeAltaEmpleado extends javax.swing.JFrame {
                     "Error al crear el empleado:\n" + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        txtApodo.setText("");
+        txtConsideracionesExtras.setText("");
+        txtContrasena.setText("");
+        txtCurp.setText("");
+        txtDiasDeTrabajo.setText("");
+        txtDomicilio.setText("");
+        txtHorario.setText("");
+        txtNombre.setText("");
+        txtSalarioDiario.setText("");
+        txtTelefono.setText("");
+        
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_btnCrearEmpleadoActionPerformed
 
     private void txtConsideracionesExtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConsideracionesExtrasActionPerformed

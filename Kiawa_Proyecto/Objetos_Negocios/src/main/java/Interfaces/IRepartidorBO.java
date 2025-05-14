@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IRepartidorBO {
 
-    boolean crearRepartidorBO(RepartidorDTO dto) throws Exception;
+    boolean crearRepartidorBO(RepartidorDTO dto , String contrasena) throws Exception;
 
     String crearIDFriendlyBO();
 

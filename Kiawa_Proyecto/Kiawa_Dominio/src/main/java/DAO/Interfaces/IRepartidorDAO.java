@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IRepartidorDAO {
     
-    boolean crearRepartidor(RepartidorDTO dto) throws Exception;
+    boolean crearRepartidor(RepartidorDTO dto, String contrasena) throws Exception;
     
     boolean deshabilitarRepartidor(String idFriendly);
     

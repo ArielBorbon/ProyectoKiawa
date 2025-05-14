@@ -2,15 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package BO.RellenoBD;
+package BO;
 
-import BO.AdministradorBO;
-import BO.CocineroBO;
-import BO.PedidoBO;
-import BO.PlatilloBO;
-import BO.RepartidorBO;
-import BO.UbicacionBO;
-import Entidades.Cocinero;
 import Fabricas.FactoryBO;
 import dto.AdministradorDTO;
 import dto.CocineroDTO;
@@ -22,17 +15,13 @@ import dto.UbicacionDTO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
 
 /**
  *
- * @author rayoa
+ * @author PC Gamer
  */
-public class LlenarBD {
-
-    @Test
-    public void rellenarBD() throws Exception {
+public class LlenarBaseDeDatos {
+        public static void rellenarBD() throws Exception {
         CocineroBO cocineroBO = FactoryBO.crearCocineroBO();
         RepartidorBO repartidorBO = FactoryBO.crearRepartidorBO();
         AdministradorBO administradorBO = FactoryBO.crearAdministradorBO();
@@ -54,7 +43,6 @@ public class LlenarBD {
             cocineroDTO.setTelefono("5931458501");
             cocineroDTO.setCurp("LOPE920315HDFRMS09");
             boolean exito = cocineroBO.crearCocineroBO(cocineroDTO, "Contraseña123");
-            assertEquals(exito, true);
             cocineroBO.deshabilitarCocineroBO("000001");
 
             CocineroDTO cocineroDTO1 = new CocineroDTO();
@@ -69,7 +57,6 @@ public class LlenarBD {
             cocineroDTO1.setTelefono("5931458502");
             cocineroDTO1.setCurp("PERE750202HDFRMC05");
             boolean exito1 = cocineroBO.crearCocineroBO(cocineroDTO1, "Contraseña456");
-            assertEquals(exito1, true);
 
             CocineroDTO cocineroDTO2 = new CocineroDTO();
             cocineroDTO2.setApodo("Sofia");
@@ -83,7 +70,6 @@ public class LlenarBD {
             cocineroDTO2.setTelefono("5931458503");
             cocineroDTO2.setCurp("MART850505HDFRZN02");
             boolean exito2 = cocineroBO.crearCocineroBO(cocineroDTO2, "Contraseña789");
-            assertEquals(exito2, true);
 
             CocineroDTO cocineroDTO3 = new CocineroDTO();
             cocineroDTO3.setApodo("Chefsito");
@@ -97,7 +83,6 @@ public class LlenarBD {
             cocineroDTO3.setTelefono("5931458504");
             cocineroDTO3.setCurp("HERN900101HDFRLT07");
             boolean exito3 = cocineroBO.crearCocineroBO(cocineroDTO3, "ChefsitoLocuras555");
-            assertEquals(exito3, true);
 
             RepartidorDTO repartidor = new RepartidorDTO();
 
@@ -112,8 +97,7 @@ public class LlenarBD {
             repartidor.setConsideracionesExtras("Tiene motocicleta propia y licencia vigente");
             repartidor.setCurp("GARC800101HDFRNL00");
 
-            boolean exitoRepartidor = repartidorBO.crearRepartidorBO(repartidor , "Lucas456");
-            assertEquals(exito, true);
+            boolean exitoRepartidor = repartidorBO.crearRepartidorBO(repartidor , "Lucas123");
 
             RepartidorDTO repartidor1 = new RepartidorDTO();
             repartidor1.setNombreCompleto("María de los Angeles");
@@ -128,7 +112,6 @@ public class LlenarBD {
             repartidor1.setCurp("SAND880707HDFRPL03");
 
             boolean exitoRepartidor1 = repartidorBO.crearRepartidorBO(repartidor1 , "Maye555");
-            assertEquals(exitoRepartidor1, true);
 
             RepartidorDTO repartidor2 = new RepartidorDTO();
             repartidor2.setNombreCompleto("Mario Enrique Osuna Cuen");
@@ -143,8 +126,7 @@ public class LlenarBD {
             repartidor2.setCurp("GUTI950404HDFRMC01");
             repartidorBO.deshabilitarRepartidorBO("000003");
 
-            boolean exitoRepartidor2 = repartidorBO.crearRepartidorBO(repartidor2, "MosunaTeams");
-            assertEquals(exitoRepartidor2, true);
+            boolean exitoRepartidor2 = repartidorBO.crearRepartidorBO(repartidor2 , "MosunasTeams");
 
             RepartidorDTO repartidor3 = new RepartidorDTO();
             repartidor3.setNombreCompleto("Christian Gibran Duran Solano");
@@ -158,326 +140,273 @@ public class LlenarBD {
             repartidor3.setConsideracionesExtras("Flexible con horarios");
             repartidor3.setCurp("RAMI760606HDFRJN08");
 
-            boolean exitoRepartidor3 = repartidorBO.crearRepartidorBO(repartidor3 , "Gibran852");
-            assertEquals(exitoRepartidor3, true);
+            boolean exitoRepartidor3 = repartidorBO.crearRepartidorBO(repartidor3 , "Repartidor123");
 
             AdministradorDTO admin = new AdministradorDTO();
             admin.setNombreCompleto("Adrian Macias Estrada");
             admin.setTelefono("1231231231");
             boolean exitoAdmin = administradorBO.crearAdministradorBO(admin, "profe123");
-            assertEquals(exito, true);
 
             AdministradorDTO admin1 = new AdministradorDTO();
             admin1.setNombreCompleto("Victor Hugo Domitsu Kono");
             admin1.setTelefono("9876543210");
             boolean exitoAdmin1 = administradorBO.crearAdministradorBO(admin1, "VHDK");
-            assertEquals(exitoAdmin1, true);
 
             AdministradorDTO admin2 = new AdministradorDTO();
             admin2.setNombreCompleto("Manuel Domitsu Kono");
             admin2.setTelefono("4567891230");
             boolean exitoAdmin2 = administradorBO.crearAdministradorBO(admin2, "AdminSEGURIDAD25");
-            assertEquals(exitoAdmin2, true);
 
             AdministradorDTO admin3 = new AdministradorDTO();
             admin3.setNombreCompleto("Ariel Eduardo Borbon Izaguirre");
             admin3.setTelefono("6442048917");
             boolean exitoAdmin3 = administradorBO.crearAdministradorBO(admin3, "Kiawa123");
-            assertEquals(exitoAdmin3, true);
 
 // Salones 1610 a 1615
             UbicacionDTO ubicacionDTO1 = new UbicacionDTO();
             ubicacionDTO1.setEdificio("1600");
             ubicacionDTO1.setSalon("Av1610");
             boolean exitoUbicacion1 = ubicacionBO.crearUbicacionBO(ubicacionDTO1);
-            assertEquals(exitoUbicacion1, true);
 
             UbicacionDTO ubicacionDTO2 = new UbicacionDTO();
             ubicacionDTO2.setEdificio("1600");
             ubicacionDTO2.setSalon("Av1611");
             boolean exitoUbicacion2 = ubicacionBO.crearUbicacionBO(ubicacionDTO2);
-            assertEquals(exitoUbicacion2, true);
 
             UbicacionDTO ubicacionDTO3 = new UbicacionDTO();
             ubicacionDTO3.setEdificio("1600");
             ubicacionDTO3.setSalon("Av1612");
             boolean exitoUbicacion3 = ubicacionBO.crearUbicacionBO(ubicacionDTO3);
-            assertEquals(exitoUbicacion3, true);
 
             UbicacionDTO ubicacionDTO4 = new UbicacionDTO();
             ubicacionDTO4.setEdificio("1600");
             ubicacionDTO4.setSalon("Av1613");
             boolean exitoUbicacion4 = ubicacionBO.crearUbicacionBO(ubicacionDTO4);
-            assertEquals(exitoUbicacion4, true);
 
             UbicacionDTO ubicacionDTO5 = new UbicacionDTO();
             ubicacionDTO5.setEdificio("1600");
             ubicacionDTO5.setSalon("Av1614");
             boolean exitoUbicacion5 = ubicacionBO.crearUbicacionBO(ubicacionDTO5);
-            assertEquals(exitoUbicacion5, true);
 
             UbicacionDTO ubicacionDTO6 = new UbicacionDTO();
             ubicacionDTO6.setEdificio("1600");
             ubicacionDTO6.setSalon("Av1615");
             boolean exitoUbicacion6 = ubicacionBO.crearUbicacionBO(ubicacionDTO6);
-            assertEquals(exitoUbicacion6, true);
 
 // Salones 1620 a 1623
             UbicacionDTO ubicacionDTO7 = new UbicacionDTO();
             ubicacionDTO7.setEdificio("1600");
             ubicacionDTO7.setSalon("Av1620");
             boolean exitoUbicacion7 = ubicacionBO.crearUbicacionBO(ubicacionDTO7);
-            assertEquals(exitoUbicacion7, true);
 
             UbicacionDTO ubicacionDTO8 = new UbicacionDTO();
             ubicacionDTO8.setEdificio("1600");
             ubicacionDTO8.setSalon("Av1621");
             boolean exitoUbicacion8 = ubicacionBO.crearUbicacionBO(ubicacionDTO8);
-            assertEquals(exitoUbicacion8, true);
 
             UbicacionDTO ubicacionDTO9 = new UbicacionDTO();
             ubicacionDTO9.setEdificio("1600");
             ubicacionDTO9.setSalon("Av1622");
             boolean exitoUbicacion9 = ubicacionBO.crearUbicacionBO(ubicacionDTO9);
-            assertEquals(exitoUbicacion9, true);
 
             UbicacionDTO ubicacionDTO10 = new UbicacionDTO();
             ubicacionDTO10.setEdificio("1600");
             ubicacionDTO10.setSalon("Av1623");
             boolean exitoUbicacion10 = ubicacionBO.crearUbicacionBO(ubicacionDTO10);
-            assertEquals(exitoUbicacion10, true);
 
             // Salones 1511 a 1515
             ubicacionDTO1 = new UbicacionDTO();
             ubicacionDTO1.setEdificio("1500");
             ubicacionDTO1.setSalon("Av1511");
             exitoUbicacion1 = ubicacionBO.crearUbicacionBO(ubicacionDTO1);
-            assertEquals(exitoUbicacion1, true);
 
             ubicacionDTO2 = new UbicacionDTO();
             ubicacionDTO2.setEdificio("1500");
             ubicacionDTO2.setSalon("Av1512");
             exitoUbicacion2 = ubicacionBO.crearUbicacionBO(ubicacionDTO2);
-            assertEquals(exitoUbicacion2, true);
 
             ubicacionDTO3 = new UbicacionDTO();
             ubicacionDTO3.setEdificio("1500");
             ubicacionDTO3.setSalon("Av1513");
             exitoUbicacion3 = ubicacionBO.crearUbicacionBO(ubicacionDTO3);
-            assertEquals(exitoUbicacion3, true);
 
             ubicacionDTO4 = new UbicacionDTO();
             ubicacionDTO4.setEdificio("1500");
             ubicacionDTO4.setSalon("Av1514");
             exitoUbicacion4 = ubicacionBO.crearUbicacionBO(ubicacionDTO4);
-            assertEquals(exitoUbicacion4, true);
 
             ubicacionDTO5 = new UbicacionDTO();
             ubicacionDTO5.setEdificio("1500");
             ubicacionDTO5.setSalon("Av1515");
             exitoUbicacion5 = ubicacionBO.crearUbicacionBO(ubicacionDTO5);
-            assertEquals(exitoUbicacion5, true);
 
 // Salones 1521 a 1525
             ubicacionDTO6 = new UbicacionDTO();
             ubicacionDTO6.setEdificio("1500");
             ubicacionDTO6.setSalon("Av1521");
             exitoUbicacion6 = ubicacionBO.crearUbicacionBO(ubicacionDTO6);
-            assertEquals(exitoUbicacion6, true);
 
             ubicacionDTO7 = new UbicacionDTO();
             ubicacionDTO7.setEdificio("1500");
             ubicacionDTO7.setSalon("Av1522");
             exitoUbicacion7 = ubicacionBO.crearUbicacionBO(ubicacionDTO7);
-            assertEquals(exitoUbicacion7, true);
 
             ubicacionDTO8 = new UbicacionDTO();
             ubicacionDTO8.setEdificio("1500");
             ubicacionDTO8.setSalon("Av1523");
             exitoUbicacion8 = ubicacionBO.crearUbicacionBO(ubicacionDTO8);
-            assertEquals(exitoUbicacion8, true);
 
             ubicacionDTO9 = new UbicacionDTO();
             ubicacionDTO9.setEdificio("1500");
             ubicacionDTO9.setSalon("Av1524");
             exitoUbicacion9 = ubicacionBO.crearUbicacionBO(ubicacionDTO9);
-            assertEquals(exitoUbicacion9, true);
 
             ubicacionDTO10 = new UbicacionDTO();
             ubicacionDTO10.setEdificio("1500");
             ubicacionDTO10.setSalon("Av1525");
             exitoUbicacion10 = ubicacionBO.crearUbicacionBO(ubicacionDTO10);
-            assertEquals(exitoUbicacion10, true);
 
             // Salones 1311 a 1315
             ubicacionDTO1 = new UbicacionDTO();
             ubicacionDTO1.setEdificio("1300");
             ubicacionDTO1.setSalon("Av1311");
             exitoUbicacion1 = ubicacionBO.crearUbicacionBO(ubicacionDTO1);
-            assertEquals(exitoUbicacion1, true);
 
             ubicacionDTO2 = new UbicacionDTO();
             ubicacionDTO2.setEdificio("1300");
             ubicacionDTO2.setSalon("Av1312");
             exitoUbicacion2 = ubicacionBO.crearUbicacionBO(ubicacionDTO2);
-            assertEquals(exitoUbicacion2, true);
 
             ubicacionDTO3 = new UbicacionDTO();
             ubicacionDTO3.setEdificio("1300");
             ubicacionDTO3.setSalon("Av1313");
             exitoUbicacion3 = ubicacionBO.crearUbicacionBO(ubicacionDTO3);
-            assertEquals(exitoUbicacion3, true);
 
             ubicacionDTO4 = new UbicacionDTO();
             ubicacionDTO4.setEdificio("1300");
             ubicacionDTO4.setSalon("Av1314");
             exitoUbicacion4 = ubicacionBO.crearUbicacionBO(ubicacionDTO4);
-            assertEquals(exitoUbicacion4, true);
 
             ubicacionDTO5 = new UbicacionDTO();
             ubicacionDTO5.setEdificio("1300");
             ubicacionDTO5.setSalon("Av1315");
             exitoUbicacion5 = ubicacionBO.crearUbicacionBO(ubicacionDTO5);
-            assertEquals(exitoUbicacion5, true);
 
 // Salones 1321 a 1325
             ubicacionDTO6 = new UbicacionDTO();
             ubicacionDTO6.setEdificio("1300");
             ubicacionDTO6.setSalon("Av1321");
             exitoUbicacion6 = ubicacionBO.crearUbicacionBO(ubicacionDTO6);
-            assertEquals(exitoUbicacion6, true);
 
             ubicacionDTO7 = new UbicacionDTO();
             ubicacionDTO7.setEdificio("1300");
             ubicacionDTO7.setSalon("Av1322");
             exitoUbicacion7 = ubicacionBO.crearUbicacionBO(ubicacionDTO7);
-            assertEquals(exitoUbicacion7, true);
 
             ubicacionDTO8 = new UbicacionDTO();
             ubicacionDTO8.setEdificio("1300");
             ubicacionDTO8.setSalon("Av1323");
             exitoUbicacion8 = ubicacionBO.crearUbicacionBO(ubicacionDTO8);
-            assertEquals(exitoUbicacion8, true);
 
             ubicacionDTO9.setEdificio("1300");
             ubicacionDTO9.setSalon("Av1324");
             exitoUbicacion9 = ubicacionBO.crearUbicacionBO(ubicacionDTO9);
-            assertEquals(exitoUbicacion9, true);
 
             ubicacionDTO10.setEdificio("1300");
             ubicacionDTO10.setSalon("Av1325");
             exitoUbicacion10 = ubicacionBO.crearUbicacionBO(ubicacionDTO10);
-            assertEquals(exitoUbicacion10, true);
 
             // Salones Av1821 a Av1828
             ubicacionDTO1 = new UbicacionDTO();
             ubicacionDTO1.setEdificio("1800");
             ubicacionDTO1.setSalon("Av1821");
             exitoUbicacion1 = ubicacionBO.crearUbicacionBO(ubicacionDTO1);
-            assertEquals(exitoUbicacion1, true);
 
             ubicacionDTO2 = new UbicacionDTO();
             ubicacionDTO2.setEdificio("1800");
             ubicacionDTO2.setSalon("Av1822");
             exitoUbicacion2 = ubicacionBO.crearUbicacionBO(ubicacionDTO2);
-            assertEquals(exitoUbicacion2, true);
 
             ubicacionDTO3 = new UbicacionDTO();
             ubicacionDTO3.setEdificio("1800");
             ubicacionDTO3.setSalon("Av1823");
             exitoUbicacion3 = ubicacionBO.crearUbicacionBO(ubicacionDTO3);
-            assertEquals(exitoUbicacion3, true);
 
             ubicacionDTO4 = new UbicacionDTO();
             ubicacionDTO4.setEdificio("1800");
             ubicacionDTO4.setSalon("Av1824");
             exitoUbicacion4 = ubicacionBO.crearUbicacionBO(ubicacionDTO4);
-            assertEquals(exitoUbicacion4, true);
 
             ubicacionDTO5 = new UbicacionDTO();
             ubicacionDTO5.setEdificio("1800");
             ubicacionDTO5.setSalon("Av1825");
             exitoUbicacion5 = ubicacionBO.crearUbicacionBO(ubicacionDTO5);
-            assertEquals(exitoUbicacion5, true);
 
             ubicacionDTO6 = new UbicacionDTO();
             ubicacionDTO6.setEdificio("1800");
             ubicacionDTO6.setSalon("Av1826");
             exitoUbicacion6 = ubicacionBO.crearUbicacionBO(ubicacionDTO6);
-            assertEquals(exitoUbicacion6, true);
 
             ubicacionDTO7 = new UbicacionDTO();
             ubicacionDTO7.setEdificio("1800");
             ubicacionDTO7.setSalon("Av1827");
             exitoUbicacion7 = ubicacionBO.crearUbicacionBO(ubicacionDTO7);
-            assertEquals(exitoUbicacion7, true);
 
             ubicacionDTO8 = new UbicacionDTO();
             ubicacionDTO8.setEdificio("1800");
             ubicacionDTO8.setSalon("Av1828");
             exitoUbicacion8 = ubicacionBO.crearUbicacionBO(ubicacionDTO8);
-            assertEquals(exitoUbicacion8, true);
 
 // Salones Av1831 a Av1838
             ubicacionDTO9 = new UbicacionDTO();
             ubicacionDTO9.setEdificio("1800");
             ubicacionDTO9.setSalon("Av1831");
             exitoUbicacion9 = ubicacionBO.crearUbicacionBO(ubicacionDTO9);
-            assertEquals(exitoUbicacion9, true);
 
             ubicacionDTO10 = new UbicacionDTO();
             ubicacionDTO10.setEdificio("1800");
             ubicacionDTO10.setSalon("Av1832");
             exitoUbicacion10 = ubicacionBO.crearUbicacionBO(ubicacionDTO10);
-            assertEquals(exitoUbicacion10, true);
 
             ubicacionDTO1 = new UbicacionDTO();
             ubicacionDTO1.setEdificio("1800");
             ubicacionDTO1.setSalon("Av1833");
             exitoUbicacion1 = ubicacionBO.crearUbicacionBO(ubicacionDTO1);
-            assertEquals(exitoUbicacion1, true);
 
             ubicacionDTO2 = new UbicacionDTO();
             ubicacionDTO2.setEdificio("1800");
             ubicacionDTO2.setSalon("Av1834");
             exitoUbicacion2 = ubicacionBO.crearUbicacionBO(ubicacionDTO2);
-            assertEquals(exitoUbicacion2, true);
 
             ubicacionDTO3 = new UbicacionDTO();
             ubicacionDTO3.setEdificio("1800");
             ubicacionDTO3.setSalon("Av1835");
             exitoUbicacion3 = ubicacionBO.crearUbicacionBO(ubicacionDTO3);
-            assertEquals(exitoUbicacion3, true);
 
             ubicacionDTO4 = new UbicacionDTO();
             ubicacionDTO4.setEdificio("1800");
             ubicacionDTO4.setSalon("Av1836");
             exitoUbicacion4 = ubicacionBO.crearUbicacionBO(ubicacionDTO4);
-            assertEquals(exitoUbicacion4, true);
 
             ubicacionDTO5 = new UbicacionDTO();
             ubicacionDTO5.setEdificio("1800");
             ubicacionDTO5.setSalon("Av1837");
             exitoUbicacion5 = ubicacionBO.crearUbicacionBO(ubicacionDTO5);
-            assertEquals(exitoUbicacion5, true);
 
             ubicacionDTO6 = new UbicacionDTO();
             ubicacionDTO6.setEdificio("1800");
             ubicacionDTO6.setSalon("Av1838");
             exitoUbicacion6 = ubicacionBO.crearUbicacionBO(ubicacionDTO6);
-            assertEquals(exitoUbicacion6, true);
 
             ubicacionDTO7 = new UbicacionDTO();
             ubicacionDTO7.setEdificio("Polideportivo");
             ubicacionDTO7.setSalon("Polideportivo");
             exitoUbicacion7 = ubicacionBO.crearUbicacionBO(ubicacionDTO7);
-            assertEquals(true, exitoUbicacion7);
 
             ubicacionDTO8 = new UbicacionDTO();
             ubicacionDTO8.setEdificio("Tutorias");
             ubicacionDTO8.setSalon("Tutorias");
             exitoUbicacion8 = ubicacionBO.crearUbicacionBO(ubicacionDTO8);
-            assertEquals(true, exitoUbicacion8);
 
             PlatilloDTO platillo1 = new PlatilloDTO();
             platillo1.setNombre("Sopa de tomate");
@@ -487,7 +416,6 @@ public class LlenarBD {
             platillo1.setCategoria("ENTRADA");
             platillo1.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo1);
-            assertEquals(exito, true);
             PlatilloDTO platillo2 = new PlatilloDTO();
             platillo2.setNombre("Lomo saltado");
             platillo2.setPrecio(35.90);
@@ -496,7 +424,6 @@ public class LlenarBD {
             platillo2.setCategoria("PLATO_FUERTE");
             platillo2.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo2);
-            assertEquals(exito, true);
             PlatilloDTO platillo3 = new PlatilloDTO();
             platillo3.setNombre("Tarta de limón");
             platillo3.setPrecio(33.80);
@@ -505,7 +432,6 @@ public class LlenarBD {
             platillo3.setCategoria("POSTRE");
             platillo3.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo3);
-            assertEquals(exito, true);
             PlatilloDTO platillo4 = new PlatilloDTO();
             platillo4.setNombre("Croquetas de jamón");
             platillo4.setPrecio(10.00);
@@ -514,7 +440,6 @@ public class LlenarBD {
             platillo4.setCategoria("SNACK");
             platillo4.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo4);
-            assertEquals(exito, true);
             PlatilloDTO platillo5 = new PlatilloDTO();
             platillo5.setNombre("Agua mineral");
             platillo5.setPrecio(21.50);
@@ -523,7 +448,6 @@ public class LlenarBD {
             platillo5.setCategoria("BEBIDA");
             platillo5.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo5);
-            assertEquals(exito, true);
             PlatilloDTO platillo6 = new PlatilloDTO();
             platillo6.setNombre("Crema de champiñones");
             platillo6.setPrecio(21.80);
@@ -532,7 +456,6 @@ public class LlenarBD {
             platillo6.setCategoria("ENTRADA");
             platillo6.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo6);
-            assertEquals(exito, true);
             PlatilloDTO platillo7 = new PlatilloDTO();
             platillo7.setNombre("Pechuga rellena de espinaca");
             platillo7.setPrecio(44.20);
@@ -541,7 +464,6 @@ public class LlenarBD {
             platillo7.setCategoria("PLATO_FUERTE");
             platillo7.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo7);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo8 = new PlatilloDTO();
             platillo8.setNombre("Brownie con nuez");
@@ -551,7 +473,6 @@ public class LlenarBD {
             platillo8.setCategoria("POSTRE");
             platillo8.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo8);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo9 = new PlatilloDTO();
             platillo9.setNombre("Bruschettas de tomate");
@@ -561,7 +482,6 @@ public class LlenarBD {
             platillo9.setCategoria("ENTRADA");
             platillo9.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo9);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo10 = new PlatilloDTO();
             platillo10.setNombre("Filete de salmón");
@@ -571,7 +491,6 @@ public class LlenarBD {
             platillo10.setCategoria("PLATO_FUERTE");
             platillo10.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo10);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo11 = new PlatilloDTO();
             platillo11.setNombre("Cheesecake de frutos rojos");
@@ -581,7 +500,6 @@ public class LlenarBD {
             platillo11.setCategoria("POSTRE");
             platillo11.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo11);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo12 = new PlatilloDTO();
             platillo12.setNombre("Nachos con queso");
@@ -591,7 +509,6 @@ public class LlenarBD {
             platillo12.setCategoria("SNACK");
             platillo12.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo12);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo13 = new PlatilloDTO();
             platillo13.setNombre("Limonada natural");
@@ -601,7 +518,6 @@ public class LlenarBD {
             platillo13.setCategoria("BEBIDA");
             platillo13.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo13);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo14 = new PlatilloDTO();
             platillo14.setNombre("Rollitos primavera");
@@ -611,7 +527,6 @@ public class LlenarBD {
             platillo14.setCategoria("ENTRADA");
             platillo14.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo14);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo15 = new PlatilloDTO();
             platillo15.setNombre("Arroz chaufa");
@@ -621,7 +536,6 @@ public class LlenarBD {
             platillo15.setCategoria("PLATO_FUERTE");
             platillo15.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo15);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo16 = new PlatilloDTO();
             platillo16.setNombre("Helado artesanal de vainilla");
@@ -631,7 +545,6 @@ public class LlenarBD {
             platillo16.setCategoria("POSTRE");
             platillo16.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo16);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo17 = new PlatilloDTO();
             platillo17.setNombre("Tostadas de atún");
@@ -641,7 +554,6 @@ public class LlenarBD {
             platillo17.setCategoria("ENTRADA");
             platillo17.setDisponible(true);
             platilloBO.agregarPlatilloBO(platillo17);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo18 = new PlatilloDTO();
             platillo18.setNombre("Lasagna de carne");
@@ -651,7 +563,6 @@ public class LlenarBD {
             platillo18.setCategoria("PLATO_FUERTE");
             platillo18.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo18);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo19 = new PlatilloDTO();
             platillo19.setNombre("Mousse de chocolate");
@@ -661,7 +572,6 @@ public class LlenarBD {
             platillo19.setCategoria("POSTRE");
             platillo19.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo19);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo20 = new PlatilloDTO();
             platillo20.setNombre("Palomitas con caramelo");
@@ -671,7 +581,6 @@ public class LlenarBD {
             platillo20.setCategoria("SNACK");
             platillo20.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo20);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo21 = new PlatilloDTO();
             platillo21.setNombre("Té helado de durazno");
@@ -681,7 +590,6 @@ public class LlenarBD {
             platillo21.setCategoria("BEBIDA");
             platillo21.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo21);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo22 = new PlatilloDTO();
             platillo22.setNombre("Carpaccio de res");
@@ -691,7 +599,6 @@ public class LlenarBD {
             platillo22.setCategoria("ENTRADA");
             platillo22.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo22);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo23 = new PlatilloDTO();
             platillo23.setNombre("Pollo tikka masala");
@@ -701,7 +608,6 @@ public class LlenarBD {
             platillo23.setCategoria("PLATO_FUERTE");
             platillo23.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo23);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo24 = new PlatilloDTO();
             platillo24.setNombre("Panqueques con miel");
@@ -711,7 +617,6 @@ public class LlenarBD {
             platillo24.setCategoria("POSTRE");
             platillo24.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo24);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo25 = new PlatilloDTO();
             platillo25.setNombre("Gazpacho andaluz");
@@ -721,8 +626,7 @@ public class LlenarBD {
             platillo25.setCategoria("ENTRADA");
             platillo25.setDisponible(true);
             platilloBO.agregarPlatilloBO(platillo25);
-            assertEquals(exito, true);
-
+       
             PlatilloDTO platillo26 = new PlatilloDTO();
             platillo26.setNombre("Canelones de espinaca");
             platillo26.setPrecio(19.70);
@@ -731,7 +635,7 @@ public class LlenarBD {
             platillo26.setCategoria("PLATO_FUERTE");
             platillo26.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo26);
-            assertEquals(exito, true);
+       
 
             PlatilloDTO platillo27 = new PlatilloDTO();
             platillo27.setNombre("Flan napolitano");
@@ -741,7 +645,7 @@ public class LlenarBD {
             platillo27.setCategoria("POSTRE");
             platillo27.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo27);
-            assertEquals(exito, true);
+         
 
             PlatilloDTO platillo28 = new PlatilloDTO();
             platillo28.setNombre("Chips de plátano");
@@ -751,8 +655,7 @@ public class LlenarBD {
             platillo28.setCategoria("SNACK");
             platillo28.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo28);
-            assertEquals(exito, true);
-
+       
             PlatilloDTO platillo29 = new PlatilloDTO();
             platillo29.setNombre("Jugo de naranja natural");
             platillo29.setPrecio(15.50);
@@ -761,7 +664,7 @@ public class LlenarBD {
             platillo29.setCategoria("BEBIDA");
             platillo29.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo29);
-            assertEquals(exito, true);
+     
 
             PlatilloDTO platillo30 = new PlatilloDTO();
             platillo30.setNombre("Brochetas caprese");
@@ -771,7 +674,6 @@ public class LlenarBD {
             platillo30.setCategoria("ENTRADA");
             platillo30.setDisponible(true);
             platilloBO.agregarPlatilloBO(platillo30);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo31 = new PlatilloDTO();
             platillo31.setNombre("Risotto de hongos");
@@ -781,7 +683,6 @@ public class LlenarBD {
             platillo31.setCategoria("PLATO_FUERTE");
             platillo31.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo31);
-            assertEquals(exito, true);
 
             PlatilloDTO platillo32 = new PlatilloDTO();
             platillo32.setNombre("Tiramisú");
@@ -792,7 +693,6 @@ public class LlenarBD {
             platillo32.setDisponible(true);
             exito = platilloBO.agregarPlatilloBO(platillo32);
 
-            assertEquals(exito, true);
 
             PedidoDTO pedido = new PedidoDTO();
             pedido.setNombreAlumno("Ariel Borbon");
@@ -835,7 +735,6 @@ public class LlenarBD {
 
             pedido.setPlatillos(listaDetalles);
             exito = pedidoBO.crearPedidoBO(pedido, listaDetalles, "000001");
-            assertEquals(exito, true);
             DetallePedidoDTO detalleA = new DetallePedidoDTO();
             detalleA.setNombrePlatillo("Risotto de hongos");
             detalleA.setCantidad(1);
@@ -876,7 +775,6 @@ public class LlenarBD {
 
             pedido2.setPlatillos(listaDetalles2);
             exito = pedidoBO.crearPedidoBO(pedido2, listaDetalles2, "000001");
-            assertEquals(exito, true);
         }
     }
 }

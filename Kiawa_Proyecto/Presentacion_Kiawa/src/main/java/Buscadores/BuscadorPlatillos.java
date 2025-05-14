@@ -10,6 +10,7 @@ import dto.PlatilloDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.function.Consumer;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +23,41 @@ import javax.swing.table.DefaultTableModel;
 public class BuscadorPlatillos extends javax.swing.JPanel {
 
     private Runnable onPlatilloAgregado;
+    private Consumer<PlatilloDTO> onPlatilloDoubleClick;
+
+    public void setOnPlatilloDoubleClick(Consumer<PlatilloDTO> callback) {
+        this.onPlatilloDoubleClick = callback;
+    }
+
+    private void initDoubleClickListener() {
+        tblPlatillos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int fila = tblPlatillos.rowAtPoint(e.getPoint());
+                    if (fila < 0) {
+                        return;
+                    }
+
+                    // Extraigo datos de la fila:
+                    String nombre = tblPlatillos.getValueAt(fila, 0).toString();
+                    double precio = Double.parseDouble(tblPlatillos.getValueAt(fila, 1).toString());
+                    int existencias = Integer.parseInt(tblPlatillos.getValueAt(fila, 3).toString());
+
+                    // Creo el DTO mínimo:
+                    PlatilloDTO dto = new PlatilloDTO();
+                    dto.setNombre(nombre);
+                    dto.setPrecio(precio);
+                    dto.setExistencias(existencias);
+
+                    // Llamo al callback si existe
+                    if (onPlatilloDoubleClick != null) {
+                        onPlatilloDoubleClick.accept(dto);
+                    }
+                }
+            }
+        });
+    }
 
     /**
      * Creates new form BuscadorPlatillos
@@ -29,7 +65,7 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
     public BuscadorPlatillos() {
         initComponents();
         llenarTablaPlatillos();
-        agregarListenerDobleClick();
+        initDoubleClickListener();
 
         this.cmbDisponible.setEnabled(false);
 
@@ -165,7 +201,9 @@ public class BuscadorPlatillos extends javax.swing.JPanel {
     ;
     
     
-    
+    public void llenarTablaPlatillosExterno(){
+        llenarTablaPlatillos();
+    }
     
 
     /**

@@ -2,6 +2,7 @@ package Subsistema;
 
 import BO.PlatilloBO;
 import Entidades.DetallePedido;
+import Entidades.Platillo;
 import Fabricas.FactoryBO;
 import dto.PlatilloDTO;
 import java.util.List;
@@ -45,10 +46,14 @@ public class FSubsistema_Platillos {
     public boolean validarExistenciasParaPedido(List<DetallePedido> detalles, StringBuilder mensajeError) {
         return platilloBO.hayExistenciasSuficientesSBBO(detalles, mensajeError);
     }
+    
+    public boolean actualizarExistenciasPlatillo(Platillo platillo , int nuevaCantidad){
+        return platilloBO.actualizarExistenciasPlatilloBO(platillo, nuevaCantidad);
+    }
 
-    // public Platillo buscarPlatilloPorNombre(String nombre) {
-    //     return platilloBO.obtenerPlatilloPorNombreBO(nombre); //posiblemente mala practica asi que clausurado por mientras
-    // }
+     public Platillo buscarPlatilloPorNombre(String nombre) {
+         return platilloBO.obtenerPlatilloPorNombreBO(nombre); 
+     }
     public List<PlatilloDTO> buscarPorCategoria(String categoria) {
         return platilloBO.buscarPorCategoriaBO(categoria);
     }

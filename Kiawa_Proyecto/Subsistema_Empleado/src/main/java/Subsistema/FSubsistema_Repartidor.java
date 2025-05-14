@@ -26,8 +26,8 @@ public class FSubsistema_Repartidor {
         this.repartidorBO = repartidorBO;
     }
 
-    public boolean crearRepartidor(RepartidorDTO dto) throws Exception {
-        return repartidorBO.crearRepartidorBO(dto);
+    public boolean crearRepartidor(RepartidorDTO dto , String contrasena) throws Exception {
+        return repartidorBO.crearRepartidorBO(dto , contrasena);
     }
 
     public String crearIDFriendlyRepartidor() {

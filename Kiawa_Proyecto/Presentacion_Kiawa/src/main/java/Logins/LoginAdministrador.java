@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -165,6 +166,8 @@ public class LoginAdministrador extends javax.swing.JFrame {
             if (adminDTO == null) {
                 JOptionPane.showMessageDialog(this, "Uusario o contraseña Incorrectos. Intente de nuevo." , "Error" , JOptionPane.ERROR_MESSAGE);
                 return;
+            }else{
+                JOptionPane.showMessageDialog(this, "Bienvenido: " + adminDTO.getNombreCompleto(), "Exito", INFORMATION_MESSAGE);
             }
             }
          catch (Exception ex) {

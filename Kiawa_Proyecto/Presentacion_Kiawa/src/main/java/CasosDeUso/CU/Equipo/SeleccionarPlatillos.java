@@ -32,6 +32,28 @@ public class SeleccionarPlatillos extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         buscadorPlatillos.setOnPlatilloAgregado(() -> actualizarTablaSeleccionados());
         getContentPane().setBackground(new Color(0xffff90));
+        
+        buscadorPlatillos.setOnPlatilloDoubleClick(dto -> {
+            String input = JOptionPane.showInputDialog(this, "¿Cuántas unidades deseas?");
+            if (input == null) return;
+            try {
+                int cantidad = Integer.parseInt(input);
+                if (cantidad < 1 || cantidad > dto.getExistencias()) {
+                    JOptionPane.showMessageDialog(this, "Cantidad no válida.");
+                    return;
+                }
+                DetallePedidoDTO det = new DetallePedidoDTO(
+                    dto.getNombre(), cantidad, dto.getPrecio(),
+                    "", dto.getPrecio() * cantidad
+                );
+                ControlPresentacion.getInstancia().agregarDetalle(det);
+                JOptionPane.showMessageDialog(this, "Platillo agregado.");
+                actualizarTablaSeleccionados();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Ingresa un número válido.");
+            }
+        });
+    
 
     }
 

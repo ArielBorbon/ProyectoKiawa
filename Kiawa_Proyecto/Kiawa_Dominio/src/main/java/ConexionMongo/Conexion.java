@@ -47,7 +47,8 @@ public class Conexion {
             if (nombresBaseDatos.contains(nombreBase)) {
                 baseDatos = conexion.getDatabase(nombreBase);
             } else {
-                throw new MongoException("La base de datos '" + nombreBase + "' no existe.");
+                baseDatos = conexion.getDatabase(nombreBase);
+                
             }
         } catch (MongoException e) {
             throw new MongoException("Error al obtener la base de datos: " + e.getMessage());

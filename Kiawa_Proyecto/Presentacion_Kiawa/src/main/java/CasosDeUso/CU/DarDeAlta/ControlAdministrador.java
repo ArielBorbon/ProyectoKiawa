@@ -17,11 +17,13 @@ import javax.swing.JOptionPane;
  * @author rayoa
  */
 public class ControlAdministrador {
+
     private static ControlAdministrador instancia = new ControlAdministrador();
     private final Stack<JFrame> historial = new Stack<>();
     private AdministradorDTO admin;
 
-    private ControlAdministrador() {}
+    private ControlAdministrador() {
+    }
 
     public static ControlAdministrador getInstancia() {
         return instancia;
@@ -39,15 +41,14 @@ public class ControlAdministrador {
                 mostrarMenu();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(login,
-                    "Usuario o contraseña incorrectos",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Usuario o contraseña incorrectos",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }
 
-  
     private void mostrarDarAlta() {
         DarDeAltaEmpleado alta = new DarDeAltaEmpleado();
         historial.push(alta);
@@ -61,7 +62,9 @@ public class ControlAdministrador {
         alta.setVisible(true);
     }
 
-    /** 4) Navegar atrás */
+    /**
+     * 4) Navegar atrás
+     */
     private void regresar() {
         if (!historial.isEmpty()) {
             JFrame actual = historial.pop();
@@ -75,11 +78,10 @@ public class ControlAdministrador {
     public AdministradorDTO getAdministrador() {
         return admin;
     }
-    
-    
-    
 
-    /** Desde el menú, invoca esto para abrir la gestión de empleados */
+    /**
+     * Desde el menú, invoca esto para abrir la gestión de empleados
+     */
     private void mostrarGestionarEmpleados() {
         GestionarEmpleados gestion = new GestionarEmpleados();
         historial.push(gestion);
@@ -94,7 +96,9 @@ public class ControlAdministrador {
         gestion.setVisible(true);
     }
 
-    /** 2) Muestra el menú principal */
+    /**
+     * 2) Muestra el menú principal
+     */
     private void mostrarMenu() {
         MenuAdministrador menu = new MenuAdministrador();
         historial.push(menu);
@@ -107,6 +111,10 @@ public class ControlAdministrador {
             menu.dispose();
             mostrarGestionarEmpleados();
         });
+        menu.getBtnActualizarStockPlatillos().addActionListener(e -> {
+            menu.dispose();
+            mostrarActualizarStock();
+        });
         menu.getBtnCerrarSesion().addActionListener(e -> {
             menu.dispose();
             historial.clear();
@@ -118,4 +126,14 @@ public class ControlAdministrador {
         menu.setVisible(true);
     }
 
+    private void mostrarActualizarStock() {
+        ActualizarExistenciasPlatillo stock = new ActualizarExistenciasPlatillo();
+        historial.push(stock);
+        stock.getBtnRegresar().addActionListener(e -> {
+            stock.dispose();
+            regresar();
+        });
+        stock.setLocationRelativeTo(null);
+        stock.setVisible(true);
+    }
 }

@@ -25,7 +25,10 @@ public class RepartidorBO implements IRepartidorBO {
     
 
     @Override
-    public boolean crearRepartidorBO(RepartidorDTO dto) throws Exception {
+    public boolean crearRepartidorBO(RepartidorDTO dto , String contrasena) throws Exception {
+        if (contrasena == null) {
+            throw new IllegalArgumentException("La contrasena no puede venir vacia");
+        }
         if (dto == null) {
             throw new IllegalArgumentException("El DTO del repartidor no puede ser nulo.");
         }
@@ -35,7 +38,7 @@ public class RepartidorBO implements IRepartidorBO {
         if (dto.getTelefono() == null || dto.getTelefono().trim().isEmpty()) {
             throw new IllegalArgumentException("El teléfono del repartidor no puede estar vacío.");
         }
-        return repartidorDAO.crearRepartidor(dto);
+        return repartidorDAO.crearRepartidor(dto , contrasena);
     }
 
     @Override

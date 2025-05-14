@@ -28,7 +28,7 @@ import org.bson.conversions.Bson;
 public class RepartidorDAO implements IRepartidorDAO {
 
     @Override
-    public boolean crearRepartidor(RepartidorDTO dto) throws Exception {
+    public boolean crearRepartidor(RepartidorDTO dto , String contrasena) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
 
@@ -39,10 +39,9 @@ public class RepartidorDAO implements IRepartidorDAO {
 
             String nuevoID = crearIDFriendly();
 
-            String contrasenaDummy = "1234";
 
             dto.setIdRepartidor(nuevoID);
-            Repartidor repartidor = RepartidorMapper.toEntity(dto, contrasenaDummy);
+            Repartidor repartidor = RepartidorMapper.toEntity(dto, contrasena);
 
             Document doc = new Document("idRepartidor", repartidor.getIdRepartidor())
                     .append("nombreCompleto", repartidor.getNombreCompleto())

@@ -84,6 +84,7 @@ public class GestionarEmpleados extends javax.swing.JFrame {
             }
         });
 
+        btnFiltrar.setBackground(new java.awt.Color(255, 255, 153));
         btnFiltrar.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
@@ -278,7 +279,7 @@ public class GestionarEmpleados extends javax.swing.JFrame {
         tblEmpleados.setModel(m);
         // Ahora ocultas las dos últimas columnas:
         tblEmpleados.removeColumn(tblEmpleados.getColumnModel().getColumn(11));
-        tblEmpleados.removeColumn(tblEmpleados.getColumnModel().getColumn(10));
+        
     }
 
 

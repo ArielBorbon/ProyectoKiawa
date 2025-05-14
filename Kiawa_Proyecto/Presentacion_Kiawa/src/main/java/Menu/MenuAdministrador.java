@@ -28,6 +28,14 @@ public class MenuAdministrador extends javax.swing.JFrame {
         return btnVerHistorial;
     }
 
+    public JButton getBtnActualizarStockPlatillos() {
+        return btnActualizarStockPlatillos;
+    }
+
+    public void setBtnActualizarStockPlatillos(JButton btnActualizarStockPlatillos) {
+        this.btnActualizarStockPlatillos = btnActualizarStockPlatillos;
+    }
+
     
     
     
@@ -51,6 +59,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnVerHistorial = new javax.swing.JButton();
+        btnActualizarStockPlatillos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,20 +96,34 @@ public class MenuAdministrador extends javax.swing.JFrame {
             }
         });
 
+        btnActualizarStockPlatillos.setBackground(new java.awt.Color(153, 255, 153));
+        btnActualizarStockPlatillos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnActualizarStockPlatillos.setText("Actualizar Stock Platillos");
+        btnActualizarStockPlatillos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarStockPlatillosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCerrarSesion)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(jLabel2))
-                        .addComponent(jLabel1)))
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnActualizarStockPlatillos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCerrarSesion)))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -120,7 +143,9 @@ public class MenuAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVerHistorial)
                 .addGap(18, 18, 18)
-                .addComponent(btnCerrarSesion)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCerrarSesion)
+                    .addComponent(btnActualizarStockPlatillos))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -138,6 +163,10 @@ public class MenuAdministrador extends javax.swing.JFrame {
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnActualizarStockPlatillosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarStockPlatillosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarStockPlatillosActionPerformed
 
     public JButton getBtnCerrarSesion() {
         return btnCerrarSesion;
@@ -158,6 +187,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarStockPlatillos;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnDarDeAltaEmpleado;
     private javax.swing.JButton btnVerHistorial;
