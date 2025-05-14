@@ -21,6 +21,23 @@ public class ControlAdministrador {
     private static ControlAdministrador instancia = new ControlAdministrador();
     private final Stack<JFrame> historial = new Stack<>();
     private AdministradorDTO admin;
+    private Object empleadoSeleccionado;
+
+    public AdministradorDTO getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(AdministradorDTO admin) {
+        this.admin = admin;
+    }
+
+    public Object getEmpleadoSeleccionado() {
+        return empleadoSeleccionado;
+    }
+
+    public void setEmpleadoSeleccionado(Object empleadoSeleccionado) {
+        this.empleadoSeleccionado = empleadoSeleccionado;
+    }
 
     private ControlAdministrador() {
     }
@@ -65,7 +82,7 @@ public class ControlAdministrador {
     /**
      * 4) Navegar atrás
      */
-    private void regresar() {
+    public void regresar() {
         if (!historial.isEmpty()) {
             JFrame actual = historial.pop();
             actual.dispose();
@@ -136,4 +153,19 @@ public class ControlAdministrador {
         stock.setLocationRelativeTo(null);
         stock.setVisible(true);
     }
+
+    private void mostrarEditarEmpleado() {
+        EditarEmpleado editar = new EditarEmpleado();
+        // 1) empujamos el frame en el historial
+        historial.push(editar);
+
+        editar.getBtnRegresar().addActionListener(e -> {
+            editar.dispose();
+            regresar();
+        });
+
+        editar.setLocationRelativeTo(null);
+        editar.setVisible(true);
+    }
+
 }

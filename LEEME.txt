@@ -1,3 +1,5 @@
 El proyecto correcto es "Kiawa Proyecto", 
 
+Ademas, antes de ejecutar el proyecto es muy importante tener el servidor_cia.py encendido,
+caso contrario la BD se llenara a medias
 Gracias

@@ -31,5 +31,9 @@ public interface IRepartidorDAO {
     String crearIDFriendly();
     
     RepartidorDTO iniciarSesionRepartidor(String idRepartidor, String contrasena);
+    
+     boolean actualizarRepartidor(RepartidorDTO dto, String contrasena) throws Exception;
+    
+     Repartidor obtenerRepartidorPorCurp(String curp) throws Exception ;
 }
 

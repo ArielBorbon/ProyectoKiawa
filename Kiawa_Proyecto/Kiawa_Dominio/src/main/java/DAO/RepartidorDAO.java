@@ -28,7 +28,7 @@ import org.bson.conversions.Bson;
 public class RepartidorDAO implements IRepartidorDAO {
 
     @Override
-    public boolean crearRepartidor(RepartidorDTO dto , String contrasena) throws Exception {
+    public boolean crearRepartidor(RepartidorDTO dto, String contrasena) throws Exception {
         MongoClient clienteMongo = null;
         Conexion conexion = Conexion.getInstancia();
 
@@ -38,7 +38,6 @@ public class RepartidorDAO implements IRepartidorDAO {
             MongoCollection<Document> coleccion = baseDatos.getCollection("Repartidores");
 
             String nuevoID = crearIDFriendly();
-
 
             dto.setIdRepartidor(nuevoID);
             Repartidor repartidor = RepartidorMapper.toEntity(dto, contrasena);
@@ -315,7 +314,7 @@ public class RepartidorDAO implements IRepartidorDAO {
                             resultado.getString("consideracionesExtras"),
                             resultado.getString("curp")
                     );
-                    return repartidorDTO; 
+                    return repartidorDTO;
                 }
             }
 
@@ -327,6 +326,114 @@ public class RepartidorDAO implements IRepartidorDAO {
             }
         }
 
-        return null; 
+        return null;
+    }
+
+    @Override
+    public Repartidor obtenerRepartidorPorCurp(String curp) throws Exception {
+        MongoClient cliente = null;
+        try {
+            cliente = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(cliente);
+            MongoCollection<Document> col = db.getCollection("Repartidores");
+
+            Document filtro = new Document("curp", curp);
+            Document doc = col.find(filtro).first();
+            if (doc == null) {
+                return null;
+            }
+
+            Repartidor r = new Repartidor();
+            r.setIdRepartidor(doc.getString("idRepartidor"));
+            r.setNombreCompleto(doc.getString("nombreCompleto"));
+            r.setTelefono(doc.getString("telefono"));
+            r.setDisponible(doc.getBoolean("disponible"));
+            r.setContrasena(doc.getString("contrasena"));
+            r.setDomicilio(doc.getString("domicilio"));
+            r.setApodo(doc.getString("apodo"));
+            r.setSalarioDiario(doc.getDouble("salarioDiario"));
+            r.setDiasTrabajo(doc.getString("diasTrabajo"));
+            r.setHorario(doc.getString("Horario"));
+            r.setConsideracionesExtras(doc.getString("consideracionesExtras"));
+            r.setCurp(doc.getString("curp"));
+            return r;
+        } catch (MongoException e) {
+            throw new Exception("Error al buscar repartidor por CURP: " + e.getMessage());
+        } finally {
+            if (cliente != null) {
+                Conexion.getInstancia().cerrarConexion(cliente);
+            }
+        }
+    }
+
+    /**
+     * Actualiza un repartidor. Solo sobreescribe en Mongo los campos no-vacíos
+     * del DTO; el resto se deja igual que en la entidad original.
+     *
+     * @param dto
+     * @param contrasena
+     * @return
+     * @throws java.lang.Exception
+     */
+    @Override
+    public boolean actualizarRepartidor(RepartidorDTO dto, String contrasena) throws Exception {
+        if (dto == null || dto.getIdRepartidor() == null || dto.getIdRepartidor().trim().isEmpty()) {
+            throw new IllegalArgumentException("El DTO o su idRepartidor no pueden estar vacíos.");
+        }
+
+        Repartidor orig = buscarRepartidorPorIdFriendly(dto.getIdRepartidor());
+        if (orig == null) {
+            return false;
+        }
+
+        String nombre = isBlank(dto.getNombreCompleto()) ? orig.getNombreCompleto() : dto.getNombreCompleto();
+        String telefono = isBlank(dto.getTelefono()) ? orig.getTelefono() : dto.getTelefono();
+        String domicilio = isBlank(dto.getDomicilio()) ? orig.getDomicilio() : dto.getDomicilio();
+        String apodo = isBlank(dto.getApodo()) ? orig.getApodo() : dto.getApodo();
+        String dias = isBlank(dto.getDiasTrabajo()) ? orig.getDiasTrabajo() : dto.getDiasTrabajo();
+        String horario = isBlank(dto.getHorario()) ? orig.getHorario() : dto.getHorario();
+        Double salarioDto = dto.getSalarioDiario();
+        double salario = (salarioDto == null) ? orig.getSalarioDiario() : salarioDto;
+
+        //  double salario = isBlank (dto.getSalarioDiario()) ? orig.getSalarioDiario() : dto.getSalarioDiario();
+        String extras = isBlank(dto.getConsideracionesExtras())
+                ? orig.getConsideracionesExtras()
+                : dto.getConsideracionesExtras();
+        String curp = isBlank(dto.getCurp()) ? orig.getCurp() : dto.getCurp();
+
+        MongoClient cliente = null;
+        try {
+            cliente = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(cliente);
+            MongoCollection<Document> col = db.getCollection("Repartidores");
+
+            Bson filtro = Filters.eq("idRepartidor", orig.getIdRepartidor());
+            Document campos = new Document()
+                    .append("nombreCompleto", nombre)
+                    .append("telefono", telefono)
+                    .append("domicilio", domicilio)
+                    .append("apodo", apodo)
+                    .append("diasTrabajo", dias)
+                    .append("Horario", horario)
+                    .append("consideracionesExtras", extras)
+                    .append("salarioDiario", salario)
+                    .append("curp", curp);
+            if (contrasena != null && !contrasena.isBlank()) {
+                campos.append("contrasena", contrasena);
+            }
+
+            UpdateResult res = col.updateOne(filtro, new Document("$set", campos));
+            return res.getModifiedCount() > 0;
+        } catch (MongoException e) {
+            throw new Exception("Error al actualizar repartidor: " + e.getMessage());
+        } finally {
+            if (cliente != null) {
+                Conexion.getInstancia().cerrarConexion(cliente);
+            }
+        }
+    }
+
+    private boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
     }
 }

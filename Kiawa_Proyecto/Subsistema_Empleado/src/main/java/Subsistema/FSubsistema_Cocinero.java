@@ -22,6 +22,22 @@ public class FSubsistema_Cocinero {
     public FSubsistema_Cocinero() {
         this.cocineroBO = FactoryBO.crearCocineroBO();
     }
+    
+    
+    
+    /**
+     * Exposición del nuevo método de búsqueda por CURP.
+     */
+    public Cocinero obtenerCocineroPorCurp(String curp) throws Exception {
+        return cocineroBO.obtenerCocineroPorCurpBO(curp);
+    }
+
+    /**
+     * Exposición del nuevo método de actualización parcial.
+     */
+    public boolean actualizarCocinero(CocineroDTO dto, String contrasena) throws Exception {
+        return cocineroBO.actualizarCocineroBO(dto, contrasena);
+    }
 
     public CocineroDTO login(String idFriendly, String contrasena) throws Exception {
         return cocineroBO.loginCocineroBO(idFriendly, contrasena);

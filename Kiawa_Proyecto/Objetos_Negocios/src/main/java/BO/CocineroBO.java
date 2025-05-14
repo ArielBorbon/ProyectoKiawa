@@ -21,8 +21,45 @@ public class CocineroBO implements ICocineroBO {
     public CocineroBO(CocineroDAO cocineroDAO) {
         this.cocineroDAO = cocineroDAO;
     }
-    
-    
+
+    /**
+     * Busca un cocinero por su CURP.
+     * @param curp
+     * @return 
+     * @throws java.lang.Exception
+     */
+    @Override
+    public Cocinero obtenerCocineroPorCurpBO(String curp) throws Exception {
+        if (curp == null || curp.trim().isEmpty()) {
+            throw new IllegalArgumentException("La CURP no puede estar vacía.");
+        }
+        Cocinero c = cocineroDAO.obtenerCocineroPorCurp(curp);
+        if (c == null) {
+            throw new Exception("No se encontró un cocinero con CURP " + curp);
+        }
+        return c;
+    }
+
+    /**
+     * Actualiza un cocinero. Se conserva cada campo original si el DTO viene
+     * nulo o vacío.
+     * @param dto
+     * @param contrasena
+     * @return 
+     * @throws java.lang.Exception
+     */
+    @Override
+    public boolean actualizarCocineroBO(CocineroDTO dto,String contrasena) throws Exception {
+        if (dto == null || dto.getIdCocinero() == null || dto.getIdCocinero().trim().isEmpty()) {
+            throw new IllegalArgumentException("El DTO o su idCocinero no pueden estar vacíos.");
+        }
+        // opcion: verificar que existe primero
+        Cocinero original = cocineroDAO.buscarCocineroPorIdFriendly(dto.getIdCocinero());
+        if (original == null) {
+            throw new Exception("No existe cocinero con id " + dto.getIdCocinero());
+        }
+        return cocineroDAO.actualizarCocinero(dto, contrasena);
+    }
 
     @Override
     public Cocinero buscarCocineroPorIdFriendlyBO(String idFriendly) {
@@ -34,7 +71,7 @@ public class CocineroBO implements ICocineroBO {
 
     @Override
     public String crearIDFriendlyBO() throws Exception {
-        return cocineroDAO.crearIDFriendly(); 
+        return cocineroDAO.crearIDFriendly();
     }
 
     @Override
@@ -74,34 +111,28 @@ public class CocineroBO implements ICocineroBO {
         return cocineroDAO.obtenerTrabajadoresDeshabilitados();
     }
 
-
     @Override
     public List<CocineroDTO> obtenerTodosLosCocinerosBO() {
         return cocineroDAO.obtenerTodosLosCocineros();
     }
-    
-    
+
     @Override
     public CocineroDTO loginCocineroBO(String idFriendly, String contrasena) throws Exception {
-    if (idFriendly == null || idFriendly.trim().isEmpty()) {
-        throw new Exception("El ID del cocinero no puede estar vacío.");
+        if (idFriendly == null || idFriendly.trim().isEmpty()) {
+            throw new Exception("El ID del cocinero no puede estar vacío.");
+        }
+
+        if (contrasena == null || contrasena.trim().isEmpty()) {
+            throw new Exception("La contraseña no puede estar vacía.");
+        }
+
+        CocineroDTO dto = cocineroDAO.loginCocinero(idFriendly, contrasena);
+
+        if (dto == null) {
+            throw new Exception("ID o contraseña incorrectos.");
+        }
+
+        return dto;
     }
 
-    if (contrasena == null || contrasena.trim().isEmpty()) {
-        throw new Exception("La contraseña no puede estar vacía.");
-    }
-
-    CocineroDTO dto = cocineroDAO.loginCocinero(idFriendly, contrasena);
-
-    if (dto == null) {
-        throw new Exception("ID o contraseña incorrectos.");
-    }
-
-    return dto;
 }
-
-    
-    
-    
-}
-

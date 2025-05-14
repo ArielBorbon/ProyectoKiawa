@@ -61,4 +61,25 @@ public class FSubsistema_Repartidor {
     public RepartidorDTO iniciarSesion(String id, String contrasena) {
         return repartidorBO.iniciarSesionRepartidorBO(id, contrasena);
     }
+    
+        /**
+     * Expone la búsqueda por CURP.
+     * @param curp
+     * @return 
+     * @throws java.lang.Exception
+     */
+    public Repartidor obtenerRepartidorPorCurp(String curp) throws Exception {
+        return repartidorBO.obtenerRepartidorPorCurpBO(curp);
+    }
+
+    /**
+     * Expone la actualización parcial de un repartidor.
+     * @param dto
+     * @param contrasena
+     * @return 
+     * @throws java.lang.Exception
+     */
+    public boolean actualizarRepartidor(RepartidorDTO dto, String contrasena) throws Exception {
+        return repartidorBO.actualizarRepartidorBO(dto , contrasena);
+    }
 }

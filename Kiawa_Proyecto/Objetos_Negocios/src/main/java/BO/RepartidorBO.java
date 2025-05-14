@@ -21,11 +21,9 @@ public class RepartidorBO implements IRepartidorBO {
     public RepartidorBO(RepartidorDAO repartidorDAO) {
         this.repartidorDAO = repartidorDAO;
     }
-    
-    
 
     @Override
-    public boolean crearRepartidorBO(RepartidorDTO dto , String contrasena) throws Exception {
+    public boolean crearRepartidorBO(RepartidorDTO dto, String contrasena) throws Exception {
         if (contrasena == null) {
             throw new IllegalArgumentException("La contrasena no puede venir vacia");
         }
@@ -38,7 +36,7 @@ public class RepartidorBO implements IRepartidorBO {
         if (dto.getTelefono() == null || dto.getTelefono().trim().isEmpty()) {
             throw new IllegalArgumentException("El teléfono del repartidor no puede estar vacío.");
         }
-        return repartidorDAO.crearRepartidor(dto , contrasena);
+        return repartidorDAO.crearRepartidor(dto, contrasena);
     }
 
     @Override
@@ -72,7 +70,7 @@ public class RepartidorBO implements IRepartidorBO {
 
     @Override
     public List<RepartidorDTO> obtenerTrabajadoresHabilitadosBO() {
-        return repartidorDAO.obtenerTrabajadoresHabilitados(); 
+        return repartidorDAO.obtenerTrabajadoresHabilitados();
     }
 
     @Override
@@ -82,9 +80,9 @@ public class RepartidorBO implements IRepartidorBO {
 
     @Override
     public List<RepartidorDTO> obtenerTodosLosRepartidoresBO() {
-        return repartidorDAO.obtenerTodosLosRepartidores(); 
+        return repartidorDAO.obtenerTodosLosRepartidores();
     }
-    
+
     @Override
     public RepartidorDTO iniciarSesionRepartidorBO(String idRepartidor, String contrasena) {
         if (idRepartidor == null || idRepartidor.isBlank() || contrasena == null || contrasena.isBlank()) {
@@ -93,5 +91,36 @@ public class RepartidorBO implements IRepartidorBO {
 
         return repartidorDAO.iniciarSesionRepartidor(idRepartidor, contrasena);
     }
-}
 
+    public Repartidor obtenerRepartidorPorCurpBO(String curp) throws Exception {
+        if (curp == null || curp.trim().isEmpty()) {
+            throw new IllegalArgumentException("La CURP no puede estar vacía.");
+        }
+        Repartidor r = repartidorDAO.obtenerRepartidorPorCurp(curp);
+        if (r == null) {
+            throw new Exception("No se encontró repartidor con CURP " + curp);
+        }
+        return r;
+    }
+
+    /**
+     * Actualiza un repartidor, respetando campos nulos/vacíos.
+     * @param dto
+     * @param contrasena
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @Override
+    public boolean actualizarRepartidorBO(RepartidorDTO dto, String contrasena) throws Exception {
+        if (dto == null || dto.getIdRepartidor() == null || dto.getIdRepartidor().trim().isEmpty()) {
+            throw new IllegalArgumentException("El DTO o su idRepartidor no pueden estar vacíos.");
+        }
+        // verificar existencia
+        Repartidor orig = repartidorDAO.buscarRepartidorPorIdFriendly(dto.getIdRepartidor());
+        if (orig == null) {
+            throw new Exception("No existe repartidor con id " + dto.getIdRepartidor());
+        }
+        return repartidorDAO.actualizarRepartidor(dto, contrasena);
+    }
+
+}

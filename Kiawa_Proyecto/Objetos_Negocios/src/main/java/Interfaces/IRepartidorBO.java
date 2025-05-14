@@ -30,5 +30,9 @@ public interface IRepartidorBO {
 
     List<RepartidorDTO> obtenerTodosLosRepartidoresBO();
     
-    public RepartidorDTO iniciarSesionRepartidorBO(String idRepartidor, String contrasena);
+     RepartidorDTO iniciarSesionRepartidorBO(String idRepartidor, String contrasena);
+    
+     boolean actualizarRepartidorBO(RepartidorDTO dto, String contrasena) throws Exception;
+     
+      Repartidor obtenerRepartidorPorCurpBO(String curp) throws Exception;
 }

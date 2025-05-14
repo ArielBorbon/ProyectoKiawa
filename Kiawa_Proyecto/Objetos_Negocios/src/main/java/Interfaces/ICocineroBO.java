@@ -31,4 +31,8 @@ public interface ICocineroBO {
     List<CocineroDTO> obtenerTodosLosCocinerosBO();
     
     public CocineroDTO loginCocineroBO(String idFriendly, String contrasena) throws Exception;
+    
+    public boolean actualizarCocineroBO(CocineroDTO dto,String contrasena) throws Exception;
+    
+    public Cocinero obtenerCocineroPorCurpBO(String curp) throws Exception;
 }
