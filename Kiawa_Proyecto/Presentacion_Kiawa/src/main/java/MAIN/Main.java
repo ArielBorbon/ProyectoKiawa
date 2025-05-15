@@ -11,8 +11,9 @@ import Menu.MenuRol;
  * @author PC Gamer
  */
 public class Main {
+
     public static void main(String[] args) {
-                MenuRol menuRol = new MenuRol();
+        MenuRol menuRol = new MenuRol();
         menuRol.setVisible(true);
     }
 }

@@ -218,7 +218,7 @@ public class PedidosRepartidor extends javax.swing.JFrame {
             modelo.addColumn("Total Pagar");
 
             for (PedidoDTO p : pedidos) {
-                if ("PENDIENTE".equalsIgnoreCase(p.getEstado())) {
+                if ("PREPARADO".equalsIgnoreCase(p.getEstado())) {
                     UbicacionDTO ubicacion = p.getUbicacionEntrega();
                     String ubicacionStr = ubicacion.getSalon();
                     modelo.addRow(new Object[]{

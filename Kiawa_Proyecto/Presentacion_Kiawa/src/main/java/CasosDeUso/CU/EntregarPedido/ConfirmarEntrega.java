@@ -8,6 +8,7 @@ import Control.ControlRepartidor;
 import dto.PedidoDTO;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -40,6 +41,11 @@ public class ConfirmarEntrega extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btnConfirmarPago = new javax.swing.JButton();
         btnNegarPago = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        txtEfectivo = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtCambio = new javax.swing.JTextField();
+        btnCalculaCambio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Confirmación pago");
@@ -68,43 +74,89 @@ public class ConfirmarEntrega extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel9.setText(" Efectivo = $");
+        jLabel9.setPreferredSize(new java.awt.Dimension(42, 16));
+
+        txtEfectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEfectivoActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText(" Cambio = $");
+        jLabel10.setPreferredSize(new java.awt.Dimension(42, 16));
+
+        txtCambio.setEditable(false);
+
+        btnCalculaCambio.setBackground(new java.awt.Color(255, 153, 102));
+        btnCalculaCambio.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btnCalculaCambio.setText("Calcular cambio");
+        btnCalculaCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalculaCambioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTotal)))
-                .addGap(34, 34, 34))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtCambio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(txtEfectivo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotal)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(btnConfirmarPago))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(btnNegarPago)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(110, 110, 110)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnConfirmarPago)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(btnNegarPago))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnCalculaCambio)))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEfectivo)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCalculaCambio)
+                .addGap(18, 18, 18)
                 .addComponent(btnConfirmarPago)
                 .addGap(18, 18, 18)
                 .addComponent(btnNegarPago)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -113,6 +165,14 @@ public class ConfirmarEntrega extends javax.swing.JFrame {
     private void btnNegarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegarPagoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNegarPagoActionPerformed
+
+    private void txtEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEfectivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEfectivoActionPerformed
+
+    private void btnCalculaCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculaCambioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCalculaCambioActionPerformed
 
     public void setDatosPedido(double totalPedido) {
         this.totalPedido = totalPedido;
@@ -142,12 +202,50 @@ public class ConfirmarEntrega extends javax.swing.JFrame {
         this.btnNegarPago = btnNegarPago;
     }
 
+    public JButton getBtnCalculaCambio() {
+        return btnCalculaCambio;
+    }
+
+    public void setBtnCalculaCambio(JButton btnCalculaCambio) {
+        this.btnCalculaCambio = btnCalculaCambio;
+    }
+
+    public JTextField getTxtCambio() {
+        return txtCambio;
+    }
+
+    public void setTxtCambio(JTextField txtCambio) {
+        this.txtCambio = txtCambio;
+    }
+
+    public JTextField getTxtEfectivo() {
+        return txtEfectivo;
+    }
+
+    public void setTxtEfectivo(JTextField txtEfectivo) {
+        this.txtEfectivo = txtEfectivo;
+    }
+
+    public JTextField getTxtTotal() {
+        return txtTotal;
+    }
+
+    public void setTxtTotal(JTextField txtTotal) {
+        this.txtTotal = txtTotal;
+    }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCalculaCambio;
     private javax.swing.JButton btnConfirmarPago;
     private javax.swing.JButton btnNegarPago;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtCambio;
+    private javax.swing.JTextField txtEfectivo;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

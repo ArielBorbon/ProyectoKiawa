@@ -104,13 +104,13 @@ public class ControlRepartidor {
             menu.dispose();
             mostrarSeleccionarPedidos();
         });
-        
+
         menu.getBtnHistorialEntregas().addActionListener(e -> {
             historialFrames.push(menu);
             menu.dispose();
             mostrarHistorialEntregas();
         });
-        
+
         menu.getBtnCerrarSesion().addActionListener(e -> {
             menu.dispose();
             historialFrames.clear();
@@ -151,17 +151,17 @@ public class ControlRepartidor {
         seleccionarPedido.setVisible(true);
     }
 
-    private void mostrarHistorialEntregas(){
+    private void mostrarHistorialEntregas() {
         HistorialEntregas historialEntregas = new HistorialEntregas();
-        
+
         historialEntregas.getBtnRegresar().addActionListener(e -> {
             regresar();
             historialEntregas.dispose();
         });
-        
+
         historialEntregas.setVisible(true);
     }
-    
+
     private void mostrarDetallesPedido() {
         DetallesPedido detallesPedido = new DetallesPedido();
 
@@ -188,6 +188,21 @@ public class ControlRepartidor {
     private void mostrarConfirmarEntrega() {
         ConfirmarEntrega confirmarEntrega = new ConfirmarEntrega();
         String folio = pedidoSeleccionado.getFolio();
+        confirmarEntrega.getBtnCalculaCambio().addActionListener(e -> {
+            try {
+                double montoPago = Double.parseDouble(confirmarEntrega.getTxtEfectivo().getText());
+                double total = pedidoSeleccionado.getTotal(); 
+                double cambio = montoPago - total;
+
+                if (cambio < 0) {
+                    JOptionPane.showMessageDialog(confirmarEntrega, "Monto insuficiente", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                confirmarEntrega.getTxtCambio().setText(String.format("%.2f", cambio));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(confirmarEntrega, "Ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         confirmarEntrega.getBtnConfirmarPago().addActionListener(e -> {
             String entregado = "ENTREGADO";
             actualizarEstado(folio, entregado, confirmarEntrega);
