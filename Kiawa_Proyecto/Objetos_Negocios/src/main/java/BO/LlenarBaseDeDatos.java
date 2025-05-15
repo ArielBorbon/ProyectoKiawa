@@ -42,7 +42,7 @@ public class LlenarBaseDeDatos {
             cocineroDTO.setSalarioDiario(250.10);
             cocineroDTO.setTelefono("5931458501");
             cocineroDTO.setCurp("LOPE920315HDFRMS09");
-            boolean exito = cocineroBO.crearCocineroBO(cocineroDTO, "Contraseña123");
+            boolean exito = cocineroBO.crearCocineroBO(cocineroDTO, "Contrasena123");
             cocineroBO.deshabilitarCocineroBO("000001");
 
             CocineroDTO cocineroDTO1 = new CocineroDTO();
@@ -56,7 +56,7 @@ public class LlenarBaseDeDatos {
             cocineroDTO1.setSalarioDiario(300.50);
             cocineroDTO1.setTelefono("5931458502");
             cocineroDTO1.setCurp("PERE750202HDFRMC05");
-            boolean exito1 = cocineroBO.crearCocineroBO(cocineroDTO1, "Contraseña456");
+            boolean exito1 = cocineroBO.crearCocineroBO(cocineroDTO1, "Contrasena456");
 
             CocineroDTO cocineroDTO2 = new CocineroDTO();
             cocineroDTO2.setApodo("Sofia");
