@@ -4,14 +4,17 @@
  */
 package CasosDeUso.CU.TomarPedido;
 
+import Control.ControlCocinero;
 import Control.ControlPedido;
 import Subsistema.FSubsistema_Pedidos;
 import dto.PedidoDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -23,14 +26,17 @@ import javax.swing.table.DefaultTableModel;
 public class PedidosAsignar extends javax.swing.JFrame {
     
     private PedidoDTO pedidoSeleccionado;
-    private ControlPedido control;
+    private List<PedidoDTO> pedidosAsignar;
+    private ControlPedido controlPedido;
+    private ControlCocinero controlCocinero;
     /**
      * Creates new form PedidosRepartidor
      */
     public PedidosAsignar() {
         initComponents();
         llenarTabla();
-        control = ControlPedido.getInstance();
+        controlPedido = ControlPedido.getInstance();
+        controlCocinero = ControlCocinero.getInstancia();
         
     }
 
@@ -46,18 +52,19 @@ public class PedidosAsignar extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidosAsignar = new javax.swing.JTable();
         btnSeleccionarPedido = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tblPedidosAsignar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Pedido", "Estado", "Fecha y Hora", "Repartidor"
+                "Pedido", "Estado", "Fecha y Hora"
             }
         ));
         jScrollPane1.setViewportView(tblPedidosAsignar);
@@ -70,15 +77,26 @@ public class PedidosAsignar extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSeleccionarPedido)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSeleccionarPedido)
+                        .addGap(62, 62, 62)
+                        .addComponent(btnRegresar)
+                        .addGap(71, 71, 71)))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -86,9 +104,11 @@ public class PedidosAsignar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(btnSeleccionarPedido)
-                .addGap(33, 33, 33))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSeleccionarPedido)
+                    .addComponent(btnRegresar))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -98,26 +118,30 @@ public class PedidosAsignar extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             seleccionarPedido();
-            control.iniciarFrmAsignarPedido();
+            controlPedido.iniciarFrmAsignarPedido();
+            this.dispose();
         } catch (ParseException ex) {
             Logger.getLogger(PedidosAsignar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnSeleccionarPedidoActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        controlCocinero.mostrarMenu();
+    }//GEN-LAST:event_btnRegresarActionPerformed
     
     private void llenarTabla(){
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblPedidosAsignar.getModel();
             modelo.setRowCount(0);
-            
-            FSubsistema_Pedidos fSubsistema_pedidos = new FSubsistema_Pedidos();
-            
-            List<PedidoDTO> listaPedidos = new ArrayList<>();
-            listaPedidos = fSubsistema_pedidos.recuperarPedidos();
+            FSubsistema_Pedidos subsistema = new FSubsistema_Pedidos();
+            pedidosAsignar = subsistema.obtenerPedidosPreparados();
                     
-            for (PedidoDTO pedido : listaPedidos) {
+            for (PedidoDTO pedido : pedidosAsignar) {
                 modelo.addRow(new Object[]{
-                    pedido.getIdPedido(),
+                    pedido.getFolio(),
                     pedido.getEstado(),
                     pedido.getFechaPedido().toString(),
                     pedido.getNombreRepartidor()
@@ -135,24 +159,23 @@ public class PedidosAsignar extends javax.swing.JFrame {
         int filaSeleccionada = tblPedidosAsignar.getSelectedRow();
         
         if (filaSeleccionada >= 0) {
-            String idPedido = tblPedidosAsignar.getValueAt(filaSeleccionada, 0).toString();
+            String folio = tblPedidosAsignar.getValueAt(filaSeleccionada, 0).toString();
             String estado = tblPedidosAsignar.getValueAt(filaSeleccionada, 1).toString();
-            String fecha = tblPedidosAsignar.getValueAt(filaSeleccionada, 2).toString();
-            String repartidor = tblPedidosAsignar.getValueAt(filaSeleccionada, 3).toString();
+            String fechaTexto = tblPedidosAsignar.getValueAt(filaSeleccionada, 2).toString();
             
-            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-            Date fechaFormateada = formato.parse(fecha);
+
             
-            pedidoSeleccionado = new PedidoDTO(idPedido, fechaFormateada, estado, repartidor);
+            SimpleDateFormat parser = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            Date fecha = parser.parse(fechaTexto);
+            
+            pedidoSeleccionado = new PedidoDTO(folio, fecha, estado);
+            controlPedido.setPedidoSeleccionado(pedidoSeleccionado);
             
         }
     }
-
-    public PedidoDTO guardarPedidoSeleccionado(){
-        return pedidoSeleccionado;
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionarPedido;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPedidosAsignar;

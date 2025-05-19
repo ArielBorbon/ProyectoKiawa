@@ -475,7 +475,35 @@ public class PedidoDAO implements IPedidoDAO {
 
         return pedidosPendientes;
     }
+    
+    @Override
+    public List<PedidoDTO> obtenerPedidosPreparados() {
+        MongoClient conexion = null;
+        List<PedidoDTO> pedidosPendientes = new ArrayList<>();
 
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = db.getCollection("Pedidos");
+
+            Bson filtro = Filters.eq("estado", "PREPARADO");
+            FindIterable<Document> documentos = coleccion.find(filtro);
+
+            for (Document doc : documentos) {
+                PedidoDTO pedido = construirPedidoDesdeDocumento(doc);
+                pedidosPendientes.add(pedido);
+            }
+        } catch (MongoException e) {
+            System.err.println("Error al obtener pedidos pendientes: " + e.getMessage());
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+
+        return pedidosPendientes;
+    }
+    
     @Override
     public boolean asignarCocineroAPedido(String folioPedido, String idCocinero, String nombreCocinero) {
         MongoClient conexion = null;
@@ -506,7 +534,7 @@ public class PedidoDAO implements IPedidoDAO {
     
     //Metodo que asigna un pedido a un repartidor
     @Override
-    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor) {
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor) {
         MongoClient conexion = null;
         try {
             conexion = Conexion.getInstancia().crearConexion();
@@ -515,9 +543,9 @@ public class PedidoDAO implements IPedidoDAO {
             
             Bson filtro = Filters.eq("folio", folioPedido); 
             Bson actualizacion = Updates.combine(
-                    
                     Updates.set("nombreRepartidor", nombreRepartidor),
-                    Updates.set("estado", "En proceso")
+                    Updates.set("estado", "En proceso"),
+                    Updates.set("idRepartidor", idRepartidor)
             );
             UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
             return resultado.getModifiedCount() > 0;

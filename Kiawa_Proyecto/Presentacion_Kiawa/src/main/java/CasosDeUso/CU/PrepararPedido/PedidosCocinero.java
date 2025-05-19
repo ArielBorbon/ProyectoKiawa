@@ -184,6 +184,7 @@ public class PedidosCocinero extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
+        Control.ControlCocinero.getInstancia().mostrarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     public JButton getBtnSeleccionarPedido() {

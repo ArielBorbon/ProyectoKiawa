@@ -39,5 +39,6 @@ public interface IPedidoBO {
     public List<PedidoDTO> recuperarPedidos();
     
     List<PedidoDTO> obtenerPedidosAsignadosARepartidorBO(String idRepartidor);
-    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor);
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor);
+    public List<PedidoDTO> obtenerPedidosPreparados();
 }

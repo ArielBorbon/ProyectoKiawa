@@ -7,6 +7,7 @@ package CasosDeUso.CU.TomarPedido;
 import Control.ControlPedido;
 import dto.PedidoDTO;
 import dto.RepartidorDTO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ public class AsignarPedido extends javax.swing.JFrame {
     
     private ControlPedido control;
     private PedidoDTO pedidoSeleccionado;
+    private List<String> idRepartidores = new ArrayList<>();
     
     /**
      * Creates new form AsignarPedido
@@ -25,16 +27,18 @@ public class AsignarPedido extends javax.swing.JFrame {
     public AsignarPedido() {
         initComponents();
         control = ControlPedido.getInstance();
-        pedidoSeleccionado = control.recuperarPedidoSeleccionado();
+        pedidoSeleccionado = control.getPedidoSeleccionado();
         llenarComboBoxRepartidores();
-        this.txtPedidoSeleccionado.setText(pedidoSeleccionado.getIdPedido());
+        this.txtPedidoSeleccionado.setText(control.getPedidoSeleccionado().getFolio());
     }
     
     private void llenarComboBoxRepartidores(){
         List<RepartidorDTO> listaRepartidores = control.recuperarRepartidoresDisponibles();
         
+        
         for(RepartidorDTO r : listaRepartidores){
             this.cmbRepartidores.addItem(r.getNombreCompleto());
+            idRepartidores.add(r.getIdRepartidor());
         }
     }
     
@@ -52,10 +56,13 @@ public class AsignarPedido extends javax.swing.JFrame {
         cmbRepartidores = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         btnAsignarPedido = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Pedido Seleccionado");
+
+        txtPedidoSeleccionado.setEditable(false);
 
         jLabel2.setText("Repartidores ");
 
@@ -67,24 +74,33 @@ public class AsignarPedido extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtPedidoSeleccionado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPedidoSeleccionado)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(btnAsignarPedido)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegresar)
                     .addComponent(cmbRepartidores, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(24, 24, 24))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAsignarPedido)
-                .addGap(136, 136, 136))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,9 +113,11 @@ public class AsignarPedido extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPedidoSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbRepartidores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
-                .addComponent(btnAsignarPedido)
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAsignarPedido)
+                    .addComponent(btnRegresar))
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -107,13 +125,23 @@ public class AsignarPedido extends javax.swing.JFrame {
 
     private void btnAsignarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPedidoActionPerformed
         // TODO add your handling code here:
+        String idRepartidor = idRepartidores.get(this.cmbRepartidores.getSelectedIndex());
         JOptionPane.showMessageDialog(rootPane, "El pedido fue asignado a "+cmbRepartidores.getSelectedItem().toString(), "Pedido asignado", JOptionPane.INFORMATION_MESSAGE);
-        control.asignarPedidoRepartidor(pedidoSeleccionado.getFolio(), pedidoSeleccionado.getNombreRepartidor());
+        control.asignarPedidoRepartidor(pedidoSeleccionado.getFolio(), this.cmbRepartidores.getSelectedItem().toString(), idRepartidor);
+        this.dispose();
+        control.iniciarFrmPedidosAsignar();
     }//GEN-LAST:event_btnAsignarPedidoActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        control.regresar();
+        control.iniciarFrmPedidosAsignar();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarPedido;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbRepartidores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

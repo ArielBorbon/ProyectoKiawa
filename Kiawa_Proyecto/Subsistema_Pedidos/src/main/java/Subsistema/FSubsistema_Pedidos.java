@@ -89,7 +89,11 @@ public class FSubsistema_Pedidos {
     public List<PedidoDTO> obtenerPedidosPendientes() {
         return pedidoBO.obtenerPedidosPendientesBO();
     }
-
+    
+    public List<PedidoDTO> obtenerPedidosPreparados() {
+        return pedidoBO.obtenerPedidosPreparados();
+    }
+    
     public boolean asignarCocineroAPedido(String folioPedido, String idCocinero, String nombreCocinero) {
         return pedidoBO.asignarCocineroAPedidoBO(folioPedido, idCocinero, nombreCocinero);
     }
@@ -105,7 +109,7 @@ public class FSubsistema_Pedidos {
         return pedidoBO.obtenerPedidosAsignadosARepartidorBO(idRepartidor);
     }
     
-    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor){
-        return pedidoBO.asignarPedidoRepartidor(folioPedido, nombreRepartidor);
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor){
+        return pedidoBO.asignarPedidoRepartidor(folioPedido, nombreRepartidor, idRepartidor);
     }
 }

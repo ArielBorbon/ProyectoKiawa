@@ -11,6 +11,8 @@ import Subsistema.FSubsistema_Repartidor;
 import dto.PedidoDTO;
 import dto.RepartidorDTO;
 import java.util.List;
+import java.util.Stack;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,39 +20,77 @@ import java.util.List;
  */
 public class ControlPedido {
     private static ControlPedido instancia = new ControlPedido();
-    private AsignarPedido frmAsignarPedido;
-    private PedidosAsignar frmPedidosAsignar;
     private FSubsistema_Pedidos fSubsitema_pedido = new FSubsistema_Pedidos();
     private FSubsistema_Repartidor fSubsitema_repartidor =  new FSubsistema_Repartidor();
-    private PedidoDTO pedidoSeleccionado = this.frmPedidosAsignar.guardarPedidoSeleccionado();
+    private PedidoDTO pedidoSeleccionado;
+    private RepartidorDTO repartidorAsignar;
+    private Stack<JFrame> historialFrames = new Stack<>();
     
     
     public static ControlPedido getInstance(){
+        if (instancia == null) {
+            instancia = new ControlPedido();
+        }
         return instancia;
     }
     
     public void iniciarFrmAsignarPedido(){
-        frmAsignarPedido = new AsignarPedido();
-        frmAsignarPedido.setVisible(true);
-        frmPedidosAsignar.setVisible(false);
+        AsignarPedido asignarPedido = new AsignarPedido();
+        historialFrames.push(asignarPedido);
+        asignarPedido.setLocationRelativeTo(null);
+        asignarPedido.setVisible(true);
+        
         
     }
     
+    public List<PedidoDTO> recuperarPedidos(){
+        return fSubsitema_pedido.recuperarPedidos();
+    }
+    
     public void iniciarFrmPedidosAsignar(){
-        frmPedidosAsignar = new PedidosAsignar();
-        frmAsignarPedido.setVisible(false);
-        frmPedidosAsignar.setVisible(true);
+        PedidosAsignar pedidosAsignar = new PedidosAsignar();
+        historialFrames.push(pedidosAsignar);
+        pedidosAsignar.setLocationRelativeTo(null);
+        pedidosAsignar.setVisible(true);
     }
     
-    public PedidoDTO recuperarPedidoSeleccionado(){
-        return pedidoSeleccionado;
-    }
-    
-    public void asignarPedidoRepartidor(String folioPedido, String nombreRepartidor){
-        fSubsitema_pedido.asignarPedidoRepartidor(folioPedido, nombreRepartidor);
+    public void asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor){
+        fSubsitema_pedido.asignarPedidoRepartidor(folioPedido, nombreRepartidor, idRepartidor);
     }
     
     public List<RepartidorDTO> recuperarRepartidoresDisponibles(){
         return fSubsitema_repartidor.obtenerTrabajadoresHabilitados();
+    }
+
+    public PedidoDTO getPedidoSeleccionado() {
+        return pedidoSeleccionado;
+    }
+
+    public void setPedidoSeleccionado(PedidoDTO pedidoSeleccionado) {
+        this.pedidoSeleccionado = pedidoSeleccionado;
+    }
+
+    public RepartidorDTO getRepartidorAsignar() {
+        return repartidorAsignar;
+    }
+
+    public void setRepartidorAsignar(RepartidorDTO repartidorAsignar) {
+        this.repartidorAsignar = repartidorAsignar;
+    }
+    
+    public void regresar() {
+        if (!historialFrames.isEmpty()) {
+            JFrame anterior = historialFrames.pop();
+            anterior.dispose();
+            if (!historialFrames.isEmpty()) {
+                historialFrames.peek().setVisible(true);
+            }
+        }
+    }
+    
+    public void cerrarSesion() {
+        this.pedidoSeleccionado = null;
+        this.repartidorAsignar = null;
+        this.historialFrames.clear();
     }
 }

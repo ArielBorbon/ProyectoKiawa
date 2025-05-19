@@ -143,15 +143,24 @@ public class PedidoBO implements IPedidoBO {
     }
 
     @Override
-    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor) {
+    public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor) {
         if (folioPedido == null || folioPedido.trim().isEmpty()) {
             throw new IllegalArgumentException("El folio no puede estar vacío");
         }
-
-        if (nombreRepartidor == null || nombreRepartidor.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del cocinero no puede estar vacío");
+            
+        if (idRepartidor == null || idRepartidor.trim().isEmpty()) {
+            throw new IllegalArgumentException("El id del repartidor no puede estar vacío");
         }
         
-        return pedidoDAO.asignarPedidoRepartidor(folioPedido, nombreRepartidor);
+        if (nombreRepartidor == null || nombreRepartidor.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del Repartidor no puede estar vacío");
+        }
+        
+        return pedidoDAO.asignarPedidoRepartidor(folioPedido, nombreRepartidor, idRepartidor);
+    }
+
+    @Override
+    public List<PedidoDTO> obtenerPedidosPreparados() {
+        return pedidoDAO.obtenerPedidosPreparados();
     }
 }

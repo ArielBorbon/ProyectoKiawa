@@ -100,7 +100,7 @@ public class MenuRepartidor extends javax.swing.JFrame {
                 .addComponent(btnHistorialEntregas)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrarSesion)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
