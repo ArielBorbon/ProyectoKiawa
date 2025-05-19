@@ -11,6 +11,7 @@ import dto.DetallePedidoDTO;
 import java.text.SimpleDateFormat;
 import dto.PedidoDTO;
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -48,10 +49,8 @@ public class PrepararPedido extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnTerminarPedido = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtMetodoPago = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        lblMetodoPago = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,9 +64,25 @@ public class PrepararPedido extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Precio Unitario"
+                "Producto", "Nota", "Cantidad", "Precio Unitario", "Total"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPedidosRepartidor.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPedidosRepartidor);
 
         btnCancelarPedido.setBackground(new java.awt.Color(255, 102, 102));
@@ -95,24 +110,17 @@ public class PrepararPedido extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel3.setText("Preparar Pedido");
 
-        txtMetodoPago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMetodoPagoActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel4.setText("Total:");
 
+        txtNombre.setEditable(false);
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombretxtNombreActionPerformed(evt);
             }
         });
 
-        lblMetodoPago.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        lblMetodoPago.setText("Método de Pago:");
-
+        txtTotal.setEditable(false);
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalActionPerformed(evt);
@@ -143,10 +151,7 @@ public class PrepararPedido extends javax.swing.JFrame {
                                         .addComponent(btnTerminarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(199, 199, 199)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblMetodoPago)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(78, 78, 78)
+                                .addGap(478, 478, 478)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -167,8 +172,6 @@ public class PrepararPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMetodoPago)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
@@ -185,27 +188,35 @@ public class PrepararPedido extends javax.swing.JFrame {
     //METODOS
     private void cargarPedido() {
         PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
-        if (pedido == null) {
-            return;
-        }
+    if (pedido == null) {
+        return;
+    }
 
-        txtNombre.setText(pedido.getNombreAlumno());
-        txtMetodoPago.setText("Efectivo");
-        txtTotal.setText("$" + pedido.getTotal());
+    DecimalFormat df = new DecimalFormat("0.00");
 
-        DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
-        modelo.setRowCount(0);
+    txtNombre.setText(pedido.getNombreAlumno());
+    txtTotal.setText("$" + df.format(pedido.getTotal()));
 
-        if (pedido.getPlatillos() != null) {
-            for (DetallePedidoDTO detalle : pedido.getPlatillos()) {
-                Object[] fila = {
-                    detalle.getNombrePlatillo(),
-                    "$" + detalle.getPrecioUnitario()
-                };
-                modelo.addRow(fila);
-            }
+    DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
+    modelo.setRowCount(0);
+
+    if (pedido.getPlatillos() != null) {
+        for (DetallePedidoDTO detalle : pedido.getPlatillos()) {
+            double precioUnitario = detalle.getPrecioUnitario();
+            int cantidad = detalle.getCantidad();
+            double totalProducto = precioUnitario * cantidad;
+
+            Object[] fila = {
+                detalle.getNombrePlatillo(),
+                detalle.getNota(),
+                cantidad,
+                "$" + df.format(precioUnitario),
+                "$" + df.format(totalProducto)
+            };
+            modelo.addRow(fila);
         }
     }
+}
 
     //BOTONES 
 
@@ -226,10 +237,6 @@ public class PrepararPedido extends javax.swing.JFrame {
         this.dispose();
         new DetallesPedidos().setVisible(true);
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
-
-    private void txtMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMetodoPagoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMetodoPagoActionPerformed
 
     private void txtNombretxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombretxtNombreActionPerformed
         // TODO add your handling code here:
@@ -256,9 +263,7 @@ public class PrepararPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblMetodoPago;
     private javax.swing.JTable tblPedidosRepartidor;
-    private javax.swing.JTextField txtMetodoPago;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

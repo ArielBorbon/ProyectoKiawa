@@ -13,6 +13,8 @@ import dto.PedidoDTO;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,12 +23,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Freddy
  */
-public class DetallesPedidos extends javax.swing.JFrame {
+public class DetallesPedidosHistorial extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuCocinero
      */
-    public DetallesPedidos() {
+    public DetallesPedidosHistorial() {
         initComponents();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0x22EEE5));
@@ -43,23 +45,22 @@ public class DetallesPedidos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jnotaCocinero = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidosRepartidor = new javax.swing.JTable();
-        btnCancelarPedido = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnPrepararPedido = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtMotivoCancelacion = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(770, 615));
 
-        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        jLabel1.setText("Alumno:");
+        jnotaCocinero.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jnotaCocinero.setText("Nota Cocinero:");
 
         tblPedidosRepartidor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,15 +88,6 @@ public class DetallesPedidos extends javax.swing.JFrame {
         tblPedidosRepartidor.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPedidosRepartidor);
 
-        btnCancelarPedido.setBackground(new java.awt.Color(255, 102, 102));
-        btnCancelarPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        btnCancelarPedido.setText("Cancelar Pedido");
-        btnCancelarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarPedidoActionPerformed(evt);
-            }
-        });
-
         btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
         btnRegresar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -109,25 +101,16 @@ public class DetallesPedidos extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setToolTipText("");
 
-        btnPrepararPedido.setBackground(new java.awt.Color(153, 255, 153));
-        btnPrepararPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        btnPrepararPedido.setText("Preparar Pedido");
-        btnPrepararPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrepararPedidoActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel3.setText("Detalles Pedido");
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel4.setText("Total:");
 
-        txtNombre.setEditable(false);
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        txtMotivoCancelacion.setEditable(false);
+        txtMotivoCancelacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombretxtNombreActionPerformed(evt);
+                txtMotivoCancelacionActionPerformed(evt);
             }
         });
 
@@ -138,36 +121,49 @@ public class DetallesPedidos extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jLabel5.setText("Alumno:");
+
+        txtNombre.setEditable(false);
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombretxtNombreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(605, 605, 605)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(282, 282, 282)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnCancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnPrepararPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(66, 66, 66)
-                                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(472, 472, 472)
+                                .addGap(506, 506, 506)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtMotivoCancelacion)
+                            .addComponent(jnotaCocinero, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -177,27 +173,21 @@ public class DetallesPedidos extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jnotaCocinero, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMotivoCancelacion, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(btnRegresar)
-                        .addContainerGap(55, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnPrepararPedido)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelarPedido)
-                        .addGap(16, 16, 16))))
+                .addGap(44, 44, 44)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90))
         );
 
         pack();
@@ -211,7 +201,7 @@ public class DetallesPedidos extends javax.swing.JFrame {
         }
 
         DecimalFormat df = new DecimalFormat("0.00");
-        txtNombre.setText(pedido.getNombreAlumno());
+        txtMotivoCancelacion.setText(pedido.getNombreAlumno());
         txtTotal.setText("$" + df.format(pedido.getTotal()));
     }
 
@@ -245,34 +235,27 @@ public class DetallesPedidos extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
-        Control.ControlCocinero.getInstancia().mostrarPedidosCocinero();
+        try {
+            new HistorialPedido().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(DetallesPedidosHistorial.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void btnPrepararPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrepararPedidoActionPerformed
-        this.dispose();
-        new PrepararPedido().setVisible(true);
-    }//GEN-LAST:event_btnPrepararPedidoActionPerformed
-
-    private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
-        this.dispose();
-        new CancelarPedido().setVisible(true);
-    }//GEN-LAST:event_btnCancelarPedidoActionPerformed
-
-    private void txtNombretxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombretxtNombreActionPerformed
+    private void txtMotivoCancelacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMotivoCancelacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombretxtNombreActionPerformed
+    }//GEN-LAST:event_txtMotivoCancelacionActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
 
-    public JButton getBtnSeleccionarPedido() {
-        return btnCancelarPedido;
-    }
+    private void txtNombretxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombretxtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombretxtNombreActionPerformed
 
-    public void setBtnSeleccionarPedido(JButton btnSeleccionarPedido) {
-        this.btnCancelarPedido = btnSeleccionarPedido;
-    }
+  
+
 
     public JButton getBtnRegresar() {
         return btnRegresar;
@@ -284,15 +267,15 @@ public class DetallesPedidos extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelarPedido;
-    private javax.swing.JButton btnPrepararPedido;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jnotaCocinero;
     private javax.swing.JTable tblPedidosRepartidor;
+    private javax.swing.JTextField txtMotivoCancelacion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

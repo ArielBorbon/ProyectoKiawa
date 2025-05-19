@@ -5,6 +5,7 @@
 package CasosDeUso.CU.PrepararPedido;
 
 import CasosDeUso.CU.Equipo.*;
+import CasosDeUso.CU.PrepararPedido.DetallesPedidosHistorial;
 import Control.ControlAlumno;
 import Control.ControlCocinero;
 import Subsistema.FSubsistema_Pedidos;
@@ -26,19 +27,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HistorialPedido extends javax.swing.JFrame {
 
-    private List<PedidoDTO> historial;
-
     public HistorialPedido() throws Exception {
         initComponents();
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0xffff90));
-        FSubsistema_Pedidos subsistema = new FSubsistema_Pedidos();
-        historial = subsistema.obtenerHistorialPorNombreAlumno(ControlAlumno.getInstancia().getAlumno().getNombreCompleto());
         cargarPedidos();
-
-        tblHistorialPedidos.addMouseListener(new MouseAdapter() {
-
-        });
     }
 
     public JButton getBtnRegresar() {
@@ -49,21 +42,12 @@ public class HistorialPedido extends javax.swing.JFrame {
         this.btnRegresar = btnRegresar;
     }
 
-    class NonEditableTableModel extends DefaultTableModel {
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    }
-
     private void cargarPedidos() {
         try {
-            String nombreAlumno = ControlAlumno.getInstancia().getAlumno().getNombreCompleto();
             FSubsistema_Pedidos subsistema = new FSubsistema_Pedidos();
-            historial = subsistema.obtenerHistorialPorNombreAlumno(nombreAlumno);
+            List<PedidoDTO> historial = subsistema.recuperarPedidos();
 
-            NonEditableTableModel modelo = new NonEditableTableModel();
+            DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn("Folio");
             modelo.addColumn("Fecha");
             modelo.addColumn("Estado");
@@ -101,6 +85,7 @@ public class HistorialPedido extends javax.swing.JFrame {
         tblHistorialPedidos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
+        btnVerPedido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,6 +115,7 @@ public class HistorialPedido extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblHistorialPedidos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblHistorialPedidos);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
@@ -144,6 +130,15 @@ public class HistorialPedido extends javax.swing.JFrame {
             }
         });
 
+        btnVerPedido.setBackground(new java.awt.Color(153, 255, 153));
+        btnVerPedido.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        btnVerPedido.setText("Ver Pedido");
+        btnVerPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerPedidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,21 +150,26 @@ public class HistorialPedido extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addComponent(jLabel1)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnRegresar))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnVerPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
         );
 
         pack();
@@ -180,9 +180,35 @@ public class HistorialPedido extends javax.swing.JFrame {
         ControlCocinero.getInstancia().mostrarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnVerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidoActionPerformed
+        int fila = tblHistorialPedidos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un pedido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            String folio = tblHistorialPedidos.getValueAt(fila, 0).toString();
+            List<PedidoDTO> historial = new FSubsistema_Pedidos().recuperarPedidos();
+            for (PedidoDTO pedido : historial) {
+                if (pedido.getFolio().equals(folio)) {
+                    ControlCocinero.getInstancia().setPedidoActual(pedido);
+                    this.dispose();
+                    new DetallesPedidosHistorial().setVisible(true);
+                    return;
+                }
+            }
+
+            JOptionPane.showMessageDialog(this, "No se encontró el pedido seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al abrir el pedido: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVerPedidoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnVerPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblHistorialPedidos;

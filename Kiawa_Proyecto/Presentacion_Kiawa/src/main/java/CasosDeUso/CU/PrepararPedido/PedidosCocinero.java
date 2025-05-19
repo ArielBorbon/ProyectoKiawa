@@ -58,14 +58,14 @@ public class PedidosCocinero extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Alumno", "Ubicación", "Metodo Pago", "Total Gastado"
+                "Alumno", "Fecha", "Total Gastado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,10 +76,8 @@ public class PedidosCocinero extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblPedidosRepartidor.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPedidosRepartidor);
-        if (tblPedidosRepartidor.getColumnModel().getColumnCount() > 0) {
-            tblPedidosRepartidor.getColumnModel().getColumn(2).setHeaderValue("Metodo Pago");
-        }
 
         btnSeleccionarPedido.setBackground(new java.awt.Color(153, 255, 153));
         btnSeleccionarPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -153,11 +151,21 @@ public class PedidosCocinero extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) tblPedidosRepartidor.getModel();
             modelo.setRowCount(0);
 
+            SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            long unDiaEnMillis = 24 * 60 * 60 * 1000;
+            long ahora = System.currentTimeMillis();
+
             for (PedidoDTO p : pedidosPendientes) {
+                if (p.getEstado().equalsIgnoreCase("PENDIENTE")
+                        && ahora - p.getFechaPedido().getTime() > unDiaEnMillis) {
+
+                    new FSubsistema_Pedidos().cambiarEstadoPedido(p.getFolio(), "CANCELADO");
+                    continue; // no mostrar en la tabla
+                }
+
                 Object[] fila = {
                     p.getNombreAlumno(),
-                    p.getUbicacionEntrega().getEdificio() + " " + p.getUbicacionEntrega().getSalon(),
-                    "Efectivo", //Caso base, dira Efectivo
+                    fmt.format(p.getFechaPedido()),
                     p.getTotal()
                 };
                 modelo.addRow(fila);
@@ -166,7 +174,7 @@ public class PedidosCocinero extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar pedidos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     //BOTONES
 
     private void btnSeleccionarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarPedidoActionPerformed
