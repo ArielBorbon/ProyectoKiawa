@@ -55,6 +55,7 @@ public class PedidosAsignar extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setForeground(java.awt.Color.orange);
 
         tblPedidosAsignar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

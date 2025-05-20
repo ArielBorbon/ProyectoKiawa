@@ -486,7 +486,7 @@ public class PedidoDAO implements IPedidoDAO {
             MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
             MongoCollection<Document> coleccion = db.getCollection("Pedidos");
 
-            Bson filtro = Filters.eq("estado", "PREPARADO");
+            Bson filtro = Filters.eq("estado", "EN_PREPARACION");
             FindIterable<Document> documentos = coleccion.find(filtro);
 
             for (Document doc : documentos) {

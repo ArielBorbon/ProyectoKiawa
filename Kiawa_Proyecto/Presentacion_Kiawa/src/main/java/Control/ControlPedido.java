@@ -58,6 +58,10 @@ public class ControlPedido {
         fSubsitema_pedido.asignarPedidoRepartidor(folioPedido, nombreRepartidor, idRepartidor);
     }
     
+    public void asignarPedidoCocinero(String folioPedido, String nombreCocinero, String idCocinero){
+        fSubsitema_pedido.asignarCocineroAPedido(folioPedido, idCocinero, nombreCocinero);
+    }
+    
     public List<RepartidorDTO> recuperarRepartidoresDisponibles(){
         return fSubsitema_repartidor.obtenerTrabajadoresHabilitados();
     }

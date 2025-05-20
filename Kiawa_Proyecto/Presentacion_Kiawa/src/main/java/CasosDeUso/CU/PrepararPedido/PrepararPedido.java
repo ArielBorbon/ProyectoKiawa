@@ -7,6 +7,8 @@ package CasosDeUso.CU.PrepararPedido;
 import Subsistema.FSubsistema_Pedidos;
 import BO.PedidoBO;
 import Control.ControlCocinero;
+import Control.ControlPedido;
+import dto.CocineroDTO;
 import dto.DetallePedidoDTO;
 import java.text.SimpleDateFormat;
 import dto.PedidoDTO;
@@ -228,7 +230,10 @@ public class PrepararPedido extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Pedido terminado con éxito.");
             this.dispose();
             ControlCocinero.getInstancia().mostrarPedidosCocinero();
-        } else {
+            CocineroDTO cocineroActual = ControlCocinero.getInstancia().getCocinero();
+            PedidoDTO pedidoActual = ControlCocinero.getInstancia().getPedidoActual();
+            ControlPedido.getInstance().asignarPedidoCocinero(pedidoActual.getFolio(), cocineroActual.getNombreCompleto(), cocineroActual.getIdCocinero());
+        }else {
             JOptionPane.showMessageDialog(this, "No se pudo actualizar el estado del pedido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnTerminarPedidoActionPerformed

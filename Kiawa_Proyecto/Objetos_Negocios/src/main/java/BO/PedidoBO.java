@@ -112,6 +112,7 @@ public class PedidoBO implements IPedidoBO {
         return pedidoDAO.obtenerPedidosPendientes();
     }
 
+    @Override
     public boolean asignarCocineroAPedidoBO(String folioPedido, String idCocinero, String nombreCocinero) {
         if (folioPedido == null || folioPedido.trim().isEmpty()) {
             throw new IllegalArgumentException("El folio del pedido no puede estar vacío");

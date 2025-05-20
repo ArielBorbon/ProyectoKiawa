@@ -24,6 +24,7 @@ public class ControlCocinero {
     private CocineroDTO cocinero;
     private PedidoDTO pedidoActual;
     private Stack<JFrame> historialFrames = new Stack<>();
+    
 
     private ControlCocinero() {
     }
@@ -75,7 +76,9 @@ public class ControlCocinero {
             JOptionPane.showMessageDialog(null, "Error al mostrar historial: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
+    
+    
     public void regresar() {
         if (!historialFrames.isEmpty()) {
             JFrame anterior = historialFrames.pop();

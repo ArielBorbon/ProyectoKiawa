@@ -53,6 +53,7 @@ public class MenuRol extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel5.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
         jLabel5.setText("Selecciona Tu Rol");
