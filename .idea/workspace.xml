@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8093c232-32a9-446a-9745-422036a319ad" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/DetallesPedidosHistorial.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/DetallesPedidosHistorial.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/DetallesPedidos.form" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/DetallesPedidos.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/DetallesPedidos.java" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/DetallesPedidos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/HistorialPedido.form" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/HistorialPedido.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/HistorialPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/HistorialPedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PedidosCocinero.form" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PedidosCocinero.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PedidosCocinero.java" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PedidosCocinero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PrepararPedido.form" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PrepararPedido.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PrepararPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/CasosDeUso/CU/PrepararPedido/PrepararPedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/Menu/MenuCocinero.form" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/Menu/MenuCocinero.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/Menu/MenuCocinero.java" beforeDir="false" afterPath="$PROJECT_DIR$/Kiawa_Proyecto/Presentacion_Kiawa/src/main/java/Menu/MenuCocinero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +63,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747664030411</updated>
-      <workItem from="1747664031833" duration="5127000" />
+      <workItem from="1747664031833" duration="6386000" />
     </task>
     <servers />
   </component>

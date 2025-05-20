@@ -44,13 +44,12 @@ public class CancelarPedido extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtMotivo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(470, 422));
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        jLabel1.setText("Motivo:");
+        jLabel1.setText("¿Está Seguro de Cancelar el Pedido?:");
 
         btnCancelarPedido.setBackground(new java.awt.Color(255, 102, 102));
         btnCancelarPedido.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -77,12 +76,6 @@ public class CancelarPedido extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel3.setText("Cancelar Pedido");
 
-        txtMotivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMotivotxtNombreActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,13 +95,11 @@ public class CancelarPedido extends javax.swing.JFrame {
                         .addGap(605, 605, 605)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(138, 138, 138)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -118,9 +109,7 @@ public class CancelarPedido extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(100, 100, 100)
                 .addComponent(btnCancelarPedido)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2)
@@ -138,11 +127,7 @@ public class CancelarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
-        String motivo = txtMotivo.getText().trim();
-        if (motivo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debes ingresar un motivo para cancelar el pedido.", "Atención", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+       
 
         PedidoDTO pedido = ControlCocinero.getInstancia().getPedidoActual();
         boolean actualizado = new FSubsistema_Pedidos().cambiarEstadoPedido(pedido.getFolio(), "CANCELADO");
@@ -155,10 +140,6 @@ public class CancelarPedido extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo cancelar el pedido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
-
-    private void txtMotivotxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMotivotxtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMotivotxtNombreActionPerformed
 
     public JButton getBtnSeleccionarPedido() {
         return btnCancelarPedido;
@@ -175,6 +156,5 @@ public class CancelarPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtMotivo;
     // End of variables declaration//GEN-END:variables
 }
