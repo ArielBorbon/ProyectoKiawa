@@ -156,7 +156,6 @@ public class ControlAdministrador {
 
     private void mostrarEditarEmpleado() {
         EditarEmpleado editar = new EditarEmpleado();
-        // 1) empujamos el frame en el historial
         historial.push(editar);
 
         editar.getBtnRegresar().addActionListener(e -> {
