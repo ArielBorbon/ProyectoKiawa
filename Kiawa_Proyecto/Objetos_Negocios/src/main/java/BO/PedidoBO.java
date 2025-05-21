@@ -164,4 +164,12 @@ public class PedidoBO implements IPedidoBO {
     public List<PedidoDTO> obtenerPedidosPreparados() {
         return pedidoDAO.obtenerPedidosPreparados();
     }
+    
+    @Override
+    public boolean pedidoPagadoBO(String folio){
+        if (folio == null || folio.trim().isEmpty()){
+            throw new IllegalArgumentException("El folio no puede estar vacío");
+        }
+        return pedidoDAO.pedidoPagado(folio);
+    }
 }

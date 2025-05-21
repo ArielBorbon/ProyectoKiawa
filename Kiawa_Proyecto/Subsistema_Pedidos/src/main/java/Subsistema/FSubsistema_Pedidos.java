@@ -112,4 +112,8 @@ public class FSubsistema_Pedidos {
     public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor){
         return pedidoBO.asignarPedidoRepartidor(folioPedido, nombreRepartidor, idRepartidor);
     }
+    
+    public boolean pedidoPagado(String folio){
+        return pedidoBO.pedidoPagadoBO(folio);
+    }
 }

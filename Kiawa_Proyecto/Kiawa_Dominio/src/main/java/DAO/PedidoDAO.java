@@ -544,7 +544,7 @@ public class PedidoDAO implements IPedidoDAO {
             Bson filtro = Filters.eq("folio", folioPedido); 
             Bson actualizacion = Updates.combine(
                     Updates.set("nombreRepartidor", nombreRepartidor),
-                    Updates.set("estado", "En proceso"),
+                    Updates.set("estado", "EN PROCESO"),
                     Updates.set("idRepartidor", idRepartidor)
             );
             UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
@@ -645,5 +645,30 @@ public class PedidoDAO implements IPedidoDAO {
         }
 
         return pedidosAsignados;
+    }
+    
+    @Override
+    public boolean pedidoPagado(String folio){
+        MongoClient conexion = null;
+        try {
+            conexion = Conexion.getInstancia().crearConexion();
+            MongoDatabase db = Conexion.getInstancia().obtenerBaseDatos(conexion);
+            MongoCollection<Document> coleccion = db.getCollection("Pedidos");
+
+            Bson filtro = Filters.eq("folio", folio);
+            Bson actualizacion = Updates.set("pagado", true);
+
+            UpdateResult resultado = coleccion.updateOne(filtro, actualizacion);
+
+            return resultado.getMatchedCount() > 0;
+
+        } catch (MongoException e) {
+            System.err.println("Error al cambiar el estado del pedido: " + e.getMessage());
+            return false;
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
     }
 }

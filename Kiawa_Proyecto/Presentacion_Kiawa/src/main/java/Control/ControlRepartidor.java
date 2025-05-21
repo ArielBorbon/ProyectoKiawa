@@ -206,6 +206,7 @@ public class ControlRepartidor {
         confirmarEntrega.getBtnConfirmarPago().addActionListener(e -> {
             String entregado = "ENTREGADO";
             actualizarEstado(folio, entregado, confirmarEntrega);
+            marcarPagadoPedido(folio, confirmarEntrega);
             regresar();
             confirmarEntrega.dispose();
         });
@@ -223,10 +224,22 @@ public class ControlRepartidor {
         boolean actualizado = subsistema.cambiarEstadoPedido(folio, estado);
 
         if (actualizado) {
-            JOptionPane.showMessageDialog(ventanaActual, "Estado actulizado.");
+            JOptionPane.showMessageDialog(ventanaActual, "Estado actulizado");
             ventanaActual.dispose();
         } else {
             JOptionPane.showMessageDialog(ventanaActual, "No se pudo actualizar el estado del pedido.");
+        }
+    }
+    
+    private void marcarPagadoPedido(String folio, JFrame ventanaActual){
+        FSubsistema_Pedidos subsistema = new FSubsistema_Pedidos();
+        boolean actualizado = subsistema.pedidoPagado(folio);
+        
+        if(actualizado){
+            JOptionPane.showMessageDialog(ventanaActual, "Pedido pagado");
+            ventanaActual.dispose();
+        } else{
+            JOptionPane.showMessageDialog(ventanaActual, "No se pudo actualizar el estado del pedido");
         }
     }
 }

@@ -47,5 +47,6 @@ public interface IPedidoDAO {
     
     public boolean asignarPedidoRepartidor(String folioPedido, String nombreRepartidor, String idRepartidor);
     public List<PedidoDTO> obtenerPedidosPreparados();
+    public boolean pedidoPagado(String folio);
 }
 
