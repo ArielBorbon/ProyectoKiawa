@@ -240,7 +240,7 @@ public class PrepararPedido extends javax.swing.JFrame {
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
         this.dispose();
-        new DetallesPedidos().setVisible(true);
+        new CancelarPedido().setVisible(true);
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
 
     private void txtNombretxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombretxtNombreActionPerformed
