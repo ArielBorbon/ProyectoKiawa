@@ -94,7 +94,7 @@ public class PlatilloDAO implements IPlatilloDAO {
             MongoDatabase baseDatos = Conexion.getInstancia().obtenerBaseDatos(conexion);
             MongoCollection<Document> coleccion = baseDatos.getCollection("Platillos");
 
-            try (MongoCursor<Document> cursor = coleccion.find().iterator()) {
+            try (MongoCursor<Document> cursor = coleccion.find().iterator()) {          //lista de platillos
                 while (cursor.hasNext()) {
                     Document doc = cursor.next();
                     Platillo platillo = new Platillo();

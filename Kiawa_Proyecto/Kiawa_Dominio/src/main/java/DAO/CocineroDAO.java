@@ -83,7 +83,7 @@ public class CocineroDAO implements ICocineroDAO {
             int max = 0;
             for (Document doc : documentos) {
                 String id = doc.getString("idCocinero");
-                if (id != null && id.matches("\\d+")) {
+                if (id != null && id.matches("\\d+")) {         //            \\d+ significa un numero 0-9 y el + uno o mas  
                     int valor = Integer.parseInt(id);
                     if (valor > max) {
                         max = valor;
